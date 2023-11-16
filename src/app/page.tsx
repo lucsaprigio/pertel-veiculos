@@ -1,5 +1,6 @@
 import { ButtonScrollBottom } from "./components/ButtonScroll";
 import { InfiniteLoop } from "./components/InfiniteLoop";
+import { PromotionCard } from "./components/PromotionCard";
 
 export default function Home() {
   return (
@@ -22,22 +23,48 @@ export default function Home() {
       </div>
 
       <div id="carros-estoque-destaque" className="flex flex-col gap-4 px-24 items-start justify-start w-full z-10">
-        <h2 className="text-4xl text-red-700 font-bold mt-10">Carros em destaque</h2>
-        <div className="grid grid-cols-3">
-          <div className="flex flex-col items-start justify-start rounded-lg overflow-hidden bg-red-700">
-            <img className="object-contain rounded-t-lg" src="/images/car.jpg" alt="Carro a venda" />
-            <div className="grid grid-col grid-col-2 w-full items-start py-3 px-3">
-              <div className="grid grid-cols-2 justify-around w-full ">
-                <strong className="text-gray-50 text-lg mb-6">Descrição do carro</strong>
-                <strong></strong>
-                <span className="flex bg-gray-50 items-center justify-center w-24 rounded-md text-black">2023/2023</span>
-                <strong className="flex items-center justify-end text-gray-50 text-2xl text-right">R$199.999,00</strong>
-              </div>
-            </div>
-            <div className="grid grid-cols-1 pb-3 px-3 w-full">
-              <span className="flex items-center justify-start opacity-90">Automático</span>
-            </div>  
-          </div>
+        <h2 className="text-4xl text-red-700 font-bold mt-8">Carros em destaque</h2>
+        <div className="flex flex-row flex-wrap">
+          <PromotionCard
+            source="/images/car.jpg"
+            description="Descrição de teste"
+            price={"199.999,00"}
+            year="2023/2023"
+            exchange="Automático"
+            fuelType="Gasolina"
+          />
+          <PromotionCard
+            source="/images/car.jpg"
+            description="Descrição de teste"
+            price={"199.999,00"}
+            year="2023/2023"
+            exchange="Automático"
+            fuelType="Gasolina"
+          />
+          <PromotionCard
+            source="/images/car.jpg"
+            description="Descrição de teste"
+            price={"199.999,00"}
+            year="2023/2023"
+            exchange="Automático"
+            fuelType="Gasolina"
+          />
+          <PromotionCard
+            source="/images/car.jpg"
+            description="Descrição de teste"
+            price={"199.999,00"}
+            year="2023/2023"
+            exchange="Automático"
+            fuelType="Gasolina"
+          />
+          <PromotionCard
+            source="/images/car.jpg"
+            description="Descrição de teste"
+            price={"199.999,00"}
+            year="2023/2023"
+            exchange="Automático"
+            fuelType="Gasolina"
+          />
         </div>
       </div>
 
