@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.17",
     "@phosphor-icons/react": "^2.0.14",
     "feather-icons": "^4.29.1",
     "lucide-react": "^0.292.0",
