@@ -14,7 +14,9 @@ const config: Config = {
         'background-home-opacity': "url('/images/background-home-opacity.gif')",
       },
       borderWidth: {
-        'b-bottom': '0 0 0.2px 0'
+        'b-bottom': '0 0 0.2px 0',
+        'b-sm': '0.2px',
+        'b-top-sm': '0.2px 0 0 0'
       },
       keyframes: {
         'loopAnimation': {
@@ -39,7 +41,7 @@ const config: Config = {
           700: '#213A5C'
         },
         red: {
-          700:'#ec1c24',
+          700: '#ec1c24',
         },
         gray: {
           700: '#121214',

@@ -19,7 +19,7 @@ export function ButtonScrollBottom({ targedDiv, description }: ButtonProps) {
     };
 
     return (
-        <button className="flex flex-row items-center justify-around bg-red-700 p-2 rounded-full text-black animate-bounce" onClick={() => scrollToDiv(targedDiv)}>
+        <button className="flex flex-row items-center justify-around bg-red-700 px-4 py-2 rounded-full text-black animate-bounce" onClick={() => scrollToDiv(targedDiv)}>
             {description}
             <ArrowDown />
         </button>

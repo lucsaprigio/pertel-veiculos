@@ -23,7 +23,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`bg-gradient-to-b from-white to-gray-150 ${roboto.className}`}>
+      <body className={`bg-gradient-to-b from-white to-red-200 ${roboto.className}`}>
         <Header />
         {children}
         <Footer />

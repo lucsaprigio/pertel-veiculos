@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ButtonScrollBottom } from "./components/ButtonScroll";
 import { PromotionCard } from "./components/PromotionCard";
 import { WhatsappButton } from "./components/WhatsappButton";
+import { InfiniteLoop } from "./components/InfiniteLoop";
 
 export default function Home() {
   return (
@@ -79,6 +80,10 @@ export default function Home() {
         <Link href="/veiculos" >
           <button className=" p-4 bg-red-700 text-gray-150 text-xl rounded-md items-center justify-center hover:brightness-95 transition-all duration-150">Conheça nosso estoque</button>
         </Link>
+      </div>
+      <div className="bg-red-700">
+        <InfiniteLoop />
+
       </div>
     </main >
   )
