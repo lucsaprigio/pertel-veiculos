@@ -38,7 +38,7 @@ export function Header() {
                     </Link>
                     <Link className="relative overflow-hidden group/link text-gray-100 text-lg hover:text-gray-150 hover:font-bold duration-300" href="/veiculos">
                         Veículos
-                        <span className="absolute -inset-x-24 h-0.5 bottom-0 w-full group-hover/link:border-b-0 group-hover/link:translate-x-full group-hover/link:bg-gray-150 transition-transform duration-700" />
+                        <span className="absolute -inset-x-16 h-0.5 bottom-0 w-full group-hover/link:border-b-0 group-hover/link:translate-x-full group-hover/link:bg-gray-150 transition-transform duration-700" />
                     </Link>
                     <Link className="relative overflow-hidden group/link text-gray-100 text-lg hover:text-gray-150 hover:font-bold duration-300" href="/sobre">
                         Sobre
