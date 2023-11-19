@@ -42,7 +42,7 @@ export function Footer() {
                     </Link>
                 </div>
                 <div className="flex w-full items-center justify-end px-2">
-                    <span className="text-gray-150 text-sm">© 2023 Powered by Lucas Aprigio</span>
+                    <span className="text-gray-150 text-sm">© 2023 Powered by <Link href="https://www.linkedin.com/in/lucas-aprigio-3b17521a5/" target="blank">Lucas Aprigio </Link></span>
                 </div>
             </div>
         </footer >

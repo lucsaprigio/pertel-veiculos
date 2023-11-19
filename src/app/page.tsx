@@ -11,7 +11,7 @@ export default function Home() {
       <div className=" position relative grid grid-cols-2 gap-2 w-full h-screen px-10 bg-page-video bg-cover bg-no-repeat after:absolute after:top-0 after:left-0 after:w-full after:h-full after:bg-black after:opacity-70">
         <div className="mb-14 flex flex-col gap-10 items-start justify-center z-10">
           <span className="mb-2 text-left text-6xl justify-center font-bold font-inter text-gray-200">
-            Em busca do seu carro dos sonhos? <br /> Aqui transformamos sonhos em realidade!
+            Em busca do seu carro dos sonhos?
           </span>
           <span className="text-left text-3xl justify-center text-gray-200">
             Com um estoque abrangente e as melhores opções, estamos prontos para ajudá-lo a encontrar o veículo perfeito.
@@ -81,9 +81,15 @@ export default function Home() {
           <button className=" p-4 bg-red-700 text-gray-150 text-xl rounded-md items-center justify-center hover:brightness-95 transition-all duration-150">Conheça nosso estoque</button>
         </Link>
       </div>
+
+      <div className="flex items-center justify-center w-full h-screen my-14">
+        <div className="flex items-center justify-center w-full h-full bg-red-200 mx-20 p-20 rounded-xl">
+          <h2 className="text-black font-bold text-4xl">O que você encontra?</h2>
+        </div>
+      </div>
+
       <div className="bg-red-700">
         <InfiniteLoop />
-
       </div>
     </main >
   )
