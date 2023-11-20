@@ -1,5 +1,3 @@
-'use client'
-
 import { FuelIcon } from "lucide-react";
 
 interface Props {

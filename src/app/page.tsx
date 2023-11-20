@@ -3,6 +3,7 @@ import { ButtonScrollBottom } from "./components/ButtonScroll";
 import { PromotionCard } from "./components/PromotionCard";
 import { WhatsappButton } from "./components/WhatsappButton";
 import { InfiniteLoop } from "./components/InfiniteLoop";
+import { BuyCard } from "./components/BuyCard";
 
 export default function Home() {
   return (
@@ -83,8 +84,29 @@ export default function Home() {
       </div>
 
       <div className="flex items-center justify-center w-full h-screen my-14">
-        <div className="flex items-center justify-center w-full h-full bg-red-200 mx-20 p-20 rounded-xl">
-          <h2 className="text-black font-bold text-4xl">O que você encontra?</h2>
+        <div className="flex flex-col gap-20 items-center justify-center w-full h-full bg-red-200 mx-20 p-20 rounded-xl">
+          <img className="w-52 h-52 opacity-25 object-contain" src="/images/logo.svg" alt="Logo" />
+          <h2 className="text-black font-bold text-4xl font-inter">Quais motivos para comprar conosco?</h2>
+          <div className="flex flex-row px-10 gap-10">
+            <BuyCard
+              title="Lorem Epsum"
+              description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+              when an unknown printer took a galley of type and scrambled it to make a type specimen book"
+            />
+            <BuyCard
+              title="Lorem Epsum"
+              description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+              when an unknown printer took a galley of type and scrambled it to make a type specimen book"
+            />
+            <BuyCard
+              title="Lorem Epsum"
+              description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+              when an unknown printer took a galley of type and scrambled it to make a type specimen book"
+            />
+          </div>
         </div>
       </div>
 
