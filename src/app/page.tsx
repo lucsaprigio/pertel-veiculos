@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { ButtonScrollBottom } from "./components/ButtonScroll";
-import { PromotionCard } from "@/components/PromotionCard";
-import { WhatsappButton } from "@/components/WhatsappButton";
-import { InfiniteLoop } from "@/components/InfiniteLoop";
-import { BuyCard } from "@/components/BuyCard";
+import { ButtonScrollBottom } from "./Components/ButtonScroll";
+import { PromotionCard } from "app/Components/PromotionCard";
+import { WhatsappButton } from "app/Components/WhatsappButton";
+import { InfiniteLoop } from "app/Components/InfiniteLoop";
+import { BuyCard } from "app/Components/BuyCard";
 
 export default function Home() {
   return (
