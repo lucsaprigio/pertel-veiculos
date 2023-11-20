@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
-import { Card } from '../components/Card';
-import { InputRange } from '../components/InputRange';
+import { Card } from '@/components/Card';
+import { InputRange } from '@/components/InputRange';
 
 
 export const metadata: Metadata = {

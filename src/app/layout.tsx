@@ -1,10 +1,9 @@
 import type { Metadata } from 'next'
-import { Inter, Roboto } from 'next/font/google'
+import { Roboto } from 'next/font/google'
 import './globals.css'
-import { Header } from './components/Header';
-import { Footer } from './components/Footer';
+import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
 
-const inter = Inter({ subsets: ['latin'] });
 const roboto = Roboto({
   weight: '400',
   subsets: ['latin'],
