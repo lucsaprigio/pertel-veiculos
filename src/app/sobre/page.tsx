@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { OlMap } from '@/app/Components/Map';
+import { OlMap } from '../Components/Map';
 import { SomePoints } from "../Components/SomePoints";
 
 export default function Sobre() {
@@ -15,7 +15,7 @@ export default function Sobre() {
                     <h3 className="flex items-center justify-center text-4xl font-inter">Sobre a Pertel Veículos </h3>
                     <span className="flex items-center justify-center text-center text-lg px-14">
                         Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                        Lorem Ipsum has been the industrys standard dummy text ever since the 1500s,
                         when an unknown printer took a galley of type and scrambled it to make a type specimen book.
                     </span>
                 </div>
@@ -31,7 +31,7 @@ export default function Sobre() {
                     <SomePoints
                         mission="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
                         vision="Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-                        values="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.|"
+                        values="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
                     />
                 </div>
             </section>
