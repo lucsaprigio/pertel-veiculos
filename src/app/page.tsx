@@ -26,7 +26,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div id="carros-estoque-destaque" className="flex flex-col gap-4 px-14 py-10 items-start justify-start w-full max-h-screen">
+      <div id="carros-estoque-destaque" className="flex flex-col gap-4 px-14 py-10 items-start justify-start w-full max-h-screen mb-64">
         <h2 className="text-4xl text-red-700 font-bold mt-8 font-inter">Novidades</h2>
         <div className="grid grid-cols-2 w-full">
           <div className="flex items-start justify-start w-full">
@@ -83,7 +83,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="flex items-center justify-center w-full h-screen my-14">
+      <div className="flex items-center justify-center w-full h-screen">
         <div className="flex flex-col gap-20 items-center justify-center w-full h-full bg-red-200 mx-20 p-20 rounded-xl">
           <img className="w-64 h-64 opacity-50 object-contain rounded-full -mb-32" src="/images/sale-car.svg" alt="Logo" />
           <h2 className="text-black font-bold text-4xl font-inter z-50">Quais motivos para comprar conosco?</h2>
