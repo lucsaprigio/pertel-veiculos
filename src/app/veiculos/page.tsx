@@ -1,14 +1,62 @@
 import { Metadata } from 'next';
 import { Card } from '../Components/Card';
 import { InputRange } from '../Components/InputRange';
-
+import Link from 'next/link';
 
 export const metadata: Metadata = {
     title: 'Veículos | Pertel Veículos',
     description: 'Pertel',
 }
 
-export default function Softwares() {
+export default async function Softwares() {
+    const cars = [
+        {
+            "id": "fdskjfui8921038413",
+            "description": "Toyota yaris xs",
+            "price": 71900,
+            "year": "2019/2019",
+            "km": 1000,
+            "exchange": "Automático",
+            "source": "https://scontent.fmvs2-1.fna.fbcdn.net/v/t45.5328-4/397442047_6858332717578894_6776584399312876377_n.jpg?stp=dst-jpg_p720x720&_nc_cat=104&ccb=1-7&_nc_sid=247b10&_nc_eui2=AeHE6_GdsiC8kWOsG6497QCZ31-ScYW-CO3fX5Jxhb4I7XeLKntX4gVoAmn_LwI3ciyCtOBHwQAP8_A7FwHzYI0l&_nc_ohc=O_bEJ4BcTbwAX_bXZUe&_nc_ht=scontent.fmvs2-1.fna&oh=00_AfBHQHbcoxhPPtOg0L-JC6m3uZp7pcWcq-wuoln0GnBLIA&oe=656112B9"
+        },
+        {
+            "id": "fdskjfui8921038413",
+            "description": "Toyota yaris xs",
+            "price": 71900,
+            "year": "2019/2019",
+            "km": 1000,
+            "exchange": "Automático",
+            "source": "https://scontent.fmvs2-1.fna.fbcdn.net/v/t45.5328-4/397442047_6858332717578894_6776584399312876377_n.jpg?stp=dst-jpg_p720x720&_nc_cat=104&ccb=1-7&_nc_sid=247b10&_nc_eui2=AeHE6_GdsiC8kWOsG6497QCZ31-ScYW-CO3fX5Jxhb4I7XeLKntX4gVoAmn_LwI3ciyCtOBHwQAP8_A7FwHzYI0l&_nc_ohc=O_bEJ4BcTbwAX_bXZUe&_nc_ht=scontent.fmvs2-1.fna&oh=00_AfBHQHbcoxhPPtOg0L-JC6m3uZp7pcWcq-wuoln0GnBLIA&oe=656112B9"
+        },
+        {
+            "id": "fdskjfui8921038413",
+            "description": "Toyota yaris xs",
+            "price": 71900,
+            "year": "2019/2019",
+            "km": 1000,
+            "exchange": "Automático",
+            "source": "https://scontent.fmvs2-1.fna.fbcdn.net/v/t45.5328-4/397442047_6858332717578894_6776584399312876377_n.jpg?stp=dst-jpg_p720x720&_nc_cat=104&ccb=1-7&_nc_sid=247b10&_nc_eui2=AeHE6_GdsiC8kWOsG6497QCZ31-ScYW-CO3fX5Jxhb4I7XeLKntX4gVoAmn_LwI3ciyCtOBHwQAP8_A7FwHzYI0l&_nc_ohc=O_bEJ4BcTbwAX_bXZUe&_nc_ht=scontent.fmvs2-1.fna&oh=00_AfBHQHbcoxhPPtOg0L-JC6m3uZp7pcWcq-wuoln0GnBLIA&oe=656112B9"
+        },
+        {
+            "id": "fdskjfui8921038413",
+            "description": "Toyota yaris xs",
+            "price": 71900,
+            "year": "2019/2019",
+            "km": 1000,
+            "exchange": "Automático",
+            "source": "https://scontent.fmvs2-1.fna.fbcdn.net/v/t45.5328-4/397442047_6858332717578894_6776584399312876377_n.jpg?stp=dst-jpg_p720x720&_nc_cat=104&ccb=1-7&_nc_sid=247b10&_nc_eui2=AeHE6_GdsiC8kWOsG6497QCZ31-ScYW-CO3fX5Jxhb4I7XeLKntX4gVoAmn_LwI3ciyCtOBHwQAP8_A7FwHzYI0l&_nc_ohc=O_bEJ4BcTbwAX_bXZUe&_nc_ht=scontent.fmvs2-1.fna&oh=00_AfBHQHbcoxhPPtOg0L-JC6m3uZp7pcWcq-wuoln0GnBLIA&oe=656112B9"
+        },
+        {
+            "id": "fdskjfui8921038413",
+            "description": "Toyota yaris xs",
+            "price": 71900,
+            "year": "2019/2019",
+            "km": 1000,
+            "exchange": "Automático",
+            "source": "https://scontent.fmvs2-1.fna.fbcdn.net/v/t45.5328-4/397442047_6858332717578894_6776584399312876377_n.jpg?stp=dst-jpg_p720x720&_nc_cat=104&ccb=1-7&_nc_sid=247b10&_nc_eui2=AeHE6_GdsiC8kWOsG6497QCZ31-ScYW-CO3fX5Jxhb4I7XeLKntX4gVoAmn_LwI3ciyCtOBHwQAP8_A7FwHzYI0l&_nc_ohc=O_bEJ4BcTbwAX_bXZUe&_nc_ht=scontent.fmvs2-1.fna&oh=00_AfBHQHbcoxhPPtOg0L-JC6m3uZp7pcWcq-wuoln0GnBLIA&oe=656112B9"
+        }
+    ]
+
     return (
         <div className="flex flex-col items-start justify-start px-10 w-full scroll-smooth focus:scroll-auto">
             <div className="flex flex-col my-10 gap-20">
@@ -27,41 +75,25 @@ export default function Softwares() {
                 </div>
             </div>
             <div className="flex flex-row w-full flex-wrap gap-8 py-10 border-b-top-sm border-opacity-30 border-red-700 ">
-                <div className="flex w-80">
-                    <Card
-                        id="1"
-                        source="/images/car.jpg"
-                        description="Descrição de teste"
-                        price={1000.10}
-                        year="2023/2023"
-                        exchange="Automático"
-                        km={1000}
-                    />
-                </div>
-                <div className="flex w-80">
-                    <Card
-                        id="1"
-                        source="/images/car.jpg"
-                        description="Descrição"
-                        price={1000.10}
-                        year="2023/2023"
-                        exchange="Automático"
-                        km={10000}
-                    />
-                </div>
-                <div className="flex w-80">
-                    <Card
-                        id="1"
-                        source="/images/car.jpg"
-                        description="Descrição de teste"
-                        price={1000.10}
-                        year="2023/2023"
-                        exchange="Automático"
-                        km={100000}
-                    />
-                </div>
+                {
+                    cars.map((car) => (
+                        <Link href={`/veiculos/${car.id}`} key={car.id}>
+                            <div className="flex w-80">
+                                <Card
+                                    id={car.id}
+                                    source={car.source}
+                                    description={car.description}
+                                    price={car.price}
+                                    year={car.year}
+                                    exchange={car.exchange}
+                                    km={car.km}
+                                />
+                            </div>
+                        </Link>
+                    ))
+                }
             </div>
-            <div className="w-full flex items-center justify-center">
+            <div className="w-full flex items-center justify-center mb-10">
                 <button className="flex items-center justify-center w-8 h-8 rounded-md border-red-700 border-b-sm hover:bg-red-700 hover:text-gray-50 transition-all duration-150">
                     1
                 </button>

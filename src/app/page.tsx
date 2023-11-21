@@ -4,6 +4,7 @@ import { PromotionCard } from "./Components/PromotionCard";
 import { WhatsappButton } from "./Components/WhatsappButton";
 import { InfiniteLoop } from "./Components/InfiniteLoop";
 import { BuyCard } from "./Components/BuyCard";
+import { ChevronRight } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -78,7 +79,7 @@ export default function Home() {
 
         <div className="flex items-center justify-center w-full h-32 p-8">
           <Link href="/veiculos" >
-            <button className=" p-4 bg-red-700 text-gray-150 text-xl rounded-md items-center justify-center hover:brightness-95 transition-all duration-150">Conheça nosso estoque</button>
+            <button className="flex p-4 bg-red-700 text-gray-150 text-xl rounded-md items-center justify-center hover:brightness-95 hover:scale-105 transition-all duration-150">Conheça nosso estoque <ChevronRight /></button>
           </Link>
         </div>
       </div>

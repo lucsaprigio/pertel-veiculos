@@ -23,11 +23,11 @@ export default function Sobre() {
                     <Image width={600} height={600} src="/images/people.jpg" alt="Pessoas" />
                 </div>
             </section>
-            <section className="w-full h-screnn grid grid-cols-2 my-36 p-20 bg-red-100 shadow-sm">
+            <section className="w-full h-screnn grid grid-cols-2 my-36 p-12 bg-red-100 shadow-sm">
                 <div className="flex items-center justify-center">
                     <Image width={600} height={600} src="/images/car-store.jpg" alt="Loja de carro" />
                 </div>
-                <div className="flex items-center justify-center px-2 mr-64">
+                <div className="flex items-center justify-center px-1 mr-20">
                     <SomePoints
                         mission="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
                         vision="Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."

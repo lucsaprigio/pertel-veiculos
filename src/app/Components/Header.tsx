@@ -19,7 +19,6 @@ export function Header() {
     };
 
     useEffect(() => {
-        console.log(pathname)
         window.addEventListener('scroll', handleScroll);
 
         return () => {
@@ -46,11 +45,11 @@ export function Header() {
                     </Link>
                     <Link className={`relative overflow-hidden group/link text-gray-100 text-lg hover:text-gray-150 hover:font-bold duration-300 border-gray-50 ${pathname === '/sobre' ? 'font-bold border-b-bottom border-b-2' : 'font-normal'}`} href="/sobre">
                         Quem somos
-                        <span className="absolute -inset-x-12 h-0.5 bottom-0 w-full group-hover/link:border-b-0 group-hover/link:translate-x-full group-hover/link:bg-gray-150 transition-transform duration-700" />
+                        <span className="absolute -inset-x-28 h-0.5 bottom-0 w-full group-hover/link:border-b-0 group-hover/link:translate-x-full group-hover/link:bg-gray-150 transition-transform duration-700" />
                     </Link>
                 </div>
             </nav>
-        </aside >
+        </aside>
     )
 
 }
