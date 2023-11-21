@@ -51,14 +51,11 @@ export function Slider({ children }: SliderProps
             <div ref={sliderRef} className="keen-slider hover:cursor-grab relative">
                 <button className="absolute left-0 top-1/2 justify-center z-50" onClick={() => handleNextSlide()}><ChevronLeftCircle className="text-white opacity-0 hover:scale-105 hover:opacity-80 transition-all duration-200" size={38} /></button>
                 {
-                    React.Children.map(children, (child) => (
-                        <div className="keen-slider__slide">{child}</div>
+                    React.Children.map(children, (child, index) => (
+                        <div key={index} className="keen-slider__slide">{child}</div>
                     ))
                 }
                 <button className="absolute right-0 top-1/2 justify-center z-50" onClick={() => handleNextSlide()}><ChevronRightCircle className="text-white opacity-0 hover:scale-105 hover:opacity-80 transition-all duration-200" size={38} /></button>
-
-
-
             </div>
 
             <div className="relative grid grid-cols-5 flex-wrap">
@@ -66,7 +63,8 @@ export function Slider({ children }: SliderProps
 
                 {children.map((child, index) => (
                     <img
-                        src={child.props.src} // Certifique-se de ajustar isso conforme necessário
+                        key={index}
+                        src={child.props.src}
                         alt={child.props.alt}
                         className={`keen-slider__slide ${selectedImageIndex === index && 'selected border-b-white border-4 flex flex-row flex-wrap'}`}
                         onClick={() => handleThumbnailClick(index)}
@@ -74,7 +72,6 @@ export function Slider({ children }: SliderProps
                     />
                 ))}
                 <button className="absolute -right-12 top-12 justify-center z-50" onClick={() => handleNextSlide()}><ChevronRight className="text-red-400 opacity-80 hover:scale-105 transition-all duration-200" size={32} /></button>
-                {/* Adicione mais imagens em miniatura conforme necessário */}
             </div>
         </div>
     );
