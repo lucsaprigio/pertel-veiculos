@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <main>
       <WhatsappButton />
-      <div className=" position relative grid grid-cols-2 gap-2 w-full h-screen px-10 bg-page-video bg-cover bg-no-repeat after:absolute after:top-0 after:left-0 after:w-full after:h-full after:bg-black after:opacity-70">
+      <div className=" position relative grid grid-cols-2 aria-hidden: gap-2 w-full h-screen px-10 bg-page-video bg-cover bg-no-repeat after:absolute after:top-0 after:left-0 after:w-full after:h-full after:bg-black after:opacity-70">
         <div className="mb-14 flex flex-col gap-10 items-start justify-center z-10">
           <span className="mb-2 text-left text-6xl justify-center font-bold font-inter text-gray-200">
             Em busca do seu carro dos sonhos?
@@ -34,44 +34,44 @@ export default function Home() {
               large={true}
               source="/images/car.jpg"
               description="Descrição de teste"
-              price={"199.999,00"}
+              price={199999}
               year="2023/2023"
               exchange="Automático"
-              fuelType="Gasolina"
+              km={100000}
             />
           </div>
           <div className="flex items-start flex-wrap gap-2 justify-start w-full">
             <PromotionCard
               source="/images/car.jpg"
               description="Descrição de teste"
-              price={"199.999,00"}
+              price={199999}
               year="2023/2023"
               exchange="Automático"
-              fuelType="Gasolina"
+              km={100000}
             />
             <PromotionCard
               source="/images/car.jpg"
               description="Descrição de teste"
-              price={"199.999,00"}
+              price={199999}
               year="2023/2023"
               exchange="Automático"
-              fuelType="Gasolina"
+              km={100000}
             />
             <PromotionCard
               source="/images/car.jpg"
               description="Descrição de teste"
-              price={"199.999,00"}
+              price={199999}
               year="2023/2023"
               exchange="Automático"
-              fuelType="Gasolina"
+              km={100000}
             />
             <PromotionCard
               source="/images/car.jpg"
               description="Descrição de teste"
-              price={"199.999,00"}
+              price={1999999}
               year="2023/2023"
               exchange="Automático"
-              fuelType="Gasolina"
+              km={100000}
             />
           </div>
         </div>
@@ -85,8 +85,8 @@ export default function Home() {
 
       <div className="flex items-center justify-center w-full h-screen my-14">
         <div className="flex flex-col gap-20 items-center justify-center w-full h-full bg-red-200 mx-20 p-20 rounded-xl">
-          <img className="w-52 h-52 opacity-25 object-contain" src="/images/logo.svg" alt="Logo" />
-          <h2 className="text-black font-bold text-4xl font-inter">Quais motivos para comprar conosco?</h2>
+          <img className="w-64 h-64 opacity-50 object-contain rounded-full -mb-32" src="/images/sale-car.svg" alt="Logo" />
+          <h2 className="text-black font-bold text-4xl font-inter z-50">Quais motivos para comprar conosco?</h2>
           <div className="flex flex-row px-10 gap-10">
             <BuyCard
               title="Lorem Epsum"

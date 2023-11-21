@@ -12,6 +12,7 @@ const config: Config = {
         'background-home': "url('/images/background.gif')",
         'page-video': "url('/images/page-video.gif')",
         'background-home-opacity': "url('/images/background-home-opacity.gif')",
+        'background-about': "url('/images/background-about.jpg')"
       },
       borderWidth: {
         'b-bottom': '0 0 0.2px 0',

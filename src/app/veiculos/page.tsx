@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function Softwares() {
     return (
-        <div className="flex flex-col items-start justify-start px-10 w-full">
+        <div className="flex flex-col items-start justify-start px-10 w-full scroll-smooth focus:scroll-auto">
             <div className="flex flex-col my-10 gap-20">
                 <strong className=" items-center justify-center text-4xl font-inter">Veículos</strong>
                 <div className="flex flex-row items-center justify-around gap-20 w-full">
@@ -32,10 +32,10 @@ export default function Softwares() {
                         id="1"
                         source="/images/car.jpg"
                         description="Descrição de teste"
-                        price={"199.999,00"}
+                        price={1000.10}
                         year="2023/2023"
                         exchange="Automático"
-                        fuelType="Gasolina"
+                        km={1000}
                     />
                 </div>
                 <div className="flex w-80">
@@ -43,10 +43,10 @@ export default function Softwares() {
                         id="1"
                         source="/images/car.jpg"
                         description="Descrição"
-                        price={"199.999,00"}
+                        price={1000.10}
                         year="2023/2023"
                         exchange="Automático"
-                        fuelType="Gasolina"
+                        km={10000}
                     />
                 </div>
                 <div className="flex w-80">
@@ -54,10 +54,10 @@ export default function Softwares() {
                         id="1"
                         source="/images/car.jpg"
                         description="Descrição de teste"
-                        price={"199.999,00"}
+                        price={1000.10}
                         year="2023/2023"
                         exchange="Automático"
-                        fuelType="Gasolina"
+                        km={100000}
                     />
                 </div>
             </div>
