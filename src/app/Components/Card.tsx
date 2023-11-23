@@ -15,8 +15,10 @@ interface Props {
 
 export function Card({ id, description, price, year, km, exchange, source }: Props) {
     return (
-        <main className="flex flex-col mx-2 items-center justify-start rounded-lg overflow-hidden shadow-xl bg-red-700 hover:drop-shadow-2xl transition-all duration-300 group">
-            <img className="object-contain rounded-t-lg group-hover:scale-105 transition-all duration-150" src={source} alt="Carro a venda" />
+        <main className="grid grid-cols-1 mx-2 items-center justify-start rounded-lg shadow-xl bg-red-700 hover:drop-shadow-2xl transition-all duration-300 group">
+            <div className="flex flex-col items-center justify-center rounded-t-lg w-full max-h-48 overflow-hidden">
+                <img className="h-auto w-auto object-cover rounded-t-lg group-hover:scale-105 transition-all duration-150" src={source} alt="Carro a venda" />
+            </div>
             <div className="grid grid-col grid-col-2 w-full items-start py-3 px-3">
                 <div className="grid grid-cols-2 justify-around w-full ">
                     <div className="border-b-white border-b-bottom border-opacity-80 py-2">

@@ -2,60 +2,31 @@ import { Metadata } from 'next';
 import { Card } from '../Components/Card';
 import { InputRange } from '../Components/InputRange';
 import Link from 'next/link';
+import { Cars } from '../DTO/ICars';
 
 export const metadata: Metadata = {
     title: 'Veículos | Pertel Veículos',
     description: 'Pertel',
 }
 
-export default async function Softwares() {
-    const cars = [
-        {
-            "id": "fdskjfui8921038413",
-            "description": "Toyota yaris xs",
-            "price": 71900,
-            "year": "2019/2019",
-            "km": 1000,
-            "exchange": "Automático",
-            "source": "https://scontent.fmvs2-1.fna.fbcdn.net/v/t45.5328-4/397442047_6858332717578894_6776584399312876377_n.jpg?stp=dst-jpg_p720x720&_nc_cat=104&ccb=1-7&_nc_sid=247b10&_nc_eui2=AeHE6_GdsiC8kWOsG6497QCZ31-ScYW-CO3fX5Jxhb4I7XeLKntX4gVoAmn_LwI3ciyCtOBHwQAP8_A7FwHzYI0l&_nc_ohc=O_bEJ4BcTbwAX_bXZUe&_nc_ht=scontent.fmvs2-1.fna&oh=00_AfBHQHbcoxhPPtOg0L-JC6m3uZp7pcWcq-wuoln0GnBLIA&oe=656112B9"
-        },
-        {
-            "id": "fdskjfui8921038413",
-            "description": "Toyota yaris xs",
-            "price": 71900,
-            "year": "2019/2019",
-            "km": 1000,
-            "exchange": "Automático",
-            "source": "https://scontent.fmvs2-1.fna.fbcdn.net/v/t45.5328-4/397442047_6858332717578894_6776584399312876377_n.jpg?stp=dst-jpg_p720x720&_nc_cat=104&ccb=1-7&_nc_sid=247b10&_nc_eui2=AeHE6_GdsiC8kWOsG6497QCZ31-ScYW-CO3fX5Jxhb4I7XeLKntX4gVoAmn_LwI3ciyCtOBHwQAP8_A7FwHzYI0l&_nc_ohc=O_bEJ4BcTbwAX_bXZUe&_nc_ht=scontent.fmvs2-1.fna&oh=00_AfBHQHbcoxhPPtOg0L-JC6m3uZp7pcWcq-wuoln0GnBLIA&oe=656112B9"
-        },
-        {
-            "id": "fdskjfui8921038413",
-            "description": "Toyota yaris xs",
-            "price": 71900,
-            "year": "2019/2019",
-            "km": 1000,
-            "exchange": "Automático",
-            "source": "https://scontent.fmvs2-1.fna.fbcdn.net/v/t45.5328-4/397442047_6858332717578894_6776584399312876377_n.jpg?stp=dst-jpg_p720x720&_nc_cat=104&ccb=1-7&_nc_sid=247b10&_nc_eui2=AeHE6_GdsiC8kWOsG6497QCZ31-ScYW-CO3fX5Jxhb4I7XeLKntX4gVoAmn_LwI3ciyCtOBHwQAP8_A7FwHzYI0l&_nc_ohc=O_bEJ4BcTbwAX_bXZUe&_nc_ht=scontent.fmvs2-1.fna&oh=00_AfBHQHbcoxhPPtOg0L-JC6m3uZp7pcWcq-wuoln0GnBLIA&oe=656112B9"
-        },
-        {
-            "id": "fdskjfui8921038413",
-            "description": "Toyota yaris xs",
-            "price": 71900,
-            "year": "2019/2019",
-            "km": 1000,
-            "exchange": "Automático",
-            "source": "https://scontent.fmvs2-1.fna.fbcdn.net/v/t45.5328-4/397442047_6858332717578894_6776584399312876377_n.jpg?stp=dst-jpg_p720x720&_nc_cat=104&ccb=1-7&_nc_sid=247b10&_nc_eui2=AeHE6_GdsiC8kWOsG6497QCZ31-ScYW-CO3fX5Jxhb4I7XeLKntX4gVoAmn_LwI3ciyCtOBHwQAP8_A7FwHzYI0l&_nc_ohc=O_bEJ4BcTbwAX_bXZUe&_nc_ht=scontent.fmvs2-1.fna&oh=00_AfBHQHbcoxhPPtOg0L-JC6m3uZp7pcWcq-wuoln0GnBLIA&oe=656112B9"
-        },
-        {
-            "id": "fdskjfui8921038413",
-            "description": "Toyota yaris xs",
-            "price": 71900,
-            "year": "2019/2019",
-            "km": 1000,
-            "exchange": "Automático",
-            "source": "https://scontent.fmvs2-1.fna.fbcdn.net/v/t45.5328-4/397442047_6858332717578894_6776584399312876377_n.jpg?stp=dst-jpg_p720x720&_nc_cat=104&ccb=1-7&_nc_sid=247b10&_nc_eui2=AeHE6_GdsiC8kWOsG6497QCZ31-ScYW-CO3fX5Jxhb4I7XeLKntX4gVoAmn_LwI3ciyCtOBHwQAP8_A7FwHzYI0l&_nc_ohc=O_bEJ4BcTbwAX_bXZUe&_nc_ht=scontent.fmvs2-1.fna&oh=00_AfBHQHbcoxhPPtOg0L-JC6m3uZp7pcWcq-wuoln0GnBLIA&oe=656112B9"
-        }
+async function getCars(page: string): Promise<Cars> {
+    const response = await fetch(`${process.env.NEXT_API_NODE}/cars?page=${page}`, { cache: 'no-cache' });
+
+    return response.json();
+}
+
+export default async function Vehicles() {
+    const cars = await getCars('1');
+    console.log(cars.cars.map(car => [
+        car.id,
+        car.description,
+        car.price,
+        car.exchange,
+        car.km,
+        car.source,
+        car.year
     ]
+    ))
 
     return (
         <div className="flex flex-col items-start justify-start px-10 w-full scroll-smooth focus:scroll-auto">
@@ -76,12 +47,12 @@ export default async function Softwares() {
             </div>
             <div className="flex flex-row w-full flex-wrap gap-8 py-10 border-b-top-sm border-opacity-30 border-red-700 ">
                 {
-                    cars.map((car) => (
+                    cars.cars.map((car) => (
                         <Link href={`/veiculos/${car.id}`} key={car.id}>
-                            <div className="flex w-80">
+                            <div className="flex w-80 h-80">
                                 <Card
                                     id={car.id}
-                                    source={car.source}
+                                    source={`http://localhost:3333/${car.source}`}
                                     description={car.description}
                                     price={car.price}
                                     year={car.year}
