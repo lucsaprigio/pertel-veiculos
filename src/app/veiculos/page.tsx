@@ -19,7 +19,7 @@ export default async function Vehicles() {
     const cars = await getCars('1');
 
     return (
-        <div className="flex flex-col items-start justify-start px-10 w-full scroll-smooth focus:scroll-auto">
+        <div className="flex flex-col items-start justify-start px-2 md:px-10 w-full scroll-smooth focus:scroll-auto">
             <div className="flex flex-col my-10 gap-20">
                 <strong className="items-center justify-center text-4xl font-inter">Veículos</strong>
                 <div className="max-[1024px]:flex-col flex flex-row items-center justify-around gap-20 w-full">

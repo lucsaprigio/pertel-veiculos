@@ -13,7 +13,7 @@ export default function Sobre() {
             <section className="w-full h-full grid grid-cols-1 md:grid-cols-2 my-32 shadow-sm">
                 <div className="flex flex-col p-20 gap-10">
                     <h3 className="flex items-center flex-col justify-center lg:text-4xl text-2xl font-inter text-center">Sobre a Pertel Veículos </h3>
-                    <span className="flex items-center justify-center text-center text-lg px-14">
+                    <span className="flex items-center justify-center text-justify lg:text-center text-lg px-2 lg:px-14">
                         Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                         Lorem Ipsum has been the industrys standard dummy text ever since the 1500s,
                         when an unknown printer took a galley of type and scrambled it to make a type specimen book.
@@ -27,7 +27,7 @@ export default function Sobre() {
                 <div className="flex items-center justify-center rounded-md">
                     <Image width={800} height={800} src="/images/sobre.jpg" alt="Loja de carro" />
                 </div>
-                <div className="flex items-center justify-center px-1 md:mr-20">
+                <div className="flex items-center justify-center px-10 md:px-1 md:mr-20">
                     <SomePoints
                         mission="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
                         vision="Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."

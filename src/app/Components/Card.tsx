@@ -15,7 +15,7 @@ interface Props {
 
 export function Card({ id, description, price, year, km, exchange, source }: Props) {
     return (
-        <main className="h-full mx-1 items-center justify-start rounded-lg shadow-xl bg-red-850 hover:drop-shadow-2xl transition-all duration-300 group">
+        <main className="h-full mx-1 my-3 items-center justify-start rounded-lg shadow-xl bg-red-850 hover:drop-shadow-2xl transition-all duration-300 group">
             <div className="flex flex-col items-center justify-center rounded-t-lg w-full max-h-56 overflow-hidden">
                 <img className="w-full h-56 object-cover rounded-t-lg group-hover:scale-105 transition-all duration-150" src={source} alt="Carro a venda" />
             </div>

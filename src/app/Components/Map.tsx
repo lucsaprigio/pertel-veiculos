@@ -61,7 +61,7 @@ export function OlMap({ }) {
     }, []);
 
     return (
-        <div className="flex flex-col gap-10 items-center justify-center w-full h-5/6 mt-32 px-32">
+        <div className="flex flex-col gap-10 items-center justify-center w-full h-5/6 mt-32 px-2 md:px-32">
             <span className="flex flex-row gap-2 text-lg"><IoLocationOutline size={24} />Localização</span>
             <div id="map" tabIndex={1} style={{ width: '100%', height: '400px' }} />
             <span>Av. Silvio Avidos, 3025 - São Silvano, Colatina - ES, 29703-100</span>

@@ -6,6 +6,9 @@ export interface Car {
     source: string;
     exchange: string;
     year: string,
+    brand: string;
+    fuelType: string;
+    doors: number;
     created_at: string;
     updated_at: string;
     ImageCars: [

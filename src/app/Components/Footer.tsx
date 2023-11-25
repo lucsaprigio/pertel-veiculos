@@ -13,16 +13,16 @@ export function Footer() {
                     <Link className="hover:scale-105 transition-all duration-200" href="#">Sobre</Link>
                 </nav>
             </div>
-            <div className="grid grid-cols-1 xl:grid-cols-3 items-center justify-center place-content-between py-10 xl:px-32 border-b-white border-b-bottom border-opacity-80">
-                <div className="flex flex-row gap-2 items-center justify-center">
+            <div className="grid grid-cols-1 xl:grid-cols-3 gap-3 xl:gap-0 items-center justify-center place-content-between py-10 xl:px-32 border-b-white border-b-bottom border-opacity-80">
+                <div className="flex flex-row gap-2 items-center justify-center text-center">
                     <Mail color="#FFFFFF" size={20} />
                     <span className="text-gray-150">pertelveiculos@hotmail.com</span>
                 </div>
-                <div className="flex flex-row gap-2 items-center justify-center">
+                <div className="flex flex-row gap-2 items-center justify-center text-center">
                     <PhoneIcon color="#FFFFFF" size={20} />
                     <span className="text-gray-150">(27) 99754-6411 </span>
                 </div>
-                <div className="flex flex-row gap-2 items-center justify-center">
+                <div className="flex flex-row gap-2 items-center justify-center text-center">
                     <MapPin color="#FFFFFF" size={20} />
                     <span className="text-gray-150">Av. Silvio Avidos, 3025 - São Silvano, Colatina - ES, 29703-100
                     </span>
