@@ -43,6 +43,7 @@ const config: Config = {
         },
         red: {
           700: '#ec1c24',
+          850: '#A7191F',
         },
         gray: {
           700: '#121214',

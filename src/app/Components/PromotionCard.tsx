@@ -34,7 +34,7 @@ export function PromotionCard({ description, price, exchange, km, year, source, 
             </div>
         ) :
             (
-                <div className="flex flex-col w-96 h-96 mx-2 items-center justify-start rounded-lg overflow-hidden shadow-xl bg-red-700 hover:scale-105 transition-all duration-200">
+                <div className="flex flex-col w-full mx-2 items-center justify-start rounded-lg overflow-hidden shadow-xl bg-red-700 hover:scale-105 transition-all duration-200">
                     <img className="object-contain rounded-t-lg" src={source} alt="Carro a venda" />
                     <div className="grid grid-col grid-col-2 w-full items-start py-3 px-3">
                         <div className="grid grid-cols-2 justify-around w-full ">
