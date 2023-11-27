@@ -11,6 +11,7 @@
   "dependencies": {
     "@headlessui/react": "^1.7.17",
     "@phosphor-icons/react": "^2.0.14",
+    "axios": "^1.6.2",
     "feather-icons": "^4.29.1",
     "keen-slider": "^6.8.6",
     "lucide-react": "^0.292.0",
@@ -18,7 +19,8 @@
     "ol": "^8.2.0",
     "react": "^18",
     "react-dom": "^18",
-    "react-icons": "^4.11.0"
+    "react-icons": "^4.11.0",
+    "react-loading": "^2.0.3"
   },
   "devDependencies": {
     "@types/feather-icons": "^4.29.4",

@@ -85,7 +85,7 @@ export default function Home() {
       </div>
 
       <div className="flex flex-col items-center justify-center w-full h-full">
-        <div className="flex flex-col gap-20 items-center justify-center w-full h-full bg-red-200 mx-20 p-20 rounded-xl">
+        <div className="flex flex-col gap-20 items-center justify-center w-full h-full bg-red-200 mx-20 px-4 md:p-20 rounded-xl">
           <img className="w-64 h-64 opacity-50 object-contain rounded-full -mb-32" src="/images/sale-car.svg" alt="Logo" />
           <h2 className="text-black font-bold text-4xl text-center font-inter z-50">Quais motivos para comprar conosco?</h2>
           <div className="flex flex-col md:flex-row px-10 gap-10">
