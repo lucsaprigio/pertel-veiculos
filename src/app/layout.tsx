@@ -3,6 +3,7 @@ import { Roboto } from 'next/font/google'
 import './globals.css'
 import { Header } from './Components/Header';
 import { Footer } from './Components/Footer';
+import NextAuthSessionProvider from '../providers/sessionProvider';
 
 const roboto = Roboto({
   weight: '400',
@@ -23,9 +24,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`bg-gradient-to-b from-white to-red-200 ${roboto.className}`}>
-        <Header />
-        {children}
-        <Footer />
+        <NextAuthSessionProvider>
+          <Header />
+          {children}
+          <Footer />
+        </NextAuthSessionProvider>
       </body>
     </html>
   )
