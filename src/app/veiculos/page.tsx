@@ -3,6 +3,7 @@ import { Card } from '../Components/Card';
 import Link from 'next/link';
 import { Cars } from '../DTO/ICars';
 import { SearchVehicles } from '../Components/SearchVehicles';
+import { CountPagesButton } from '../Components/CountPagesButton';
 
 export const metadata: Metadata = {
     title: 'Veículos | Pertel Veículos',
@@ -19,8 +20,8 @@ async function getCars(page: string): Promise<Cars> {
     }
 }
 
-export default async function Vehicles() {
-    const cars = await getCars('1');
+export default async function Vehicles({ searchParams }: { searchParams?: { page: string } }) {
+    const cars = await getCars(searchParams.page);
 
     return (
         <div className="flex flex-col items-start justify-start px-2 md:px-10 w-full scroll-smooth focus:scroll-auto">
@@ -43,21 +44,7 @@ export default async function Vehicles() {
                 }
             </div>
             <div className="w-full flex items-center justify-center mb-10">
-                <button className="flex items-center justify-center w-8 h-8 rounded-md border-red-700 border-b-sm hover:bg-red-700 hover:text-gray-50 transition-all duration-150">
-                    1
-                </button>
-                <button className="flex items-center justify-center w-8 h-8 rounded-md border-red-700 border-b-sm hover:bg-red-700 hover:text-gray-50 transition-all duration-150">
-                    2
-                </button>
-                <button className="flex items-center justify-center w-8 h-8 rounded-md border-red-700 border-b-sm hover:bg-red-700 hover:text-gray-50 transition-all duration-150">
-                    3
-                </button>
-                <button className="flex items-center justify-center w-8 h-8 rounded-md border-red-700 border-b-sm hover:bg-red-700 hover:text-gray-50 transition-all duration-150">
-                    4
-                </button>
-                <button className="flex items-center justify-center w-8 h-8 rounded-md border-red-700 border-b-sm hover:bg-red-700 hover:text-gray-50 transition-all duration-150">
-                    ...
-                </button>
+                <CountPagesButton countPages={cars.totalPages} />
             </div>
         </div>
     )

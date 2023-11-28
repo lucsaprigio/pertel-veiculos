@@ -1,5 +1,6 @@
 export interface Cars {
     count: number;
+    totalPages: number;
     cars: [
         {
             id: string;

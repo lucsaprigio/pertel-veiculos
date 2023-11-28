@@ -34,7 +34,7 @@ export default async function CarDetailsPage({ params }: { params: { carId: stri
                         <strong className="uppercase text-3xl mb-3">{car.description}</strong>
                         <Slider>
                             {
-                                car.ImageCars &&
+
                                 car.ImageCars.map((image) => (
                                     <img key={car.id} className="lg:object-contain" src={`http://localhost:3333/${image.source}`} alt="Imagem do carro" />
                                 ))
