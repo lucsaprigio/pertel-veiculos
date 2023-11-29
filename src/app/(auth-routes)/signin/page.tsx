@@ -9,7 +9,7 @@ export default function SignIn() {
     const [password, setPassword] = useState('');
     const [visible, setVisible] = useState(false);
 
-    const router = useRouter()
+    const router = useRouter();
 
     async function handleSubmit(event: SyntheticEvent) {
         event.preventDefault();
@@ -29,7 +29,6 @@ export default function SignIn() {
     }
 
     return (
-        <main className="w-full h-full md:px-32">
             <form className="flex flex-col items-center justify-center px-10 gap-6 my-32" onSubmit={handleSubmit}>
                 <UserCircle2 size={48} className="text-red-800" />
                 <h2 className="text-2xl font-bold">Bem-vindo!</h2>
@@ -73,6 +72,5 @@ export default function SignIn() {
                     Entrar
                 </button>
             </form>
-        </main>
     )
 }
