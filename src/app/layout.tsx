@@ -27,7 +27,6 @@ export default function RootLayout({
         <NextAuthSessionProvider>
           <Header />
           {children}
-          <Footer />
         </NextAuthSessionProvider>
       </body>
     </html>
