@@ -22,7 +22,7 @@ export function Sidebar({ user, email }: Props) {
                     <HomeIcon />
                     Painel
                 </Link>
-                <Link href="/new-car" className='flex items-center gap-3 text-sm font-semibold text-zinc-200'>
+                <Link href="/painel/register-car" className='flex items-center gap-3 text-sm font-semibold text-zinc-200'>
                     <Car />
                     Cadastrar Veículo
                 </Link>
