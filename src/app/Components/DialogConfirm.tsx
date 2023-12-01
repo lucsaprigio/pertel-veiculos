@@ -35,12 +35,16 @@ export function DialogConfirm({ description, source, okButton, cancelButton, tit
                         </Dialog.Description>
 
                         <div className="grid grid-cols-2 items-center justify-center gap-3">
-                            <div className="w-full">
+                            <div className={`w-full ${!cancelButton && 'col-span-2'}`}>
                                 <button className="w-full bg-red-800 text-gray-50 p-1 rounded-lg hover:brightness-90 transition-all duration-150" onClick={() => handleClose()}>{okButton}</button>
                             </div>
-                            <div className="w-full">
-                                <button className="w-full bg-red-800 text-gray-50 p-1 rounded-lg hover:brightness-90 transition-all duration-150" onClick={() => handleClose()}>{cancelButton}</button>
-                            </div>
+                            {
+                                cancelButton && (
+                                    <div className="w-full">
+                                        <button className="w-full bg-red-800 text-gray-50 p-1 rounded-lg hover:brightness-90 transition-all duration-150" onClick={() => handleClose()}>{cancelButton}</button>
+                                    </div>
+                                )
+                            }
                         </div>
                     </div>
                 </Dialog.Panel>

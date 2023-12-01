@@ -22,10 +22,10 @@ export default async function Painel() {
                 <span className="font-bold text-lg text-center mb-4">Últimas atualizações</span>
                 <div className="w-full grid grid-cols-5 gap-2">
                     {
-                        cars.cars.sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())
+                        cars && cars.cars.sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())
                             .slice(0, 5)
                             .map(car => (
-                                <div className="flex flex-row w-full gap-6 bg-gray-50 rounded-lg px-6 py-1 border-b-8 border-red-800">
+                                <div key={car.id} className="flex flex-row w-full gap-6 bg-gray-50 rounded-lg px-6 py-1 border-b-8 border-red-800">
                                     <div className="flex items-center justify-center w-28">
                                         <img className="object-contain rounded-lg" src={`http://localhost:3333/${car.source}`} alt="Logo" />
                                     </div>

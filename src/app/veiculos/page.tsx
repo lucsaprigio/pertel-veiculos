@@ -30,7 +30,7 @@ export default async function Vehicles({ searchParams }: { searchParams?: { page
                 <SearchVehicles />
                 <div className="lg:grid lg:grid-cols-3 xl:grid xl:grid-cols-4 sm:flex sm:flex-col w-full gap-8 py-10 border-b-top-sm border-opacity-30 border-red-700">
                     {
-                        cars.cars.map((car) => (
+                        cars && cars.cars.map((car) => (
                             <Link href={`/veiculos/${car.id}`} key={car.id}>
                                 <Card
                                     id={car.id}
@@ -46,7 +46,7 @@ export default async function Vehicles({ searchParams }: { searchParams?: { page
                     }
                 </div>
                 <div className="w-full flex items-center justify-center mb-10">
-                    <CountPagesButton countPages={cars.totalPages} />
+                    <CountPagesButton countPages={cars && cars.totalPages} />
                 </div>
             </div>
             <Footer />

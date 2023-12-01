@@ -1,7 +1,6 @@
 import { nextAuthOptions } from '@/app/api/auth/[...nextauth]/route';
 import { PlusCircle } from 'lucide-react';
 import { getServerSession } from 'next-auth';
-import { SyntheticEvent, useEffect, useState } from 'react';
 import NewCarForm from '../../Components/NewCarForm';
 
 export default async function RegisterCar() {

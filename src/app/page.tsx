@@ -46,7 +46,7 @@ export default async function Home() {
           <h2 className="text-4xl text-red-700 font-bold mt-8 font-inter">Novidades</h2>
           <div className="flex flex-col items-center justify-center xl:grid xl:grid-cols-2 gap-3 w-full">
             {
-              cars.cars.map((car) => (
+              cars && cars.cars.map((car) => (
                 <Link key={car.id} href={`/veiculos/${car.id}`} className="w-full">
                   <Card
                     id={car.id}
