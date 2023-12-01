@@ -1,5 +1,4 @@
 import { api } from "@/app/axios/api";
-import axios from "axios";
 import NextAuth, { NextAuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -39,7 +38,11 @@ const nextAuthOptions: NextAuthOptions = {
     },
     callbacks: {
         async jwt({ token, user }) {
-            user && (token.user = user)
+            if (user) {
+                token.expires = Math.floor(Date.now() / 1000) + (2 * 24 * 60 * 60); // 2 dias em segundos
+                token.user = user;
+            }
+            
             return token
         },
         async session({ session, token }) {
