@@ -11,7 +11,7 @@ export function InfiniteLoop() {
                     <Image id="img" width={100} height={100} objectFit="contain" src="/images/fiat.png" alt="Logo-parceiro" />
                 </li>
                 <li>
-                    <Image id="img" width={100} height={100} objectFit="contain" src="/images/ford.png" alt="Logo-parceiro" />
+                    <Image id="img" width={100} height={100} objectFit="contain" src="/images/ford.svg" alt="Logo-parceiro" />
                 </li>
                 <li>
                     <Image id="img" width={100} height={100} objectFit="contain" src="/images/renault.png" alt="Logo-parceiro" />
@@ -34,7 +34,7 @@ export function InfiniteLoop() {
                     <Image id="img" width={100} height={100} objectFit="contain" src="/images/fiat.png" alt="Logo-parceiro" />
                 </li>
                 <li>
-                    <Image id="img" width={100} height={100} objectFit="contain" src="/images/ford.png" alt="Logo-parceiro" />
+                    <Image id="img" width={100} height={100} objectFit="contain" src="/images/ford.svg" alt="Logo-parceiro" />
                 </li>
                 <li>
                     <Image id="img" width={100} height={100} objectFit="contain" src="/images/renault.png" alt="Logo-parceiro" />

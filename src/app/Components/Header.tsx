@@ -59,7 +59,7 @@ export function Header() {
                     <MenuDropddown />
                 </div>
             </aside>
-            <aside className={`fixed ${color && 'hidden'} flex w-full p-10 h-16 shadow-xl z-50 ${!visible ? '-inset-full translate-y-full' : '-translate-y-full transform transition-all duration-200'} ${color ? 'bg-transparent' : 'bg-gradient-to-b from-red-800 to-red-700'}`}>
+            <aside className={`fixed ${color && 'hidden'} flex w-full p-10 h-16 shadow-xl z-50 ${!visible ? '-inset-full translate-y-full' : '-translate-y-full transform transition-all duration-75'} ${color ? 'bg-transparent' : 'bg-gradient-to-b from-red-800 to-red-700'}`}>
                 <nav className="flex flex-row gap-28 justify-center items-center ">
                     <div className="flex w-32 h-20 justify-center ml-3">
                         <Link href="/">

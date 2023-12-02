@@ -30,11 +30,11 @@ export default async function Vehicles({ searchParams }: { searchParams?: { page
                 <SearchVehicles />
                 <div className="lg:grid lg:grid-cols-3 xl:grid xl:grid-cols-4 sm:flex sm:flex-col w-full gap-8 py-10 border-b-top-sm border-opacity-30 border-red-700">
                     {
-                        cars && cars.cars.map((car) => (
+                        cars.cars.length > 0 ? cars.cars.map((car) => (
                             <Link href={`/veiculos/${car.id}`} key={car.id}>
                                 <Card
                                     id={car.id}
-                                    source={`http://localhost:3333/${car.source}`}
+                                    source={`${process.env.NEXT_S3_URL}/${car.source}`}
                                     description={car.description}
                                     price={car.price}
                                     year={car.year}
@@ -42,7 +42,11 @@ export default async function Vehicles({ searchParams }: { searchParams?: { page
                                     km={car.km}
                                 />
                             </Link>
-                        ))
+                        )) : (
+                            <div className="flex items-center justify-center col-span-4 h-60">
+                                <span className="text-gray-300 opacity-80 text-3xl">Não há veículo a ser exibido</span>
+                            </div>
+                        )
                     }
                 </div>
                 <div className="w-full flex items-center justify-center mb-10">

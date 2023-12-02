@@ -27,7 +27,7 @@ export default async function Painel() {
                             .map(car => (
                                 <div key={car.id} className="flex flex-row w-full gap-6 bg-gray-50 rounded-lg px-6 py-1 border-b-8 border-red-800">
                                     <div className="flex items-center justify-center w-28">
-                                        <img className="object-contain rounded-lg" src={`http://localhost:3333/${car.source}`} alt="Logo" />
+                                        <img className="object-contain rounded-lg" src={`${process.env.NEXT_S3_URL}/${car.source}`} alt="Logo" />
                                     </div>
                                     <ul className="flex flex-col gap-2 items-start w-full">
                                         <li className="text-red-800 text-lg uppercase">{car.description}</li>
@@ -53,7 +53,7 @@ export default async function Painel() {
                         cars.cars.map(car => (
                             <div key={car.id} className="flex flex-row w-full bg-red-200 rounded-lg p-2 overflow-hidden gap-6">
                                 <div className="w-32 h-32 rounded-lg overflow-hidden">
-                                    <img className="object-cover" src={`http://localhost:3333/${car.source}`} alt="Photo" />
+                                    <img className="object-cover" src={`${process.env.NEXT_S3_URL}/${car.source}`} alt="Photo" />
                                 </div>
                                 <ul className="flex flex-col md:flex-row gap-20 items-center justify-center">
                                     <li className="uppercase w-full md:w-96 text-red-950 md:text-1xl font-semibold">{car.description}</li>

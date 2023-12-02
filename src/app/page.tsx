@@ -46,12 +46,12 @@ export default async function Home() {
           <h2 className="text-4xl text-red-700 font-bold mt-8 font-inter">Novidades</h2>
           <div className="flex flex-col items-center justify-center xl:grid xl:grid-cols-2 gap-3 w-full">
             {
-              cars && cars.cars.map((car) => (
+              cars.cars.length > 0 ? cars.cars.map((car) => (
                 <Link key={car.id} href={`/veiculos/${car.id}`} className="w-full">
                   <Card
                     id={car.id}
                     key={car.id}
-                    source={`http://localhost:3333/${car.source}`}
+                    source={`${process.env.NEXT_S3_URL}/${car.source}`}
                     description={car.description}
                     price={car.price}
                     year={car.year}
@@ -59,7 +59,11 @@ export default async function Home() {
                     km={car.km}
                   />
                 </Link>
-              ))
+              )) : (
+                <div className="flex items-center justify-center col-span-2 h-60">
+                  <span className="text-gray-300 opacity-80 text-3xl">Em breve...</span>
+                </div>
+              )
             }
           </div>
 
