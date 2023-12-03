@@ -1,8 +1,8 @@
 import { api } from "@/app/axios/api";
-import NextAuth, { AuthOptions } from "next-auth"
+import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-const nextAuthOptions: AuthOptions = {
+export const nextAuthOptions: AuthOptions = {
     providers: [
         CredentialsProvider({
             name: 'credentials',
@@ -51,7 +51,3 @@ const nextAuthOptions: AuthOptions = {
         }
     }
 }
-
-const handler = NextAuth(nextAuthOptions)
-
-export { handler as GET, handler as POST, nextAuthOptions };

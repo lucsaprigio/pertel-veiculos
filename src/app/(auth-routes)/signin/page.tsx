@@ -18,24 +18,28 @@ export default function SignIn() {
     }
 
     async function handleSubmit(event: SyntheticEvent) {
-        event.preventDefault();
+        try {
+            event.preventDefault();
 
-        const result = await signIn('credentials', {
-            email,
-            password,
-            redirect: false
-        });
+            const result = await signIn('credentials', {
+                email,
+                password,
+                redirect: false
+            });
 
-        if (result.error) {
-            console.log(result.error);
-            return setDialogIsOpen(true);
+            if (result.error) {
+                console.log(result.error);
+                return setDialogIsOpen(true);
+            }
+
+            router.replace('/painel')
+        } catch (error) {
+            console.log(error);
         }
-
-        router.replace('/painel')
     }
 
     return (
-        <form className="flex flex-col items-center justify-center px-10 gap-6 my-32" onSubmit={handleSubmit}>
+        <form className="h-screen flex flex-col items-center justify-center px-10 gap-6" onSubmit={handleSubmit}>
             <DialogConfirm
                 title="Ocorreu um erro"
                 description="Usuário ou senha incorretas!"

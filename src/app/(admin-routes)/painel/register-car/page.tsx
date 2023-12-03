@@ -1,4 +1,4 @@
-import { nextAuthOptions } from '@/app/api/auth/[...nextauth]/auth';
+import { nextAuthOptions } from '@/app/api/auth/[...nextauth]/route';
 import { PlusCircle } from 'lucide-react';
 import { getServerSession } from 'next-auth';
 import NewCarForm from '../../Components/NewCarForm';
