@@ -1,8 +1,8 @@
 import { api } from "@/app/axios/api";
-import NextAuth, { NextAuthOptions } from "next-auth"
+import NextAuth, { AuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials";
 
-const nextAuthOptions: NextAuthOptions = {
+const nextAuthOptions: AuthOptions = {
     providers: [
         CredentialsProvider({
             name: 'credentials',
@@ -11,7 +11,7 @@ const nextAuthOptions: NextAuthOptions = {
                 password: { label: 'password', type: 'text' }
             },
 
-            async authorize(credentials, req) {
+            async authorize(credentials) {
                 try {
                     const response = await api.post('/signin', {
                         email: credentials.email,
@@ -42,7 +42,7 @@ const nextAuthOptions: NextAuthOptions = {
                 token.expires = Math.floor(Date.now() / 1000) + (2 * 24 * 60 * 60); // 2 dias em segundos
                 token.user = user;
             }
-            
+
             return token
         },
         async session({ session, token }) {
