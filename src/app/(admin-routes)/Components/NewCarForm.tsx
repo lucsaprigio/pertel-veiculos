@@ -55,7 +55,7 @@ export default function NewCarForm({ token }: Props) {
             formData.append('fuelType', fuelType.toUpperCase());
             formData.append('exchange', exchange.toUpperCase());
             formData.append('doors', doors);
-            formData.append('file', file);
+            formData.append('file', file)
 
             const response = await axios.post(`${process.env.NEXT_PUBLIC_API_NODE}/new-car`, formData, {
                 headers: {
