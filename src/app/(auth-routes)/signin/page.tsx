@@ -35,15 +35,15 @@ export default function SignIn() {
         console.log('caiu aqui')
     }
 
-    async function handleSignin(event: SyntheticEvent) {
+    async function handleSignin(data: any) {
         try {
-            event.preventDefault();
-
             const result = await signIn('credentials', {
-                email,
-                password,
+                email: data.email,
+                password: data.password,
                 redirect: false
             });
+
+            console.log(data);
 
             if (result.error) {
                 console.log(result.error);
@@ -58,7 +58,7 @@ export default function SignIn() {
 
     return (
         <form
-            onSubmit={handleSubmit(createUser)}
+            onSubmit={handleSubmit(handleSignin)}
             className="h-screen flex flex-col items-center justify-center px-10 gap-6" >
             <DialogConfirm
                 title="Ocorreu um erro"
@@ -71,50 +71,56 @@ export default function SignIn() {
             <UserCircle2 size={48} className="text-red-800" />
             <h2 className="text-2xl font-bold">Bem-vindo!</h2>
             <h2 className="text-lg">Login</h2>
-            <input className={`w-full md:w-96 h-10 bg-transparent p-1 ${errors.email?.message ? 'border-red-700 border-2 rounded-md' : 'border-red-800 border-b-b-sm  focus:border-b-2'} focus:outline-none`}
-                type="text"
-                placeholder="E-mail"
-                {...register('email')}
-            />
-            {errors.email && (
-                <span className="text-red-700">
-                    {errors.email?.message as ReactNode}*
-                </span>)}
-            <div className="w-full flex md:w-96 border-b-b-sm border-red-800 group">
-                <input className={`w-full md:w-96 h-10 bg-transparent p-1 ${errors.password?.message ? 'border-red-700 border-2 rounded-md' : 'border-red-800 border-b-b-sm  focus:border-b-2'} focus:outline-none`}
-                    type={visible ? 'text' : 'password'}
-                    placeholder="Senha"
-                    {...register('password')}
+            <div className="flex flex-col">
+                <input className={`w-full md:w-96 h-10 bg-transparent p-1 ${errors.email?.message ? 'border-red-700 border-2 rounded-md' : 'border-red-800 border-b-b-sm  focus:border-b-2'} focus:outline-none`}
+                    type="text"
+                    placeholder="E-mail"
+                    {...register('email')}
                 />
+                {errors.email && (
+                    <strong className="text-red-700">
+                        {errors.email?.message as ReactNode}*
+                    </strong>)}
+            </div>
+            <div className="flex flex-col">
+                <div className={`w-full relative flex md:w-96 ${errors.password?.message ? 'border-red-700 border-2 rounded-md' : 'border-b-b-sm border-red-800'} group`}>
+                    <input className={`w-full md:w-96 h-10 bg-transparent p-1 border-red-800 border-b-b-sm  focus:border-b-2 focus:outline-none`}
+                        type={visible ? 'text' : 'password'}
+                        placeholder="Senha"
+                        {...register('password')}
+                    />
+                    {
+                        visible ? (
+                            <button
+                                className="absolute right-2 top-2 bg-transparent"
+                                onClick={() => setVisible(!visible)}
+                                type="button"
+                            >
+                                <EyeIcon />
+                            </button>
+                        ) : (
+                            <button
+                                className="absolute right-2 top-2 bg-transparent"
+                                onClick={() => setVisible(!visible)}
+                                type="button">
+                                <EyeOffIcon />
+                            </button>
+                        )
+                    }
+                </div>
                 {
-                    visible ? (
-                        <button
-                            className="bg-transparent"
-                            onClick={() => setVisible(!visible)}
-                            type="button"
-                        >
-                            <EyeIcon />
-                        </button>
-                    ) : (
-                        <button
-                            className="bg-transparent"
-                            onClick={() => setVisible(!visible)}
-                            type="button">
-                            <EyeOffIcon />
-                        </button>
-                    )
+                    errors.password && (
+                        <strong className="text-red-700">
+                            {errors.password?.message as ReactNode}*
+                        </strong>)
                 }
             </div>
-            {errors.password && (
-                <span className="text-red-700">
-                    {errors.password?.message as ReactNode}*
-                </span>)}
             <span className="text-red-800 underline">Esqueci minha senha</span>
             <button
                 className="w-full md:w-96  bg-red-800 text-gray-50 h-10 rounded-lg my-3 hover:brightness-90 transition-all duration-150"
                 type="submit">
                 Entrar
             </button>
-        </form>
+        </form >
     )
 }
