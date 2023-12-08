@@ -19,9 +19,6 @@ export default function SignIn() {
         resolver: zodResolver(handleSigninFormSchema)
     });
 
-    console.log(errors.email);
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const [visible, setVisible] = useState(false);
     const [dialogIsOpen, setDialogIsOpen] = useState(false);
 
@@ -29,10 +26,6 @@ export default function SignIn() {
 
     function handleCloseModal() {
         return setDialogIsOpen(false);
-    }
-
-    function createUser(data: any) {
-        console.log('caiu aqui')
     }
 
     async function handleSignin(data: any) {

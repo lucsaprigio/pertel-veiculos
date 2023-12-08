@@ -7,6 +7,7 @@ import Loading from 'react-loading';
 import { FileInput } from './FileInput';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 interface Props {
     token: string;
@@ -26,11 +27,13 @@ const createCarFormSchema = z.object({
     year: z.string().min(1, 'Preencha o Ano/modelo'),
     fuelType: z.string().min(1, 'Preencha o tipo de Combustível').toUpperCase(),
     exchange: z.string().min(1, 'Preencha o Câmbio').toUpperCase(),
-    doors: z.string().min(1, 'Campo obrigatório'),
+    doors: z.string().min(1, 'Campo obrigatório').regex(/^\d+$/)
 })
 
 export default function NewCarForm({ token }: Props) {
-    const { register, handleSubmit, formState: { errors }, setValue } = useForm<CreateCarFormData>();
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm<CreateCarFormData>({
+        resolver: zodResolver(createCarFormSchema)
+    });
 
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
@@ -61,10 +64,8 @@ export default function NewCarForm({ token }: Props) {
         setFiles(files);
     }, []);
 
-    async function handleRegisterCar(event: SyntheticEvent) {
+    async function handleRegisterCar(data: any) {
         try {
-            event.preventDefault();
-
             setLoading(true);
             const formData = new FormData();
             const formDataFiles = new FormData();
@@ -76,7 +77,7 @@ export default function NewCarForm({ token }: Props) {
             formData.append('fuelType', fuelType.toUpperCase());
             formData.append('exchange', exchange.toUpperCase());
             formData.append('doors', doors);
-            formData.append('file', file)
+            formData.append('file', file);
 
             const response = await axios.post(`${process.env.NEXT_PUBLIC_API_NODE}/new-car`, formData, {
                 headers: {
@@ -113,7 +114,6 @@ export default function NewCarForm({ token }: Props) {
             setDescriptionDialog('Deseja continuar cadastrando?');
             setSourceDialog('/images/checked.png');
             setOkButtonDialog('Sim');
-
         } catch (err) {
             setLoading(false);
             setIsDialogOpen(true);
@@ -127,12 +127,12 @@ export default function NewCarForm({ token }: Props) {
         }
     }
 
-    function handleSetYear(value: string) {
+    function handleSetYear(value: any) {
         return value
             .replace(/\D/g, "")
             .replace(/(\d{4})(\d)/, "$1/$2")
             .replace(/(\d{4})(\d)/, "$1");
-    }
+    };
 
     function handleSetKm(value: any) {
         const numericValue = parseFloat(value.replace(/[^\d]/g, '')) || 0;
@@ -200,7 +200,7 @@ export default function NewCarForm({ token }: Props) {
                         placeholder="Valor"
                         {...register('price')}
                     />
-                    {errors.description && (<span>{errors.description.message}</span>)}
+                    {errors.price && (<span>{errors.price.message}</span>)}
                 </div>
                 <div className="flex flex-col w-full gap-1">
                     <span className="text-red-950 font-bold">Quilometragem*</span>
@@ -215,32 +215,37 @@ export default function NewCarForm({ token }: Props) {
                             }
                         })}
                     />
-                    {errors.description && (<span>{errors.description.message}</span>)}
+                    {errors.km && (<span>{errors.km.message}</span>)}
                 </div>
                 <div className="flex flex-col w-full gap-1">
                     <span className="text-red-950 font-bold">Ano/Modelo*</span>
                     <input className={`w-full md:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 ${year && 'border-2'}`}
                         type="text"
                         placeholder="Ano/Modelo"
-                        value={year}
-                        onChange={e => setYear(handleSetYear(e.target.value))}
+                        {...register('year', {
+                            onChange: (e: any) => {
+                                const formattedValue = handleSetYear(e.target.value);
+                                setValue('year', formattedValue, { shouldValidate: true });
+                            }
+                        })}
                     />
+                    {errors.year && (<span>{errors.year.message}</span>)}
                 </div>
                 <div className="flex flex-col w-full gap-1">
                     <span className="text-red-950 font-bold">Combustível*</span>
                     <input className={`w-full md:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 ${fuelType && 'border-2'}`}
                         type="text"
                         placeholder="Tipo de Combustível"
-                        value={fuelType}
-                        onChange={e => setFueltype(e.target.value.toUpperCase())}
+                        {...register('fuelType', {
+                            onChange: handleInputChange
+                        })}
                     />
                 </div>
                 <div className="flex flex-col w-full gap-1">
 
                     <span className="text-red-950 font-bold">Câmbio*</span>
                     <select className={`w-full md:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 ${exchange && 'border-2'}`} placeholder="Tipo de Combustível"
-                        value={exchange}
-                        onChange={e => setExchange(e.target.value)}
+                        {...register('exchange')}
                     >
                         <option value="" disabled hidden>Câmbio</option>
                         <option value="automatico" >AUTOMÁTICO</option>
@@ -251,10 +256,14 @@ export default function NewCarForm({ token }: Props) {
                     <span className="text-red-950 font-bold">Portas*</span>
                     <input className={`w-full md:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 ${doors && 'border-2'}`}
                         type="text"
+                        maxLength={1}
                         placeholder="Portas"
-                        value={doors}
-                        onChange={e => setDoors(e.target.value)}
-                    />
+                        {...register('doors', {
+                            onChange: (e) => {
+                                setValue('doors', e.target.value)
+                            }
+                        })}
+                    />  
                 </div>
                 <div className="flex flex-col w-full gap-1 col-span-2">
                     <span className="text-red-950 font-bold">Selecione uma imagem (Imagem principal)*</span>
@@ -287,7 +296,7 @@ export default function NewCarForm({ token }: Props) {
                         }
                     </button>
                 </div>
-            </form >
-        </main >
+            </form>
+        </main>
     )
 } 
