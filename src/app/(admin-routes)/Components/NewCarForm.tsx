@@ -5,12 +5,33 @@ import axios from 'axios';
 import { ChangeEvent, SyntheticEvent, useCallback, useState } from 'react';
 import Loading from 'react-loading';
 import { FileInput } from './FileInput';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 interface Props {
     token: string;
 }
 
+type CreateCarFormData = z.infer<typeof createCarFormSchema>;
+
+const createCarFormSchema = z.object({
+    description: z.string().min(6, 'Preencha a descrição').transform(description => {
+        return description.toLocaleUpperCase()
+    }),
+    price: z.string().min(1, 'Preço obrigatório'),
+    km: z.string().min(1, 'Preencha a Quilometragem').transform(km => {
+        const numericValue = parseFloat(km.replace(/\./g, '')) || 0;
+        return numericValue.toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+    }),
+    year: z.string().min(1, 'Preencha o Ano/modelo'),
+    fuelType: z.string().min(1, 'Preencha o tipo de Combustível').toUpperCase(),
+    exchange: z.string().min(1, 'Preencha o Câmbio').toUpperCase(),
+    doors: z.string().min(1, 'Campo obrigatório'),
+})
+
 export default function NewCarForm({ token }: Props) {
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm<CreateCarFormData>();
+
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
     const [km, setKm] = useState('');
@@ -40,7 +61,7 @@ export default function NewCarForm({ token }: Props) {
         setFiles(files);
     }, []);
 
-    async function handleSubmit(event: SyntheticEvent) {
+    async function handleRegisterCar(event: SyntheticEvent) {
         try {
             event.preventDefault();
 
@@ -106,10 +127,6 @@ export default function NewCarForm({ token }: Props) {
         }
     }
 
-    function test() {
-        console.log(files);
-    }
-
     function handleSetYear(value: string) {
         return value
             .replace(/\D/g, "")
@@ -117,23 +134,15 @@ export default function NewCarForm({ token }: Props) {
             .replace(/(\d{4})(\d)/, "$1");
     }
 
-    function handleSetKm(value: string) {
-        const sanitizedValue = value.replace(/\D/g, "");
-
-        if (sanitizedValue.length <= 3) {
-            return sanitizedValue;
-        }
-
-        if (sanitizedValue.length === 4) {
-            return `${sanitizedValue.slice(0, 1)}.${sanitizedValue.slice(1)}`;
-        }
-
-        if (sanitizedValue.length > 5) {
-            return `${sanitizedValue.slice(0, -3)}.${sanitizedValue.slice(-3)}`;
-        }
-
-        return sanitizedValue;
+    function handleSetKm(value: any) {
+        const numericValue = parseFloat(value.replace(/[^\d]/g, '')) || 0;
+        const formattedValue = numericValue.toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+        return formattedValue;
     };
+
+    function handleInputChange(e: any) {
+        e.target.value = e.target.value.toUpperCase()
+    }
 
     function handleSetPrice(value: string) {
         return value.replace('', '')
@@ -172,35 +181,41 @@ export default function NewCarForm({ token }: Props) {
                 source={sourceDialog}
                 onClose={handleCloseDialog}
             />
-            <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-6 my-10 bg-gray-50 py-10 md:px-32 rounded-lg">
+            <form onSubmit={handleSubmit(handleRegisterCar)} className="grid grid-cols-2 gap-6 my-10 bg-gray-50 py-10 md:px-32 rounded-lg">
                 <div className="w-full gap-1 col-span-2">
                     <span className="text-red-950 font-bold">Descrição*</span>
                     <input className={`w-full h-12 p-2 bg-white border rounded-lg border-red-800 focus:outline-none focus:border-2 ${description && 'border-2'}`}
                         type="text"
                         placeholder="Descrição"
-                        value={description}
-                        onChange={e => setDescription(e.target.value.toUpperCase())}
+                        {...register('description', {
+                            onChange: handleInputChange
+                        })}
                     />
+                    {errors.description && (<span>{errors.description.message}</span>)}
                 </div>
                 <div className="flex flex-col w-full gap-1">
                     <span className="text-red-950 font-bold">Valor*</span>
                     <input className={`w-full md:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 ${price && 'border-2'}`}
                         type="text"
                         placeholder="Valor"
-                        value={price}
-                        onChange={e => setPrice(e.target.value)}
-
+                        {...register('price')}
                     />
+                    {errors.description && (<span>{errors.description.message}</span>)}
                 </div>
                 <div className="flex flex-col w-full gap-1">
                     <span className="text-red-950 font-bold">Quilometragem*</span>
                     <input className={`w-full md:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 ${km && 'border-2'}`}
                         type="text"
                         placeholder="Quilometragem"
-                        value={km}
-                        maxLength={6}
-                        onChange={e => setKm(handleSetKm(e.target.value))}
+                        maxLength={7}
+                        {...register('km', {
+                            onChange: (e: any) => {
+                                const formattedValue = handleSetKm(e.target.value);
+                                setValue('km', formattedValue, { shouldValidate: true });
+                            }
+                        })}
                     />
+                    {errors.description && (<span>{errors.description.message}</span>)}
                 </div>
                 <div className="flex flex-col w-full gap-1">
                     <span className="text-red-950 font-bold">Ano/Modelo*</span>

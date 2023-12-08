@@ -43,8 +43,6 @@ export default function SignIn() {
                 redirect: false
             });
 
-            console.log(data);
-
             if (result.error) {
                 console.log(result.error);
                 return setDialogIsOpen(true);
