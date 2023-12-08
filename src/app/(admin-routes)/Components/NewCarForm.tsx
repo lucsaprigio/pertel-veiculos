@@ -64,19 +64,19 @@ export default function NewCarForm({ token }: Props) {
         setFiles(files);
     }, []);
 
-    async function handleRegisterCar(data: any) {
+    async function handleRegisterCar(data: CreateCarFormData) {
         try {
             setLoading(true);
             const formData = new FormData();
             const formDataFiles = new FormData();
 
-            formData.append('description', description.toUpperCase());
-            formData.append('price', price.replaceAll('.', ''));
-            formData.append('km', km.replaceAll('.', ''));
-            formData.append('year', year);
-            formData.append('fuelType', fuelType.toUpperCase());
-            formData.append('exchange', exchange.toUpperCase());
-            formData.append('doors', doors);
+            formData.append('description', data.description.toLocaleUpperCase());
+            formData.append('price', data.price);
+            formData.append('km', data.km.replaceAll('.', ''));
+            formData.append('year', data.year);
+            formData.append('fuelType', data.fuelType.toUpperCase());
+            formData.append('exchange', data.exchange.toUpperCase());
+            formData.append('doors', data.doors);
             formData.append('file', file);
 
             const response = await axios.post(`${process.env.NEXT_PUBLIC_API_NODE}/new-car`, formData, {
@@ -263,7 +263,7 @@ export default function NewCarForm({ token }: Props) {
                                 setValue('doors', e.target.value)
                             }
                         })}
-                    />  
+                    />
                 </div>
                 <div className="flex flex-col w-full gap-1 col-span-2">
                     <span className="text-red-950 font-bold">Selecione uma imagem (Imagem principal)*</span>
