@@ -16,7 +16,7 @@ interface Props {
 type CreateCarFormData = z.infer<typeof createCarFormSchema>;
 
 const createCarFormSchema = z.object({
-    description: z.string().min(6, 'Preencha a descrição').transform(description => {
+    description: z.string().min(5, 'Preencha a descrição').transform(description => {
         return description.toLocaleUpperCase()
     }),
     price: z.string().min(1, 'Preço obrigatório'),
@@ -27,7 +27,8 @@ const createCarFormSchema = z.object({
     year: z.string().min(1, 'Preencha o Ano/modelo'),
     fuelType: z.string().min(1, 'Preencha o tipo de Combustível').toUpperCase(),
     exchange: z.string().min(1, 'Preencha o Câmbio').toUpperCase(),
-    doors: z.string().min(1, 'Campo obrigatório').regex(/^\d+$/)
+    doors: z.string().min(1, 'Campo obrigatório').regex(/^\d+$/),
+    file: z.instanceof(FileList).transform(list => list.item(0))
 })
 
 export default function NewCarForm({ token }: Props) {
@@ -70,6 +71,8 @@ export default function NewCarForm({ token }: Props) {
             const formData = new FormData();
             const formDataFiles = new FormData();
 
+            console.log(data);
+
             formData.append('description', data.description.toLocaleUpperCase());
             formData.append('price', data.price);
             formData.append('km', data.km.replaceAll('.', ''));
@@ -77,9 +80,9 @@ export default function NewCarForm({ token }: Props) {
             formData.append('fuelType', data.fuelType.toUpperCase());
             formData.append('exchange', data.exchange.toUpperCase());
             formData.append('doors', data.doors);
-            formData.append('file', file);
+            formData.append('file', data.file);
 
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_NODE}/new-car`, formData, {
+            const response = await axios.post(`${process.env.NEXT_API_NODE}/new-car`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}`,
@@ -92,7 +95,7 @@ export default function NewCarForm({ token }: Props) {
                 });
             }
 
-            await axios.post(`${process.env.NEXT_PUBLIC_API_NODE}/add-image-car/${response.data.newCar.id}`, formDataFiles, {
+            await axios.post(`${process.env.NEXT_API_NODE}/add-image-car/${response.data.newCar.id}`, formDataFiles, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}`,
@@ -191,7 +194,7 @@ export default function NewCarForm({ token }: Props) {
                             onChange: handleInputChange
                         })}
                     />
-                    {errors.description && (<span>{errors.description.message}</span>)}
+                    {errors.description && (<span className="text-red-700 text-sm">{errors.description.message}</span>)}
                 </div>
                 <div className="flex flex-col w-full gap-1">
                     <span className="text-red-950 font-bold">Valor*</span>
@@ -200,7 +203,7 @@ export default function NewCarForm({ token }: Props) {
                         placeholder="Valor"
                         {...register('price')}
                     />
-                    {errors.price && (<span>{errors.price.message}</span>)}
+                    {errors.price && (<span className="text-red-700 text-sm">{errors.price.message}</span>)}
                 </div>
                 <div className="flex flex-col w-full gap-1">
                     <span className="text-red-950 font-bold">Quilometragem*</span>
@@ -215,7 +218,7 @@ export default function NewCarForm({ token }: Props) {
                             }
                         })}
                     />
-                    {errors.km && (<span>{errors.km.message}</span>)}
+                    {errors.km && (<span className="text-red-700 text-sm">{errors.km.message}</span>)}
                 </div>
                 <div className="flex flex-col w-full gap-1">
                     <span className="text-red-950 font-bold">Ano/Modelo*</span>
@@ -229,7 +232,7 @@ export default function NewCarForm({ token }: Props) {
                             }
                         })}
                     />
-                    {errors.year && (<span>{errors.year.message}</span>)}
+                    {errors.year && (<span className="text-red-700 text-sm">{errors.year.message}</span>)}
                 </div>
                 <div className="flex flex-col w-full gap-1">
                     <span className="text-red-950 font-bold">Combustível*</span>
@@ -240,9 +243,9 @@ export default function NewCarForm({ token }: Props) {
                             onChange: handleInputChange
                         })}
                     />
+                    {errors.fuelType && (<span className="text-red-700 text-sm">{errors.fuelType.message}</span>)}
                 </div>
                 <div className="flex flex-col w-full gap-1">
-
                     <span className="text-red-950 font-bold">Câmbio*</span>
                     <select className={`w-full md:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 ${exchange && 'border-2'}`} placeholder="Tipo de Combustível"
                         {...register('exchange')}
@@ -271,10 +274,9 @@ export default function NewCarForm({ token }: Props) {
                         type="file"
                         placeholder="Selecione a imagem principal"
                         accept="image/*"
-                        onChange={handleFileChange}
+                        {...register('file')}
                     />
                 </div>
-
                 <div className="w-full h-80 col-span-2 flex items-center justify-center">
                     <FileInput
                         files={files}

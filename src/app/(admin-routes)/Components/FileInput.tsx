@@ -42,7 +42,7 @@ function Input({ dropzone }: InputProps) {
     return (
         <div
             {...getRootProps()}
-            className={`w-1/2 h-full rounded-lg border-dashed border-4 border-red-800 hover:border-red-700 hover:bg-red-300 transition-all duration-100
+            className={`w-full h-full rounded-lg border-dashed border-4 border-red-800 hover:border-red-700 hover:bg-red-300 transition-all duration-100
             ${isDragActive ? 'text-red-700' : 'bg-red-200'}
             `}>
             <label htmlFor="dropzone-file" className="cursor-pointer w-full h-full">
