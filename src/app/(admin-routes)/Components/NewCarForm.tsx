@@ -8,6 +8,7 @@ import { FileInput } from './FileInput';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { api } from '@/app/axios/api';
 
 interface Props {
     token: string;
@@ -82,7 +83,7 @@ export default function NewCarForm({ token }: Props) {
             formData.append('doors', data.doors);
             formData.append('file', data.file);
 
-            const response = await axios.post(`${process.env.NEXT_API_NODE}/new-car`, formData, {
+            const response = await api.post('/new-car', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}`,
@@ -95,7 +96,7 @@ export default function NewCarForm({ token }: Props) {
                 });
             }
 
-            await axios.post(`${process.env.NEXT_API_NODE}/add-image-car/${response.data.newCar.id}`, formDataFiles, {
+            await api.post(`${process.env.NEXT_API_NODE}/add-image-car/${response.data.newCar.id}`, formDataFiles, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}`,
