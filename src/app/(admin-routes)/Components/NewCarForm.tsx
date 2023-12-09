@@ -2,13 +2,12 @@
 
 import { DialogConfirm } from '@/app/Components/DialogConfirm';
 import axios from 'axios';
-import { ChangeEvent, SyntheticEvent, useCallback, useState } from 'react';
+import { ChangeEvent, useCallback, useState } from 'react';
 import Loading from 'react-loading';
 import { FileInput } from './FileInput';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { api } from '@/app/axios/api';
 
 interface Props {
     token: string;
@@ -33,17 +32,10 @@ const createCarFormSchema = z.object({
 })
 
 export default function NewCarForm({ token }: Props) {
-    const { register, handleSubmit, formState: { errors }, setValue } = useForm<CreateCarFormData>({
+    const { register, handleSubmit, formState: { errors }, setValue, reset } = useForm<CreateCarFormData>({
         resolver: zodResolver(createCarFormSchema)
     });
 
-    const [description, setDescription] = useState('');
-    const [price, setPrice] = useState('');
-    const [km, setKm] = useState('');
-    const [year, setYear] = useState('');
-    const [fuelType, setFueltype] = useState('');
-    const [exchange, setExchange] = useState('');
-    const [doors, setDoors] = useState('4');
     const [loading, setLoading] = useState(false);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -72,7 +64,7 @@ export default function NewCarForm({ token }: Props) {
             const formData = new FormData();
             const formDataFiles = new FormData();
 
-            console.log(data);
+            console.log(data.file.name);
 
             formData.append('description', data.description.toLocaleUpperCase());
             formData.append('price', data.price);
@@ -82,8 +74,9 @@ export default function NewCarForm({ token }: Props) {
             formData.append('exchange', data.exchange.toUpperCase());
             formData.append('doors', data.doors);
             formData.append('file', data.file);
+            console.log(formDataFiles)
 
-            const response = await api.post('/new-car', formData, {
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_NODE}/new-car`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}`,
@@ -96,21 +89,12 @@ export default function NewCarForm({ token }: Props) {
                 });
             }
 
-            await api.post(`${process.env.NEXT_API_NODE}/add-image-car/${response.data.newCar.id}`, formDataFiles, {
+            await axios.post(`${process.env.NEXT_PUBLIC_API_NODE}/add-image-car/${response.data.newCar.id}`, formDataFiles, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}`,
                 }
             });
-
-            setLoading(false);
-            setDescription('');
-            setPrice('');
-            setKm('');
-            setYear('');
-            setFueltype('');
-            setExchange('');
-            setFiles(null);
 
             setIsDialogOpen(true);
 
@@ -118,6 +102,10 @@ export default function NewCarForm({ token }: Props) {
             setDescriptionDialog('Deseja continuar cadastrando?');
             setSourceDialog('/images/checked.png');
             setOkButtonDialog('Sim');
+            setLoading(false);
+
+            reset();
+            setFiles(null);
         } catch (err) {
             setLoading(false);
             setIsDialogOpen(true);
@@ -148,8 +136,17 @@ export default function NewCarForm({ token }: Props) {
         e.target.value = e.target.value.toUpperCase()
     }
 
-    function handleSetPrice(value: string) {
-        return value.replace('', '')
+    function handleSetPrice(value: any) {
+        // Remove não números e formata como dinheiro
+        value = parseFloat(value.replace(/\D/g, ''));
+        const formattedValue = new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+        }).format(value / 100); // Divida por 100 para considerar os centavos
+
+        value = formattedValue
+
+        return formattedValue
     }
 
     function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
@@ -188,7 +185,7 @@ export default function NewCarForm({ token }: Props) {
             <form onSubmit={handleSubmit(handleRegisterCar)} className="grid grid-cols-2 gap-6 my-10 bg-gray-50 py-10 md:px-32 rounded-lg">
                 <div className="w-full gap-1 col-span-2">
                     <span className="text-red-950 font-bold">Descrição*</span>
-                    <input className={`w-full h-12 p-2 bg-white border rounded-lg border-red-800 focus:outline-none focus:border-2 ${description && 'border-2'}`}
+                    <input className={`w-full h-12 p-2 bg-white border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`}
                         type="text"
                         placeholder="Descrição"
                         {...register('description', {
@@ -199,16 +196,22 @@ export default function NewCarForm({ token }: Props) {
                 </div>
                 <div className="flex flex-col w-full gap-1">
                     <span className="text-red-950 font-bold">Valor*</span>
-                    <input className={`w-full md:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 ${price && 'border-2'}`}
+                    <input
+                        className={`w-full md:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`}
                         type="text"
                         placeholder="Valor"
-                        {...register('price')}
+                        {...register('price', {
+                            onChange: (e) => {
+                                const formattedValue = handleSetPrice(e.target.value);
+                                setValue('price', formattedValue, { shouldValidate: false })
+                            }
+                        })}
                     />
                     {errors.price && (<span className="text-red-700 text-sm">{errors.price.message}</span>)}
                 </div>
                 <div className="flex flex-col w-full gap-1">
                     <span className="text-red-950 font-bold">Quilometragem*</span>
-                    <input className={`w-full md:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 ${km && 'border-2'}`}
+                    <input className={`w-full md:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`}
                         type="text"
                         placeholder="Quilometragem"
                         maxLength={7}
@@ -223,7 +226,7 @@ export default function NewCarForm({ token }: Props) {
                 </div>
                 <div className="flex flex-col w-full gap-1">
                     <span className="text-red-950 font-bold">Ano/Modelo*</span>
-                    <input className={`w-full md:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 ${year && 'border-2'}`}
+                    <input className={`w-full md:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`}
                         type="text"
                         placeholder="Ano/Modelo"
                         {...register('year', {
@@ -237,7 +240,7 @@ export default function NewCarForm({ token }: Props) {
                 </div>
                 <div className="flex flex-col w-full gap-1">
                     <span className="text-red-950 font-bold">Combustível*</span>
-                    <input className={`w-full md:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 ${fuelType && 'border-2'}`}
+                    <input className={`w-full md:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`}
                         type="text"
                         placeholder="Tipo de Combustível"
                         {...register('fuelType', {
@@ -248,7 +251,7 @@ export default function NewCarForm({ token }: Props) {
                 </div>
                 <div className="flex flex-col w-full gap-1">
                     <span className="text-red-950 font-bold">Câmbio*</span>
-                    <select className={`w-full md:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 ${exchange && 'border-2'}`} placeholder="Tipo de Combustível"
+                    <select className={`w-full md:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`} placeholder="Tipo de Combustível"
                         {...register('exchange')}
                     >
                         <option value="" disabled hidden>Câmbio</option>
@@ -258,7 +261,7 @@ export default function NewCarForm({ token }: Props) {
                 </div>
                 <div className="flex flex-col w-full gap-1">
                     <span className="text-red-950 font-bold">Portas*</span>
-                    <input className={`w-full md:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 ${doors && 'border-2'}`}
+                    <input className={`w-full md:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`}
                         type="text"
                         maxLength={1}
                         placeholder="Portas"

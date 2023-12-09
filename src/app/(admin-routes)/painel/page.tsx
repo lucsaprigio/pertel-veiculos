@@ -22,7 +22,7 @@ export default async function Painel() {
                 <span className="font-bold text-lg text-center mb-4">Últimas atualizações</span>
                 <div className="w-full grid grid-cols-5 gap-2">
                     {
-                        cars && cars.cars.sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())
+                        cars.cars.length > 0 ? (cars.cars.sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())
                             .slice(0, 5)
                             .map(car => (
                                 <div key={car.id} className="flex flex-row w-full gap-6 bg-gray-50 rounded-lg px-6 py-1 border-b-8 border-red-800">
@@ -35,7 +35,7 @@ export default async function Painel() {
                                         <li className="text-red-800 text-lg">{format(new Date(car.updated_at), 'dd/MM/yyyy HH:mm')}</li>
                                     </ul>
                                 </div>
-                            ))
+                            ))) : (<h2 className="flex items-center justify-center text-lg text-gray-300 col-span-5">Nenhuma atualização encontrada</h2>)
                     }
                 </div>
             </section>
@@ -50,7 +50,7 @@ export default async function Painel() {
                         <li className="text-red-950 md:text-1xl font-semibold">Última atualização</li>
                     </ul>
                     {
-                        cars.cars.map(car => (
+                        cars.cars.length > 0 ? (cars.cars.map(car => (
                             <div key={car.id} className="flex flex-row w-full bg-red-200 rounded-lg p-2 overflow-hidden gap-6">
                                 <div className="w-32 h-32 rounded-lg overflow-hidden">
                                     <img className="object-cover" src={`${process.env.NEXT_S3_URL}/${car.source}`} alt="Photo" />
@@ -63,7 +63,7 @@ export default async function Painel() {
                                     <li className="text-red-950 md:text-1xl font-semibold">{format(new Date(car.updated_at), 'dd/MM/yyyy')}</li>
                                 </ul>
                             </div>
-                        ))
+                        ))) : (<h2 className="flex items-center justify-center text-lg text-gray-300">Não há carros a serem exibidos</h2>)
                     }
                 </div>
             </section>

@@ -42,7 +42,7 @@ function Input({ dropzone }: InputProps) {
     return (
         <div
             {...getRootProps()}
-            className={`w-full h-full rounded-lg border-dashed border-4 border-red-800 hover:border-red-700 hover:bg-red-300 transition-all duration-100
+            className={`w-full h-full rounded-lg border-dashed border-4 p-2 border-red-800 hover:border-red-700 hover:bg-red-300 transition-all duration-100
             ${isDragActive ? 'text-red-700' : 'bg-red-200'}
             `}>
             <label htmlFor="dropzone-file" className="cursor-pointer w-full h-full">
@@ -69,12 +69,12 @@ function Input({ dropzone }: InputProps) {
 
 function HasFile({ files, removeFile }: HasFileProps) {
     return (
-        <div>
+        <div className="w-full">
             {files && files.length > 0 && (
                 <div>
                     {files.map((file, index) => (
-                        <div key={index} className="flex items-center justify-center w-1/2 h-full rounded-lg px-2 border-dashed border-4 border-red-800 hover:border-red-700 hover:bg-red-300 transition-all duration-100">
-                            <div className="bg-white w-full rounded-md shadow-md flex gap-3 items-center justify-center">
+                        <div key={index} className="flex items-center justify-center w-full h-full rounded-lg px-2 border-dashed border-4 border-red-800 hover:border-red-700 hover:bg-red-300 transition-all duration-100">
+                            <div className="bg-white w-full rounded-md shadow-md flex gap-3 items-center justify-center p-2">
                                 <ImageIcon className="w-5 h-6 my-4 ml-4" />
                                 <span>{file.name}</span>
                                 <button onClick={() => removeFile(index)} className="place-self-start mt-1 p-1" type="button">
