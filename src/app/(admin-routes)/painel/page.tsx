@@ -1,5 +1,7 @@
 import { Cars } from "@/app/DTO/ICars";
 import { format } from 'date-fns';
+import { Edit } from 'lucide-react';
+import Link from "next/link";
 async function getCars(): Promise<Cars> {
     try {
         const response = await fetch(`${process.env.NEXT_API_NODE}/all-cars`, { cache: 'no-cache' });
@@ -41,9 +43,9 @@ export default async function Painel() {
             </section>
             <section className="w-full h-full m-10 bg-gray-50 rounded-lg p-4">
                 <div className="flex flex-col items-start justify-center px-10 gap-6">
-                    <ul className="flex flex-col md:flex-row gap-20 items-center justify-center">
-                        <li className="w-28"></li>
-                        <li className="uppercase w-full md:w-96 text-red-950 md:text-1xl font-semibold">Descrição</li>
+                    <ul className="grid grid-cols-6 md:flex-row gap-20 items-center justify-center">
+                        <li></li>
+                        <li className="uppercase w-full text-red-950 md:text-1xl font-semibold">Descrição</li>
                         <li className="text-red-950 md:text-1xl font-semibold"> Valor</li>
                         <li className="text-red-950 md:text-1xl font-semibold">Ano/Modelo</li>
                         <li className="text-red-950 md:text-1xl font-semibold">Criação</li>
@@ -51,16 +53,21 @@ export default async function Painel() {
                     </ul>
                     {
                         cars.cars.length > 0 ? (cars.cars.map(car => (
-                            <div key={car.id} className="flex flex-row w-full bg-red-200 rounded-lg p-2 overflow-hidden gap-6">
-                                <div className="w-32 h-32 rounded-lg overflow-hidden">
-                                    <img className="object-cover" src={`${process.env.NEXT_S3_URL}/${car.source}`} alt="Photo" />
+                            <div key={car.id} className="flex flex-row items-center justify-center w-full h-32 bg-red-200 rounded-lg p-2 overflow-hidden gap-6 group">
+                                <div className="w-48 py-10 rounded-lg">
+                                    <img className="flex items-center h-full rounded-lg object-contain" src={`${process.env.NEXT_S3_URL}/${car.source}`} alt="Photo" />
                                 </div>
-                                <ul className="flex flex-col md:flex-row gap-20 items-center justify-center">
-                                    <li className="uppercase w-full md:w-96 text-red-950 md:text-1xl font-semibold">{car.description}</li>
-                                    <li className="text-red-950 md:text-1xl font-semibold"> {car.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
-                                    <li className="text-red-950 md:text-1xl font-semibold">{car.year}</li>
-                                    <li className="text-red-950 md:text-1xl font-semibold">{format(new Date(car.created_at), 'dd/MM/yyyy')}</li>
-                                    <li className="text-red-950 md:text-1xl font-semibold">{format(new Date(car.updated_at), 'dd/MM/yyyy')}</li>
+                                <ul className="grid grid-cols-6 md:flex-row gap-20 items-center justify-center">
+                                    <li className="items-center justify-center uppercase w-full md:w-96 text-red-950 md:text-1xl font-semibold">{car.description}</li>
+                                    <li className="items-center justify-center text-red-950 md:text-1xl font-semibold"> {car.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
+                                    <li className="items-center justify-center text-red-950 md:text-1xl font-semibold">{car.year}</li>
+                                    <li className="items-center justify-center text-red-950 md:text-1xl font-semibold">{format(new Date(car.created_at), 'dd/MM/yyyy')}</li>
+                                    <li className="items-center justify-center text-red-950 md:text-1xl font-semibold">{format(new Date(car.updated_at), 'dd/MM/yyyy')}</li>
+                                    <li>
+                                        <Link href={`edit-cars/${car.id}`} className="opacity-0 group-hover:opacity-100 transition-all duration-150">
+                                            <Edit className="text-red-950" />
+                                        </Link>
+                                    </li>
                                 </ul>
                             </div>
                         ))) : (<h2 className="flex items-center justify-center text-lg text-gray-300">Não há carros a serem exibidos</h2>)

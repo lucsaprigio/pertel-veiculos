@@ -19,7 +19,7 @@ const createCarFormSchema = z.object({
     description: z.string().min(5, 'Preencha a descrição').transform(description => {
         return description.toLocaleUpperCase()
     }),
-    price: z.string().min(1, 'Preço obrigatório'),
+    price: z.string().min(1, 'Preço obrigatório').transform(price => { return price.replaceAll('R$', '').replaceAll('.', '').replaceAll(',', '.') }),
     km: z.string().min(1, 'Preencha a Quilometragem').transform(km => {
         const numericValue = parseFloat(km.replace(/\./g, '')) || 0;
         return numericValue.toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
@@ -64,8 +64,6 @@ export default function NewCarForm({ token }: Props) {
             const formData = new FormData();
             const formDataFiles = new FormData();
 
-            console.log(data.file.name);
-
             formData.append('description', data.description.toLocaleUpperCase());
             formData.append('price', data.price);
             formData.append('km', data.km.replaceAll('.', ''));
@@ -74,7 +72,7 @@ export default function NewCarForm({ token }: Props) {
             formData.append('exchange', data.exchange.toUpperCase());
             formData.append('doors', data.doors);
             formData.append('file', data.file);
-            console.log(formDataFiles)
+            console.log(data.price)
 
             const response = await axios.post(`${process.env.NEXT_PUBLIC_API_NODE}/new-car`, formData, {
                 headers: {
@@ -181,6 +179,7 @@ export default function NewCarForm({ token }: Props) {
                 showDialog={isDialogOpen}
                 source={sourceDialog}
                 onClose={handleCloseDialog}
+                actionButton={handleCloseDialog}
             />
             <form onSubmit={handleSubmit(handleRegisterCar)} className="grid grid-cols-2 gap-6 my-10 bg-gray-50 py-10 md:px-32 rounded-lg">
                 <div className="w-full gap-1 col-span-2">

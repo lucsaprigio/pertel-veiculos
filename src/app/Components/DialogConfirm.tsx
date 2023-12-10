@@ -8,11 +8,12 @@ interface Props {
     okButton: string;
     cancelButton?: string;
     onClose: () => void;
+    actionButton: () => void;
     source: string;
     showDialog: boolean;
 }
 
-export function DialogConfirm({ description, source, okButton, cancelButton, title, onClose, showDialog = false }: Props) {
+export function DialogConfirm({ description, source, okButton, cancelButton, title, onClose, showDialog = false, actionButton }: Props) {
     const [isOpen, setIsOpen] = useState(true);
 
     function handleClose() {
@@ -36,7 +37,7 @@ export function DialogConfirm({ description, source, okButton, cancelButton, tit
 
                         <div className="grid grid-cols-2 items-center justify-center gap-3">
                             <div className={`w-full ${!cancelButton && 'col-span-2'}`}>
-                                <button className="w-full bg-red-800 text-gray-50 p-1 rounded-lg hover:brightness-90 transition-all duration-150" onClick={() => handleClose()}>{okButton}</button>
+                                <button className="w-full bg-red-800 text-gray-50 p-1 rounded-lg hover:brightness-90 transition-all duration-150" onClick={actionButton}>{okButton}</button>
                             </div>
                             {
                                 cancelButton && (

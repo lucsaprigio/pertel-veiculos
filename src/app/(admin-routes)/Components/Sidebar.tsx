@@ -18,15 +18,15 @@ export function Sidebar({ user, email }: Props) {
                 <span className="text-sm text-zinc-200">{email}</span>
             </div>
             <nav className="space-y-8 my-2">
-                <Link href="/painel" className='flex items-center gap-3 text-sm font-semibold text-zinc-200'>
+                <Link href="/painel" className='flex items-center gap-3 text-sm font-semibold text-zinc-200 hover:scale-105 transition-all duration-150'>
                     <HomeIcon />
                     Painel
                 </Link>
-                <Link href="/painel/register-car" className='flex items-center gap-3 text-sm font-semibold text-zinc-200'>
+                <Link href="/painel/register-car" className='flex items-center gap-3 text-sm font-semibold text-zinc-200 hover:scale-105 transition-all duration-150'>
                     <Car />
                     Cadastrar Veículo
                 </Link>
-                <Link href="/account" className='flex items-center gap-3 text-sm font-semibold text-zinc-200'>
+                <Link href="/account" className='flex items-center gap-3 text-sm font-semibold text-zinc-200 hover:scale-105 transition-all duration-150'>
                     <User />
                     Minha conta
                 </Link>

@@ -8,6 +8,7 @@ import { UserCircle2, EyeIcon, EyeOffIcon } from 'lucide-react';
 import { DialogConfirm } from "@/app/Components/DialogConfirm";
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import Loading from "react-loading";
 
 const handleSigninFormSchema = z.object({
     email: z.string().min(1, 'Email obrigatório').email('Digite um e-mail válido'),
@@ -21,6 +22,7 @@ export default function SignIn() {
 
     const [visible, setVisible] = useState(false);
     const [dialogIsOpen, setDialogIsOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const router = useRouter();
 
@@ -30,6 +32,7 @@ export default function SignIn() {
 
     async function handleSignin(data: any) {
         try {
+            setLoading(true);
             const result = await signIn('credentials', {
                 email: data.email,
                 password: data.password,
@@ -38,12 +41,14 @@ export default function SignIn() {
 
             if (result.error) {
                 console.log(result.error);
+                setLoading(false);
                 return setDialogIsOpen(true);
             }
-
+            setLoading(false);
             router.replace('/painel')
         } catch (error) {
             console.log(error);
+            setLoading(false);
         }
     }
 
@@ -69,9 +74,10 @@ export default function SignIn() {
                     {...register('email')}
                 />
                 {errors.email && (
-                    <strong className="text-red-700">
+                    <span className="text-red-700">
                         {errors.email?.message as ReactNode}*
-                    </strong>)}
+                    </span>
+                )}
             </div>
             <div className="flex flex-col">
                 <div className={`w-full relative flex md:w-96 ${errors.password?.message ? 'border-red-700 border-2 rounded-md' : 'border-b-b-sm border-red-800'} group`}>
@@ -101,16 +107,22 @@ export default function SignIn() {
                 </div>
                 {
                     errors.password && (
-                        <strong className="text-red-700">
+                        <span className="text-red-700">
                             {errors.password?.message as ReactNode}*
-                        </strong>)
+                        </span>)
                 }
             </div>
             <span className="text-red-800 underline">Esqueci minha senha</span>
             <button
-                className="w-full md:w-96  bg-red-800 text-gray-50 h-10 rounded-lg my-3 hover:brightness-90 transition-all duration-150"
+                className="flex items-center justify-center w-full md:w-96  bg-red-800 text-gray-50 h-10 rounded-lg my-3 hover:brightness-90 transition-all duration-150"
                 type="submit">
-                Entrar
+                {
+                    loading ? (
+                        <Loading type='spin' width={32} height={32} />
+                    ) : (
+                        <span>Entrar</span>
+                    )
+                }
             </button>
         </form >
     )
