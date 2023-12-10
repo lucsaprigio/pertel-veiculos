@@ -3,17 +3,28 @@
 import { DialogConfirm } from '@/app/Components/DialogConfirm';
 import { ChangeEvent, useCallback, useState } from 'react';
 import Loading from 'react-loading';
+import { Trash2 } from 'lucide-react';
 import { FileInput } from './FileInput';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 interface Props {
+    id: string;
     token: string;
+    description: string;
+    price: string;
+    km: string;
+    year: string;
+    fuelType: string;
+    exchange: string;
+    doors: string;
+    imageCars: Array<any>
 }
 
-type CreateCarFormData = z.infer<typeof createCarFormSchema>;
+type UpdateCarFormData = z.infer<typeof createCarFormSchema>;
 
 const createCarFormSchema = z.object({
     description: z.string().min(5, 'Preencha a descrição').transform(description => {
@@ -31,9 +42,19 @@ const createCarFormSchema = z.object({
     file: z.instanceof(FileList).transform(list => list.item(0))
 })
 
-export default function NewCarForm({ token }: Props) {
-    const { register, handleSubmit, formState: { errors }, setValue, reset } = useForm<CreateCarFormData>({
-        resolver: zodResolver(createCarFormSchema)
+export default function UpdateCarForm({ description, doors, exchange, fuelType, km, price, year, token, id, imageCars }: Props) {
+    const route = useRouter();
+    const { register, handleSubmit, formState: { errors }, setValue, reset } = useForm<UpdateCarFormData>({
+        resolver: zodResolver(createCarFormSchema),
+        defaultValues: {
+            description: description,
+            price: price,
+            exchange: exchange,
+            fuelType: fuelType,
+            year: year,
+            km: km,
+            doors: doors
+        }
     });
 
     const [loading, setLoading] = useState(false);
@@ -58,7 +79,7 @@ export default function NewCarForm({ token }: Props) {
         setFiles(files);
     }, []);
 
-    async function handleRegisterCar(data: CreateCarFormData) {
+    async function handleUpdateCar(data: UpdateCarFormData) {
         try {
             setLoading(true);
             const formData = new FormData();
@@ -72,9 +93,8 @@ export default function NewCarForm({ token }: Props) {
             formData.append('exchange', data.exchange.toUpperCase());
             formData.append('doors', data.doors);
             formData.append('file', data.file);
-            console.log(data.price)
 
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_NODE}/new-car`, formData, {
+            const response = await axios.put(`${process.env.NEXT_PUBLIC_API_NODE}/update-car/${id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}`,
@@ -87,23 +107,22 @@ export default function NewCarForm({ token }: Props) {
                 });
             }
 
-            await axios.post(`${process.env.NEXT_PUBLIC_API_NODE}/add-image-car/${response.data.newCar.id}`, formDataFiles, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'Authorization': `Bearer ${token}`,
-                }
-            });
+            /*             await axios.post(`${process.env.NEXT_PUBLIC_API_NODE}/add-image-car/${response.data.newCar.id}`, formDataFiles, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data',
+                                'Authorization': `Bearer ${token}`,
+                            }
+                        }); */
 
             setIsDialogOpen(true);
 
-            setTitleDialog('Cadastro feito com sucesso!');
+            setTitleDialog('Veículo atualizado com sucesso!');
             setDescriptionDialog('Deseja continuar cadastrando?');
             setSourceDialog('/images/checked.png');
             setOkButtonDialog('Sim');
             setLoading(false);
-
-            reset();
             setFiles(null);
+            reset();
         } catch (err) {
             setLoading(false);
             setIsDialogOpen(true);
@@ -114,6 +133,53 @@ export default function NewCarForm({ token }: Props) {
             setOkButtonDialog('Ok');
 
             console.log(err);
+        }
+    }
+
+    function handlePushPainel() {
+        route.push('/painel');
+    }
+
+    async function handleDeleteCar() {
+        try {
+            setLoading(true);
+
+            await axios.delete(`${process.env.NEXT_PUBLIC_API_NODE}/delete-car/${id}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                }
+            })
+                .then(() => {
+                    setIsDialogOpen(true);
+
+                    setTitleDialog('Veículo excluído!');
+                    setDescriptionDialog('');
+                    setSourceDialog('/images/checked.png');
+                    setOkButtonDialog('Ok');
+                    setLoading(false);
+                    reset();
+                    setTimeout(() => {
+                        route.push('/painel')
+                    }, 3000);
+                }).catch((response) => {
+                    setIsDialogOpen(true);
+                    console.log(response);
+                    setTitleDialog('Ocorreu um erro ao excluir.');
+                    setDescriptionDialog('');
+                    setSourceDialog('/images/cancel.png');
+                    setOkButtonDialog('Sim');
+                    setLoading(false);
+                })
+        } catch (err) {
+            setIsDialogOpen(true);
+
+            console.log(err);
+            setTitleDialog('Ocorreu um erro interno!');
+            setDescriptionDialog('Entre em contato conosco para mais informações');
+            setSourceDialog('/images/cancel.png');
+            setOkButtonDialog('Sim');
+            setLoading(false);
         }
     }
 
@@ -178,10 +244,9 @@ export default function NewCarForm({ token }: Props) {
                 cancelButton="Ir para o Painel"
                 showDialog={isDialogOpen}
                 source={sourceDialog}
-                onClose={handleCloseDialog}
-                actionButton={handleCloseDialog}
+                actionButton={handlePushPainel}
             />
-            <form onSubmit={handleSubmit(handleRegisterCar)} className="grid grid-cols-2 gap-6 my-10 bg-gray-50 py-10 md:px-32 rounded-lg">
+            <form onSubmit={handleSubmit(handleUpdateCar)} className="grid grid-cols-2 gap-6 my-10 bg-gray-50 py-10 md:px-32 rounded-lg">
                 <div className="w-full gap-1 col-span-2">
                     <span className="text-red-950 font-bold">Descrição*</span>
                     <input className={`w-full h-12 p-2 bg-white border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`}
@@ -271,6 +336,17 @@ export default function NewCarForm({ token }: Props) {
                         })}
                     />
                 </div>
+
+                <div className="flex flex-row w-full h-32 gap-2">
+                    {
+                        imageCars && imageCars.map((item, index) => (
+                            <button key={index} type="button" className="relative flex items-center justify-center w-20 h-20 group">
+                                <img className="w-full h-full object-cover group-hover:shadow-2xl group-hover:opacity-50 transition-all duration-200 rounded-lg" src={`${process.env.NEXT_PUBLIC_S3_URL}/${item.source}`} alt={`item.source`} />
+                                <Trash2 className='absolute opacity-0 w-10 h-10 text-red-600 group-hover:opacity-100 transition-all duration-200' />
+                            </button>
+                        ))
+                    }
+                </div>
                 <div className="flex flex-col w-full gap-1 col-span-2">
                     <span className="text-red-950 font-bold">Selecione uma imagem (Imagem principal)*</span>
                     <input className="w-full h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2"
@@ -288,15 +364,28 @@ export default function NewCarForm({ token }: Props) {
                     />
                 </div>
 
-                <div className="flex flex-col w-full gap-1 col-span-2">
+                <div className="flex flex-col items-center justify-center w-full gap-2 col-span-2">
                     <button
-                        className="flex items-center justify-center text-gray-50 bg-red-800 hover:brightness-90 transition-all duration-100 rounded-lg p-6"
+                        className="flex w-full items-center justify-center text-gray-50 bg-red-800 hover:brightness-90 transition-all duration-100 rounded-lg p-6"
                         type='submit'>
                         {
                             loading ? (
                                 <Loading type='spin' width={32} height={32} />
                             ) : (
-                                <span>Cadastrar</span>
+                                <span>Atualizar</span>
+                            )
+                        }
+                    </button>
+                    <button
+                        className="flex w-full items-center justify-center text-gray-50 bg-red-700 hover:brightness-90 transition-all duration-100 rounded-lg p-6"
+                        type='button'
+                        onClick={handleDeleteCar}
+                    >
+                        {
+                            loading ? (
+                                <Loading type='spin' width={32} height={32} />
+                            ) : (
+                                <span>Excluir</span>
                             )
                         }
                     </button>

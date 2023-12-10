@@ -26,7 +26,7 @@ export function Sidebar({ user, email }: Props) {
                     <Car />
                     Cadastrar Veículo
                 </Link>
-                <Link href="/account" className='flex items-center gap-3 text-sm font-semibold text-zinc-200 hover:scale-105 transition-all duration-150'>
+                <Link href="/painel/account" className='flex items-center gap-3 text-sm font-semibold text-zinc-200 hover:scale-105 transition-all duration-150'>
                     <User />
                     Minha conta
                 </Link>

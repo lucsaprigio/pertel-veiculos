@@ -7,8 +7,8 @@ interface Props {
     description: string;
     okButton: string;
     cancelButton?: string;
-    onClose: () => void;
-    actionButton: () => void;
+    onClose?: () => void;
+    actionButton?: () => void;
     source: string;
     showDialog: boolean;
 }

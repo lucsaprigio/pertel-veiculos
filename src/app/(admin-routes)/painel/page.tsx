@@ -2,9 +2,11 @@ import { Cars } from "@/app/DTO/ICars";
 import { format } from 'date-fns';
 import { Edit } from 'lucide-react';
 import Link from "next/link";
+import ReloadButton from "../Components/ReloadButton";
+
 async function getCars(): Promise<Cars> {
     try {
-        const response = await fetch(`${process.env.NEXT_API_NODE}/all-cars`, { cache: 'no-cache' });
+        const response = await fetch(`${process.env.NEXT_API_NODE}/all-cars`, { next: { revalidate: 10 } });
 
         return response.json();
     } catch (err) {
@@ -17,11 +19,12 @@ export default async function Painel() {
 
     return (
         <main className="flex flex-col items-center justify-center w-full h-full px-3">
-            <section className="flex py-6 h-20">
+            <section className="flex flex-col gap-2 py-6 h-20">
                 <h2 className="text-2xl font-bold">Painel</h2>
             </section>
             <section className="flex flex-col items-center">
                 <span className="font-bold text-lg text-center mb-4">Últimas atualizações</span>
+                <ReloadButton />
                 <div className="w-full grid grid-cols-5 gap-2">
                     {
                         cars.cars.length > 0 ? (cars.cars.sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())
@@ -64,7 +67,7 @@ export default async function Painel() {
                                     <li className="items-center justify-center text-red-950 md:text-1xl font-semibold">{format(new Date(car.created_at), 'dd/MM/yyyy')}</li>
                                     <li className="items-center justify-center text-red-950 md:text-1xl font-semibold">{format(new Date(car.updated_at), 'dd/MM/yyyy')}</li>
                                     <li>
-                                        <Link href={`edit-cars/${car.id}`} className="opacity-0 group-hover:opacity-100 transition-all duration-150">
+                                        <Link href={`/painel/edit-car/${car.id}`} className="opacity-0 group-hover:opacity-100 transition-all duration-150">
                                             <Edit className="text-red-950" />
                                         </Link>
                                     </li>

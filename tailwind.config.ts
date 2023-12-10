@@ -17,7 +17,8 @@ const config: Config = {
       borderWidth: {
         'b-bottom': '0 0 0.2px 0',
         'b-sm': '0.2px',
-        'b-top-sm': '0.2px 0 0 0'
+        'b-top-sm': '0.2px 0 0 0',
+        'border-1': '1px'
       },
       keyframes: {
         'loopAnimation': {
