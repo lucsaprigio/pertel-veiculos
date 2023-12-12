@@ -95,6 +95,8 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
             formData.append('doors', data.doors);
             formData.append('file', data.file);
 
+            console.log(data)
+
             const response = await api.put(`${process.env.NEXT_PUBLIC_API_NODE}/update-car/${id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -106,15 +108,15 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
                 files.forEach((file) => {
                     formDataFiles.append('file', file);
                 });
+
+                await api.post(`${process.env.NEXT_PUBLIC_API_NODE}/add-image-car/${response.data.id}`, formDataFiles, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Authorization': `Bearer ${token}`,
+                    }
+                });
             }
-
-            await api.post(`${process.env.NEXT_PUBLIC_API_NODE}/add-image-car/${response.data.id}`, formDataFiles, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'Authorization': `Bearer ${token}`,
-                }
-            });
-
+            
             setIsDialogOpen(true);
 
             setTitleDialog('Veículo atualizado com sucesso!');
@@ -128,6 +130,7 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
             setLoading(false);
             setIsDialogOpen(true);
 
+            console.log(err)
             setTitleDialog('Ocorreu um erro!');
             setDescriptionDialog('Parece que houve um erro com o servidor, tente novamente.');
             setSourceDialog('/images/cancel.png');
