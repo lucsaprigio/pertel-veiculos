@@ -14,7 +14,6 @@ export default function CarsPainel() {
         try {
             const response = await api.get('/all-cars');
 
-            console.log(response);
             setCars(response.data.cars);
         } catch (err) {
             console.log(err);

@@ -10,7 +10,7 @@ async function getCar(id: string): Promise<Car> {
 
         return response.json();
     } catch (err) {
-        console.log(err);
+        console.log('Aconteceu um erro');
     }
 }
 

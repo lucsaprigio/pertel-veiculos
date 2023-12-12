@@ -19,7 +19,6 @@ export const nextAuthOptions: AuthOptions = {
                     })
 
                     const user = response.data;
-                    console.log(user);
 
                     if (!response.data.error) {
                         return user
@@ -27,7 +26,7 @@ export const nextAuthOptions: AuthOptions = {
 
                     return null
                 } catch (err) {
-                    console.log(err);
+                    return null
                 }
             },
         })

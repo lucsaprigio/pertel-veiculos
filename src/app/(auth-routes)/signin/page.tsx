@@ -40,14 +40,12 @@ export default function SignIn() {
             });
 
             if (result.error) {
-                console.log(result.error);
                 setLoading(false);
                 return setDialogIsOpen(true);
             }
             setLoading(false);
             router.replace('/painel')
         } catch (error) {
-            console.log(error);
             setLoading(false);
         }
     }

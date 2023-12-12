@@ -71,7 +71,6 @@ export default function UpdateUserForm({ email, name, token, id }: UpdateFormPro
             setLoading(false);
         } catch (err) {
             setLoading(false);
-            console.log(err);
         }
     }
 

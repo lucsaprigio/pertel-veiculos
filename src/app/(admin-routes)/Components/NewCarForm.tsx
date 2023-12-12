@@ -72,7 +72,6 @@ export default function NewCarForm({ token }: Props) {
             formData.append('exchange', data.exchange.toUpperCase());
             formData.append('doors', data.doors);
             formData.append('file', data.file);
-            console.log(data.price)
 
             const response = await axios.post(`${process.env.NEXT_PUBLIC_API_NODE}/new-car`, formData, {
                 headers: {
@@ -113,7 +112,6 @@ export default function NewCarForm({ token }: Props) {
             setSourceDialog('/images/cancel.png');
             setOkButtonDialog('Ok');
 
-            console.log(err);
         }
     }
 
@@ -155,7 +153,6 @@ export default function NewCarForm({ token }: Props) {
             // Verifica se o tipo do arquivo é uma imagem
             if (selectedFile.type.startsWith('image/')) {
                 // Faça o que você precisa com o arquivo de imagem
-                console.log('Arquivo de imagem selecionado:', selectedFile);
                 setFile(selectedFile);
             } else {
                 alert('Por favor, selecione um arquivo de imagem.');

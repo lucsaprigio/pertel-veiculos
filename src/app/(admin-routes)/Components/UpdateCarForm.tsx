@@ -133,7 +133,6 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
             setSourceDialog('/images/cancel.png');
             setOkButtonDialog('Fechar');
 
-            console.log(err);
         }
     }
 
@@ -153,7 +152,6 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
                     route.refresh();
                 })
                 .catch((response) => {
-                    console.log(response);
                     if (response.response.status === 401) {
                         setIsDialogOpen(true);
 
@@ -165,7 +163,7 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
                     }
                 });
         } catch (err) {
-            console.log(err)
+            return null
         }
     };
 
@@ -193,7 +191,6 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
                     }, 3000);
                 }).catch((response) => {
                     setIsDialogOpen(true);
-                    console.log(response);
                     setTitleDialog('Ocorreu um erro ao excluir.');
                     setDescriptionDialog('');
                     setSourceDialog('/images/cancel.png');
@@ -202,8 +199,6 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
                 })
         } catch (err) {
             setIsDialogOpen(true);
-
-            console.log(err);
             setTitleDialog('Ocorreu um erro interno!');
             setDescriptionDialog('Entre em contato conosco para mais informações');
             setSourceDialog('/images/cancel.png');
@@ -250,7 +245,6 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
             // Verifica se o tipo do arquivo é uma imagem
             if (selectedFile.type.startsWith('image/')) {
                 // Faça o que você precisa com o arquivo de imagem
-                console.log('Arquivo de imagem selecionado:', selectedFile);
                 setFile(selectedFile);
             } else {
                 alert('Por favor, selecione um arquivo de imagem.');
