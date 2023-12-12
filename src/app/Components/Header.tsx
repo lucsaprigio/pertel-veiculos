@@ -15,7 +15,6 @@ export function Header() {
 
     function handleScroll() {
         const currentScrollPos = window.scrollY;
-        console.log(currentScrollPos)
 
         setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
         setColor(currentScrollPos <= 600);

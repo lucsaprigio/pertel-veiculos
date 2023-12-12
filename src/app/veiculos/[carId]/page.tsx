@@ -17,7 +17,6 @@ async function getCar(carId: string): Promise<Car> {
 
 export default async function CarDetailsPage({ params }: { params: { carId: string } }) {
     const car = await getCar(params.carId);
-    console.log(car);
     const title = `${car.description} | Veículos`;
 
     return (

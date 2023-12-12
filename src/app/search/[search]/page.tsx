@@ -18,7 +18,6 @@ async function getCar(search: string): Promise<Cars> {
 export default async function SearchParams({ params }: { params: { search: string } }) {
     const decoded = decodeURIComponent(params.search);
     const cars = await getCar(decoded);
-    console.log(cars);
 
     return (
         <>
