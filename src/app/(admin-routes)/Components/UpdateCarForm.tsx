@@ -10,6 +10,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import { api } from '@/app/axios/api';
 
 interface Props {
     id: string;
@@ -94,7 +95,7 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
             formData.append('doors', data.doors);
             formData.append('file', data.file);
 
-            const response = await axios.put(`${process.env.NEXT_PUBLIC_API_NODE}/update-car/${id}`, formData, {
+            const response = await api.put(`${process.env.NEXT_PUBLIC_API_NODE}/update-car/${id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}`,
@@ -107,19 +108,19 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
                 });
             }
 
-            /*             await axios.post(`${process.env.NEXT_PUBLIC_API_NODE}/add-image-car/${response.data.newCar.id}`, formDataFiles, {
-                            headers: {
-                                'Content-Type': 'multipart/form-data',
-                                'Authorization': `Bearer ${token}`,
-                            }
-                        }); */
+            await api.post(`${process.env.NEXT_PUBLIC_API_NODE}/add-image-car/${response.data.id}`, formDataFiles, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
 
             setIsDialogOpen(true);
 
             setTitleDialog('Veículo atualizado com sucesso!');
-            setDescriptionDialog('Deseja continuar cadastrando?');
+            setDescriptionDialog('');
             setSourceDialog('/images/checked.png');
-            setOkButtonDialog('Sim');
+            setOkButtonDialog('Voltar para o painel');
             setLoading(false);
             setFiles(null);
             reset();
@@ -130,7 +131,7 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
             setTitleDialog('Ocorreu um erro!');
             setDescriptionDialog('Parece que houve um erro com o servidor, tente novamente.');
             setSourceDialog('/images/cancel.png');
-            setOkButtonDialog('Ok');
+            setOkButtonDialog('Fechar');
 
             console.log(err);
         }
@@ -139,6 +140,34 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
     function handlePushPainel() {
         route.push('/painel');
     }
+
+    async function handheDeleteImageCar(carId: string) {
+        try {
+            api.delete(`/del-image-car/${carId}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                }
+            })
+                .then(() => {
+                    route.refresh();
+                })
+                .catch((response) => {
+                    console.log(response);
+                    if (response.response.status === 401) {
+                        setIsDialogOpen(true);
+
+                        setTitleDialog('Sessão expirada');
+                        setDescriptionDialog('Inicie uma nova sessão');
+                        setSourceDialog('/images/cancel.png');
+                        setOkButtonDialog('Ok');
+                        setLoading(false);
+                    }
+                });
+        } catch (err) {
+            console.log(err)
+        }
+    };
 
     async function handleDeleteCar() {
         try {
@@ -156,7 +185,7 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
                     setTitleDialog('Veículo excluído!');
                     setDescriptionDialog('');
                     setSourceDialog('/images/checked.png');
-                    setOkButtonDialog('Ok');
+                    setOkButtonDialog('Voltar para o painel');
                     setLoading(false);
                     reset();
                     setTimeout(() => {
@@ -168,7 +197,7 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
                     setTitleDialog('Ocorreu um erro ao excluir.');
                     setDescriptionDialog('');
                     setSourceDialog('/images/cancel.png');
-                    setOkButtonDialog('Sim');
+                    setOkButtonDialog('Fechar');
                     setLoading(false);
                 })
         } catch (err) {
@@ -181,7 +210,7 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
             setOkButtonDialog('Sim');
             setLoading(false);
         }
-    }
+    };
 
     function handleSetYear(value: any) {
         return value
@@ -241,7 +270,6 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
                 title={titleDialog}
                 description={descriptionDialog}
                 okButton={okButtonDialog}
-                cancelButton="Ir para o Painel"
                 showDialog={isDialogOpen}
                 source={sourceDialog}
                 actionButton={handlePushPainel}
@@ -340,7 +368,7 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
                 <div className="flex flex-row w-full h-32 gap-2">
                     {
                         imageCars && imageCars.map((item, index) => (
-                            <button key={index} type="button" className="relative flex items-center justify-center w-20 h-20 group">
+                            <button key={index} onClick={() => handheDeleteImageCar(item.id)} type="button" className="relative flex items-center justify-center w-20 h-20 group">
                                 <img className="w-full h-full object-cover group-hover:shadow-2xl group-hover:opacity-50 transition-all duration-200 rounded-lg" src={`${process.env.NEXT_PUBLIC_S3_URL}/${item.source}`} alt={`item.source`} />
                                 <Trash2 className='absolute opacity-0 w-10 h-10 text-red-600 group-hover:opacity-100 transition-all duration-200' />
                             </button>
