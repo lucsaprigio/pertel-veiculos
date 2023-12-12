@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 
 import { useEffect, useState } from 'react';
 import { MenuDropddown } from "./MenuDropdown";
+import { FaWhatsapp } from 'react-icons/fa'
 
 export function Header() {
     const pathname = usePathname();
@@ -32,7 +33,7 @@ export function Header() {
 
     return (
         <>
-            <aside className={`relative flex w-full p-10 h-16 bg-gradient-to-b from-red-800 to-red-700 shadow-xl z-50 ${visible ? 'translate-y-0' : '-translate-y-full transform transition-all duration-200'}`}>
+            <aside className={`relative flex justify-around w-full p-10 h-16 bg-gradient-to-b from-red-800 to-red-700 shadow-xl z-50 ${visible ? 'translate-y-0' : '-translate-y-full transform transition-all duration-200'}`}>
                 <nav className="flex flex-row gap-28 justify-center items-center ">
                     <div className="flex w-32 h-20 justify-center ml-3">
                         <Link href="/">
@@ -54,6 +55,13 @@ export function Header() {
                         </Link>
                     </div>
                 </nav>
+                <div className="flex flex-row items-center gap-2 justify-center">
+                    <FaWhatsapp size={32} className="text-gray-50" />
+                    <div>
+                        <span className="flex gap-3 text-gray-50 text-sm text-left">Felipe - (27) 99754-6411</span>
+                        <span className="flex gap-3 text-gray-50 text-sm text-left">Michel - (27) 99836-6919</span>
+                    </div>
+                </div>
                 <div className="absolute right-0 top-0 mt-5 mr-10 min-[868px]:hidden">
                     <MenuDropddown />
                 </div>

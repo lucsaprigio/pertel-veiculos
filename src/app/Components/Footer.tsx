@@ -18,9 +18,15 @@ export function Footer() {
                     <Mail color="#FFFFFF" size={20} />
                     <span className="text-gray-150">pertelveiculos@hotmail.com</span>
                 </div>
-                <div className="flex flex-row gap-2 items-center justify-center text-center">
-                    <PhoneIcon color="#FFFFFF" size={20} />
-                    <span className="text-gray-150">(27) 99754-6411 </span>
+                <div className="flex flex-col items-center justify-center">
+                    <div className="flex flex-row gap-2 items-center justify-center text-center">
+                        <PhoneIcon color="#FFFFFF" size={20} />
+                        <span className="text-gray-150">Felipe - (27) 99754-6411 </span>
+                    </div>
+                    <div className="flex flex-row gap-2 items-center justify-center text-center">
+                        <PhoneIcon color="#FFFFFF" size={20} />
+                        <span className="text-gray-150">Michel - (27) 99836-6919 </span>
+                    </div>
                 </div>
                 <div className="flex flex-row gap-2 items-center justify-center text-center">
                     <MapPin color="#FFFFFF" size={20} />
