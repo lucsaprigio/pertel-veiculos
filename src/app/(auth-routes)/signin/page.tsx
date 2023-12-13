@@ -59,6 +59,7 @@ export default function SignIn() {
                 description="Usuário ou senha incorretas!"
                 okButton="Fechar"
                 onClose={handleCloseModal}
+                actionButton={handleCloseModal}
                 showDialog={dialogIsOpen}
                 source="/images/cancel.png"
             />

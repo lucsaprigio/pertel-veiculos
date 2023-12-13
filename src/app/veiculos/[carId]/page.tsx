@@ -41,11 +41,11 @@ export default async function CarDetailsPage({ params }: { params: { carId: stri
                         </Slider>
                     </div>
 
-                    <div className="w-full flex flex-col items-center justify-start gap-10 bg-gray-50 rounded-lg my-10 p-7 md:p-10">
+                    <div className="w-full flex flex-col items-center justify-start gap-4 bg-gray-50 rounded-lg my-10 p-7 md:p-10">
                         <div className="w-full border-b-bottom border-red-700 mb-1">
                             <strong className="w-full uppercase text-2xl text-red-700 mb-3">{car.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</strong>
                         </div>
-                        <ul className="w-full flex flex-row lg:gap-28 items-center justify-around mt-4 border-b-bottom border-red-700">
+                        <ul className="w-full flex flex-row lg:gap-20 items-center justify-around mt-4 border-b-bottom border-red-700">
                             <ul className="flex flex-col md:gap-3 w-full">
                                 <li className="flex gap-3 my-2"><CarFront /> Marca: </li>
                                 <li className="flex gap-3 my-2"><CalendarDays />Ano: </li>
@@ -63,13 +63,11 @@ export default async function CarDetailsPage({ params }: { params: { carId: stri
                                 <li className="flex gap-3 my-2"><strong className="uppercase text-red-600 text-1xl">{car.doors}</strong></li>
                             </ul>
                         </ul>
-                        <ul className="grid grid-cols-2 gap-14">
-                            <li className="flex items-center gap-1"><Check className="text-red-700" /><span>Garantia na loja (3 meses)</span></li>
-                            <li className="flex items-center gap-1"><Check className="text-red-700" /><span>Garantia na loja (3 meses)</span></li>
+                        <ul className="flex items-center">
                             <li className="flex items-center gap-1"><Check className="text-red-700" /><span>Garantia na loja (3 meses) </span></li>
                         </ul>
                         <div className="w-full mt-3">
-                            <strong className="flex items-center justify-center text-red-600 text-lg lg:text-3xl">Este anúncio te interessou?</strong>
+                            <strong className="flex items-center justify-center text-red-600 text-lg lg:text-2xl">Este anúncio te interessou?</strong>
                         </div>
                         <div className="flex w-full h-full items-center justify-center ">
                             <SendWhatsapp />

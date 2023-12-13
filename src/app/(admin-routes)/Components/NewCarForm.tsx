@@ -277,7 +277,7 @@ export default function NewCarForm({ token }: Props) {
                         {...register('file')}
                     />
                 </div>
-                <div className="w-full h-80 col-span-2 flex items-center justify-center">
+                <div className="w-full max-h-80 overflow-y-auto col-span-2 flex items-center justify-center">
                     <FileInput
                         files={files}
                         onDrop={onDrop}

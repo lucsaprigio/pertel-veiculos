@@ -48,7 +48,7 @@ export function Slider({ children }: SliderProps
 
     return (
         <div className="flex flex-col">
-            <div ref={sliderRef} className="keen-slider hover:cursor-grab relative h-2/5 flex items-center">
+            <div ref={sliderRef} className="keen-slider hover:cursor-grab relative h-full flex items-center">
                 <button className="absolute left-0 top-1/2 justify-center z-50" onClick={() => handlePreviousSlide()}><ChevronLeftCircle className="text-white opacity-20 hover:scale-105 hover:opacity-80 transition-all duration-200" size={38} /></button>
                 {
                     React.Children.map(children, (child, index) => (
@@ -59,8 +59,6 @@ export function Slider({ children }: SliderProps
             </div>
 
             <div className="relative grid grid-cols-5 max-[868px]:hidden">
-                <button className="absolute -left-12 top-12 justify-center z-50" onClick={() => handlePreviousSlide()}><ChevronLeft className="text-red-400 opacity-80 hover:scale-105 transition-all duration-200" size={32} /></button>
-
                 {children.map((child, index) => (
                     <img
                         key={index}
@@ -71,7 +69,6 @@ export function Slider({ children }: SliderProps
                         draggable={false}
                     />
                 ))}
-                <button className="absolute -right-12 top-12 justify-center z-50" onClick={() => handleNextSlide()}><ChevronRight className="text-red-400 opacity-80 hover:scale-105 transition-all duration-200" size={32} /></button>
             </div>
         </div>
     );
