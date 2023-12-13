@@ -8,9 +8,9 @@ export function Footer() {
             <div className="flex flex-col gap-2 items-center justify-center mt-4 border-b-white border-b-bottom border-opacity-80">
                 <img src="/images/logo.svg" alt="Logo" className="w-40 h-24 object-contain" />
                 <nav className="flex gap-8 text-gray-150 my-3">
-                    <Link className="hover:scale-105 transition-all duration-200" href="#">Home</Link>
-                    <Link className="hover:scale-105 transition-all duration-200" href="#">Veículos</Link>
-                    <Link className="hover:scale-105 transition-all duration-200" href="#">Sobre</Link>
+                    <Link className="hover:scale-105 transition-all duration-200" href="/">Home</Link>
+                    <Link className="hover:scale-105 transition-all duration-200" href="/veiculos">Veículos</Link>
+                    <Link className="hover:scale-105 transition-all duration-200" href="/sobre">Sobre</Link>
                 </nav>
             </div>
             <div className="grid grid-cols-1 xl:grid-cols-3 gap-3 xl:gap-0 items-center justify-center place-content-between py-10 xl:px-10 border-b-white border-b-bottom border-opacity-80">
@@ -38,7 +38,7 @@ export function Footer() {
 
             <div className="flex flex-row place-content-between mt-4 h-14 w-full bg-red-800 rounded-lg">
                 <div className="flex flex-rows items-center  px-2 gap-4 w-full">
-                    <Link className="hover:scale-110 transition-all duration-300" href="https://wa.me/5527997546411" target="blank">
+                    <Link className="hover:scale-110 transition-all duration-300" href="https://wa.me/27998366919" target="blank">
                         <FaWhatsapp color={'#FFFFFF'} size={28} />
                     </Link>
                     <Link className="hover:scale-110 transition-all duration-300" href="https://www.instagram.com/pertelveiculos/" target="blank">

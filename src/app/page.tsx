@@ -78,24 +78,27 @@ export default async function Home() {
           <div className="flex flex-col gap-20 items-center justify-center w-full h-full bg-red-200 mx-20 px-4 md:p-20 rounded-xl">
             <img className="w-64 h-64 opacity-50 object-contain rounded-full -mb-32" src="/images/sale-car.svg" alt="Logo" />
             <h2 className="text-black font-bold text-4xl text-center font-inter z-50">Quais motivos para comprar conosco?</h2>
-            <div className="flex flex-col md:flex-row px-10 gap-10">
+            <div className="lg:grid lg:grid-cols-3 flex flex-col px-10 gap-10">
               <BuyCard
-                title="Lorem Epsum"
-                description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-              when an unknown printer took a galley of type and scrambled it to make a type specimen book"
+                title="Tradição e Experiência"
+                iconName="car"
+                description=" Com mais de 30 anos no mercado de veículos seminovos, nossa empresa traz consigo uma tradição sólida e uma rica experiência. 
+                Ao escolher comprar conosco, você se beneficia da nossa longa história de dedicação ao cliente e conhecimento profundo do setor automotivo."
               />
               <BuyCard
-                title="Lorem Epsum"
-                description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-              when an unknown printer took a galley of type and scrambled it to make a type specimen book"
+                title="Qualidade Inigualável"
+                iconName="quality"
+                description="Destacamo-nos pela oferta de veículos seminovos de qualidade excepcional. 
+                Cada automóvel em nosso estoque é cuidadosamente selecionado, passando por rigorosas 
+                verificações para garantir que você adquira um veículo confiável e duradouro. 
+                A qualidade é a nossa prioridade, e reflete-se em cada carro que vendemos."
               />
               <BuyCard
-                title="Lorem Epsum"
-                description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-              when an unknown printer took a galley of type and scrambled it to make a type specimen book"
+                title="Atendimento e Compromisso"
+                iconName="service"
+                description="Nossa equipe está comprometida em oferecer um atendimento personalizado, 
+                compreendendo suas necessidades individuais e garantindo uma experiência de compra tranquila e satisfatória. Valorizamos cada cliente e estamos aqui para guiá-lo em cada etapa, 
+                desde a escolha do veículo até o financiamento, proporcionando confiança e tranquilidade durante todo o processo."
               />
             </div>
           </div>
