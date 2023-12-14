@@ -41,7 +41,7 @@ export function Footer() {
                     <Link className="hover:scale-110 transition-all duration-300" href="https://wa.me/27998366919" target="blank">
                         <FaWhatsapp color={'#FFFFFF'} size={28} />
                     </Link>
-                    <Link className="hover:scale-110 transition-all duration-300" href="https://www.instagram.com/pertelveiculos/" target="blank">
+                    <Link className="hover:scale-110 transition-all duration-300" href="https://www.instagram.com/fellipertel/" target="blank">
                         <Instagram color={'#FFFFFF'} size={28} />
                     </Link>
                     <Link className="hover:scale-110 transition-all duration-300" href="https://www.facebook.com/pertelveiculos/" target="blank">
