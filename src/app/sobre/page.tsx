@@ -23,8 +23,6 @@ export default function Sobre() {
                             Atendemos orgulhosamente toda a região de Colatina e o Noroeste do Espírito Santo, servindo nossa comunidade com integridade e profissionalismo. Estamos localizados na Avenida Silvio Ávidos, 3025, Bairro São Silvano, Colatina, 29703100.
 
                             Confie em nós para uma experiência única ao adquirir o seu próximo veículo. Sua satisfação é a nossa prioridade!
-
-                            Espero que esta versão seja mais atraente para seus clientes! Se precisar de mais ajustes ou informações adicionais, estou à disposição.
                         </span>
                     </div>
                     <div className="relative flex items-center justify-center">
