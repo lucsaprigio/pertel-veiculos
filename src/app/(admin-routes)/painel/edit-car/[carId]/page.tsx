@@ -25,6 +25,7 @@ export default async function UpdateCarPage({ params }: { params: { carId: strin
                 token={session.user.token}
                 description={car.description}
                 price={car.price.toString()}
+                source={car.source}
                 doors={car.doors.toString()}
                 exchange={car.exchange}
                 fuelType={car.fuelType}

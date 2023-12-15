@@ -69,16 +69,26 @@ function Input({ dropzone }: InputProps) {
 
 function HasFile({ files, removeFile }: HasFileProps) {
     return (
-        <div className="w-full">
+        <div className="flex flex-col items-center w-full gap-1">
             {files && files.length > 0 && (
                 <div>
                     {files.map((file, index) => (
                         <div key={index} className="flex items-center justify-center w-full h-full rounded-lg px-2 border-dashed border-4 border-red-800 hover:border-red-700 hover:bg-red-300 transition-all duration-100">
-                            <div className="bg-white w-full rounded-md shadow-md flex gap-3 items-center justify-center p-2">
-                                <ImageIcon className="w-5 h-6 my-4 ml-4" />
+                            <div className="relative bg-white w-full rounded-md shadow-md flex gap-3 items-center justify-center p-2">
+                                {
+                                    file.type.startsWith('image/') ? (
+                                        <img
+                                            src={URL.createObjectURL(file)}
+                                            alt={file.name}
+                                            className="w-10 h-10 my-4 ml-4 object-cover rounded-md"
+                                        />
+                                    ) : (
+                                        <ImageIcon className="w-5 h-6 my-4 ml-4" />
+                                    )
+                                }
                                 <span>{file.name}</span>
                                 <button onClick={() => removeFile(index)} className="place-self-start mt-1 p-1" type="button">
-                                    <X className="w-5 h-5" />
+                                    <X className="absolute top-3 right-2 w-5 h-5" />
                                 </button>
                             </div>
                         </div>

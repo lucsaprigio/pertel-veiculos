@@ -7,7 +7,6 @@ import { FileInput } from './FileInput';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import axios from 'axios';
 import { api } from '@/app/axios/api';
 
 interface Props {
@@ -48,6 +47,8 @@ export default function NewCarForm({ token }: Props) {
     const [file, setFile] = useState<File | null>(null);
 
     const [files, setFiles] = useState<File[] | null>(null);
+
+    const [imagePreview, setImagePreview] = useState(null);
 
     const removeFile = useCallback((index: number) => {
         const newFiles = [...(files || [])];
@@ -146,25 +147,22 @@ export default function NewCarForm({ token }: Props) {
         return formattedValue
     }
 
-    function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
-        const selectedFile = e.target.files[0];
-
-        // Verifica se um arquivo foi selecionado
-        if (selectedFile) {
-            // Verifica se o tipo do arquivo é uma imagem
-            if (selectedFile.type.startsWith('image/')) {
-                // Faça o que você precisa com o arquivo de imagem
-                setFile(selectedFile);
-            } else {
-                alert('Por favor, selecione um arquivo de imagem.');
-                // Limpe o input para evitar que o usuário envie um arquivo incorreto
-                e.target.value = null;
-            }
-        }
-    };
-
     function handleCloseDialog() {
         setIsDialogOpen(false);
+    }
+
+    function handleImageChange(e: any) {
+        const file = e.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onloadend = () => {
+                setImagePreview(reader.result);
+            };
+
+            reader.readAsDataURL(file);
+        }
     }
 
     return (
@@ -270,15 +268,31 @@ export default function NewCarForm({ token }: Props) {
                     />
                 </div>
                 <div className="flex flex-col w-full gap-1 col-span-2">
-                    <span className="text-red-950 font-bold">Selecione uma imagem (Imagem principal)*</span>
+                    <span className="text-red-950 font-bold">Selecione uma Imagem para vitrine*</span>
                     <input className="w-full h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2"
                         type="file"
                         placeholder="Selecione a imagem principal"
                         accept="image/*"
-                        {...register('file')}
+                        {...register('file', {
+                            onChange: (e) => {
+                                handleImageChange(e)
+                            }
+                        })}
                     />
+                    {
+                        imagePreview && (
+                            <div className="flex flex-col items-center justify-center  mt-4 bg-gray-100 rounded-lg p-4">
+                                <span className='text-sm text-blue-700 '>Imagem selecionada para Vitrine!</span>
+                                <img
+                                    src={imagePreview}
+                                    alt="Preview"
+                                    className="mt-2 w-36 h-36 object-cover rounded-lg"
+                                />
+                            </div>
+                        )
+                    }
                 </div>
-                <div className="w-full max-h-80 overflow-y-auto col-span-2 flex items-center justify-center">
+                <div className="w-full overflow-y-auto max-h-96 col-span-2 flex items-center justify-center">
                     <FileInput
                         files={files}
                         onDrop={onDrop}

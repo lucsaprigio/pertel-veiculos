@@ -17,6 +17,7 @@ interface Props {
     token: string;
     description: string;
     price: string;
+    source: string;
     km: string;
     year: string;
     fuelType: string;
@@ -43,7 +44,7 @@ const createCarFormSchema = z.object({
     file: z.instanceof(FileList).transform(list => list.item(0))
 })
 
-export default function UpdateCarForm({ description, doors, exchange, fuelType, km, price, year, token, id, imageCars }: Props) {
+export default function UpdateCarForm({ description, doors, exchange, fuelType, km, price, year, token, id, imageCars, source }: Props) {
     const route = useRouter();
     const { register, handleSubmit, formState: { errors }, setValue, reset } = useForm<UpdateCarFormData>({
         resolver: zodResolver(createCarFormSchema),
@@ -69,6 +70,7 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
     const [file, setFile] = useState<File | null>(null);
 
     const [files, setFiles] = useState<File[] | null>(null);
+    const [imagePreview, setImagePreview] = useState(null);
 
     const removeFile = useCallback((index: number) => {
         const newFiles = [...(files || [])];
@@ -116,7 +118,7 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
                     }
                 });
             }
-            
+
             setIsDialogOpen(true);
 
             setTitleDialog('Veículo atualizado com sucesso!');
@@ -210,6 +212,20 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
         }
     };
 
+    function handleImageChange(e: any) {
+        const file = e.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onloadend = () => {
+                setImagePreview(reader.result);
+            };
+
+            reader.readAsDataURL(file);
+        }
+    }
+
     function handleSetYear(value: any) {
         return value
             .replace(/\D/g, "")
@@ -240,23 +256,6 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
         return formattedValue
     }
 
-    function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
-        const selectedFile = e.target.files[0];
-
-        // Verifica se um arquivo foi selecionado
-        if (selectedFile) {
-            // Verifica se o tipo do arquivo é uma imagem
-            if (selectedFile.type.startsWith('image/')) {
-                // Faça o que você precisa com o arquivo de imagem
-                setFile(selectedFile);
-            } else {
-                alert('Por favor, selecione um arquivo de imagem.');
-                // Limpe o input para evitar que o usuário envie um arquivo incorreto
-                e.target.value = null;
-            }
-        }
-    };
-
     function handleCloseDialog() {
         setIsDialogOpen(false);
     }
@@ -271,10 +270,13 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
                 source={sourceDialog}
                 actionButton={handlePushPainel}
             />
-            <form onSubmit={handleSubmit(handleUpdateCar)} className="grid grid-cols-2 gap-6 my-10 bg-gray-50 py-10 md:px-32 rounded-lg">
+            <form onSubmit={handleSubmit(handleUpdateCar)} className="grid grid-cols-2 gap-6 my-10 bg-gradient-to-b from-gray-100 to-gray-50 py-10 md:px-32 rounded-lg">
+                <div className="w-full max-h-28">
+                    <img className="object-cover w-32 h-32 rounded-full" src={`${process.env.NEXT_PUBLIC_S3_URL}/${source}`} alt="Imagem Principal" />
+                </div>
                 <div className="w-full gap-1 col-span-2">
                     <span className="text-red-950 font-bold">Descrição*</span>
-                    <input className={`w-full h-12 p-2 bg-white border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`}
+                    <input className={`w-full h-12 bg-transparent p-2 border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`}
                         type="text"
                         placeholder="Descrição"
                         {...register('description', {
@@ -373,13 +375,29 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
                     }
                 </div>
                 <div className="flex flex-col w-full gap-1 col-span-2">
-                    <span className="text-red-950 font-bold">Selecione uma imagem (Imagem principal)*</span>
+                    <span className="text-red-950 font-bold">Selecione uma Imagem para vitrine*</span>
                     <input className="w-full h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2"
                         type="file"
                         placeholder="Selecione a imagem principal"
                         accept="image/*"
-                        {...register('file')}
+                        {...register('file', {
+                            onChange: (e) => {
+                                handleImageChange(e)
+                            }
+                        })}
                     />
+                    {
+                        imagePreview && (
+                            <div className="flex flex-col items-center justify-center  mt-4 bg-gray-100 rounded-lg p-4">
+                                <span className='text-sm text-blue-700 '>Imagem selecionada para Vitrine!</span>
+                                <img
+                                    src={imagePreview}
+                                    alt="Preview"
+                                    className="mt-2 w-36 h-36 object-cover rounded-lg"
+                                />
+                            </div>
+                        )
+                    }
                 </div>
                 <div className="w-full h-80 col-span-2 flex items-center justify-center">
                     <FileInput
