@@ -47,8 +47,8 @@ export function Slider({ children }: SliderProps
     }
 
     return (
-        <div className="flex flex-col">
-            <div ref={sliderRef} className="keen-slider hover:cursor-grab relative h-full flex items-center">
+        <div className="flex flex-col w-full overflow-hidden">
+            <div ref={sliderRef} className="keen-slider hover:cursor-grab relative w-full flex items-center">
                 <button className="absolute left-0 top-1/2 justify-center z-50" onClick={() => handlePreviousSlide()}><ChevronLeftCircle className="text-white opacity-20 hover:scale-105 hover:opacity-80 transition-all duration-200" size={38} /></button>
                 {
                     React.Children.map(children, (child, index) => (

@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      height: {
+        'h-120': '48rem'
+      },
       backgroundImage: {
         'background-home': "url('/images/background.gif')",
         'page-video': "url('/images/page-video.gif')",

@@ -3,7 +3,7 @@ import { Footer } from "../Components/Footer";
 export default function Loading() {
     return (
         <>
-            <div className="mt-20 flex flex-col items-start h-screen rounded-lg justify-start px-2 md:px-10 w-full scroll-smooth focus:scroll-auto">
+            <div className="mt-20 flex flex-col items-start h-full rounded-lg justify-start px-2 md:px-10 w-full scroll-smooth focus:scroll-auto">
                 <div className="lg:grid lg:grid-cols-3 xl:grid xl:grid-cols-4 sm:flex sm:flex-col w-full gap-8 py-10 border-opacity-30 bg-gray-50 animate-pulse">
                     <div className="mx-1 my-3 items-center rounded-lg shadow-xl hover:drop-shadow-2xl transition-all duration-300 group p-1">
                         <div className="h-96 flex flex-col items-center justify-center w-full bg-gray-200 rounded-tr-lg">
