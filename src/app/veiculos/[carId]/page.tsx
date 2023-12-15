@@ -41,27 +41,27 @@ export default async function CarDetailsPage({ params }: { params: { carId: stri
                         </Slider>
                     </div>
 
-                    <div className="flex flex-col justify-start gap-4 bg-gray-50 rounded-lg my-10 p-7 md:p-10">
+                    <div className="flex flex-col items-start justify-start gap-4 bg-gray-50 rounded-lg my-10 p-7 md:p-10">
                         <div className="w-full border-b-bottom border-red-700 mb-1">
                             <strong className="w-full uppercase text-2xl text-red-700 mb-3">{car.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</strong>
                         </div>
-                        <ul className="flex flex-row lg:gap-10 items-center justify-center mt-4 border-b-bottom border-red-700">
-                            <ul className="flex flex-col md:gap-3 w-full">
-                                <li className="flex gap-3 my-2"><CarFront /> Marca: </li>
-                                <li className="flex gap-3 my-2"><CalendarDays />Ano: </li>
-                                <li className="flex gap-3 my-2"><GaugeCircle /> Quilometragem:</li>
-                                <li className="flex gap-3 my-2"><Fuel /> Combustível:</li>
-                                <li className="flex gap-3 my-2"><img className="w-6 h-6" src="/images/exchange-black.svg" alt="exchange" />Câmbio:</li>
-                                <li className="flex gap-3 my-2"><DoorClosedIcon />Portas:</li>
+                        <ul className="flex w-full lg:gap-10 items-center justify-center my-4 py-2 border-b-bottom border-red-700">
+                            <ul className="flex flex-col md:gap-6 w-full justify-center">
+                                {/* <li className="flex gap-3"><CarFront /> Marca: </li> */}
+                                <li className="flex gap-3"><CalendarDays />Ano: </li>
+                                <li className="flex gap-3"><GaugeCircle /> Quilometragem:</li>
+                                <li className="flex gap-3"><Fuel /> Combustível:</li>
+                                <li className="flex gap-3"><img className="w-6 h-6" src="/images/exchange-black.svg" alt="exchange" />Câmbio:</li>
+                                <li className="flex gap-3"><DoorClosedIcon />Portas:</li>
                             </ul>
-                            <ul className="flex flex-col md:gap-3 w-full">
-                                <li className="flex gap-3 my-2"><strong className="uppercase text-red-600 text-1xl">{car.brand}</strong></li>
-                                <li className="flex gap-3 my-2"><strong className="uppercase text-red-600 text-1xl">{car.year}</strong></li>
-                                <li className="flex gap-3 my-2"><strong className="uppercase text-red-600 text-1xl">{car.km.toLocaleString()}</strong></li>
-                                <li className="flex gap-3 my-2"><strong className="uppercase text-red-600 text-1xl">{car.fuelType}</strong></li>
-                                <li className="flex gap-3 my-2"><strong className="uppercase text-red-600 text-1xl">{car.exchange}</strong></li>
-                                <li className="flex gap-3 my-2"><strong className="uppercase text-red-600 text-1xl">{car.doors}</strong></li>
-                            </ul>
+{                            <ul className="flex flex-col md:gap-6 w-full justify-center">
+                                {/* <li className="flex gap-3"><strong className="uppercase text-red-600 text-1xl">{car.brand}</strong></li> */}
+                                <li className="flex gap-3"><strong className="uppercase text-red-600 text-1xl">{car.year}</strong></li>
+                                <li className="flex gap-3"><strong className="uppercase text-red-600 text-1xl">{car.km.toLocaleString()}</strong></li>
+                                <li className="flex gap-3"><strong className="uppercase text-red-600 text-1xl">{car.fuelType}</strong></li>
+                                <li className="flex gap-3"><strong className="uppercase text-red-600 text-1xl">{car.exchange}</strong></li>
+                                <li className="flex gap-3"><strong className="uppercase text-red-600 text-1xl">{car.doors}</strong></li>
+                            </ul>}
                         </ul>
                         <ul className="flex items-center justify-center">
                             <li className="flex items-center gap-1"><Check className="text-red-700" /><span>Garantia na loja (3 meses) </span></li>

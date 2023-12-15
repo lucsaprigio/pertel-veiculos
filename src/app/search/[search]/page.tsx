@@ -34,7 +34,7 @@ export default async function SearchParams({ params }: { params: { search: strin
                             <Link href={`/veiculos/${car.id}`} key={car.id}>
                                 <Card
                                     id={car.id}
-                                    source={`http://localhost:3333/${car.source}`}
+                                    source={`${process.env.NEXT_PUBLIC_S3_URL}/${car.source}`}
                                     description={car.description}
                                     price={car.price}
                                     year={car.year}
