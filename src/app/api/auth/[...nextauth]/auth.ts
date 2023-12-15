@@ -3,6 +3,9 @@ import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const nextAuthOptions: AuthOptions = {
+    session: {
+        maxAge: 24 * 60 * 60
+    },
     providers: [
         CredentialsProvider({
             name: 'credentials',
@@ -19,9 +22,10 @@ export const nextAuthOptions: AuthOptions = {
                     })
 
                     const user = response.data;
+                    console.log(response.data)
 
                     if (!response.data.error) {
-                        return user
+                        return { ...user }
                     }
 
                     return null
@@ -38,7 +42,6 @@ export const nextAuthOptions: AuthOptions = {
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
-                token.expires = Math.floor(Date.now() / 1000) + (2 * 24 * 60 * 60); // 2 dias em segundos
                 token.user = user;
             }
 
