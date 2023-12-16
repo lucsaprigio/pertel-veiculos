@@ -22,7 +22,6 @@ export const nextAuthOptions: AuthOptions = {
                     })
 
                     const user = response.data;
-                    console.log(response.data)
 
                     if (!response.data.error) {
                         return { ...user }

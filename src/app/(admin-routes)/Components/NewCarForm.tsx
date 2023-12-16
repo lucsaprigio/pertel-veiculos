@@ -1,13 +1,15 @@
 'use client'
 
 import { DialogConfirm } from '@/app/Components/DialogConfirm';
-import { ChangeEvent, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import Loading from 'react-loading';
 import { FileInput } from './FileInput';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { api } from '@/app/axios/api';
+import { useRouter } from 'next/navigation';
+import { Edit } from 'lucide-react';
 
 interface Props {
     token: string;
@@ -33,8 +35,13 @@ const createCarFormSchema = z.object({
 
 export default function NewCarForm({ token }: Props) {
     const { register, handleSubmit, formState: { errors }, setValue, reset } = useForm<CreateCarFormData>({
-        resolver: zodResolver(createCarFormSchema)
+        resolver: zodResolver(createCarFormSchema),
+        defaultValues: {
+            fuelType: 'ÁLCOOL/GASOLINA',
+            doors: '4'
+        }
     });
+    const router = useRouter();
 
     const [loading, setLoading] = useState(false);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -43,8 +50,6 @@ export default function NewCarForm({ token }: Props) {
     const [descriptionDialog, setDescriptionDialog] = useState('');
     const [sourceDialog, setSourceDialog] = useState('');
     const [okButtonDialog, setOkButtonDialog] = useState('');
-
-    const [file, setFile] = useState<File | null>(null);
 
     const [files, setFiles] = useState<File[] | null>(null);
 
@@ -100,7 +105,7 @@ export default function NewCarForm({ token }: Props) {
             setTitleDialog('Cadastro feito com sucesso!');
             setDescriptionDialog('Deseja continuar cadastrando?');
             setSourceDialog('/images/checked.png');
-            setOkButtonDialog('Sim');
+            setOkButtonDialog('Ir para o painel');
             setLoading(false);
 
             reset();
@@ -165,19 +170,56 @@ export default function NewCarForm({ token }: Props) {
         }
     }
 
+    function handleGoPainel() {
+        router.push('/painel')
+    }
+
+    function handleSetDoors(value: string) {
+        return value.replace(/\D/g, '');
+    }
+
+
     return (
         <main className="flex flex-col items-center justify-center w-full h-full px-3 gap-6">
             <DialogConfirm
                 title={titleDialog}
                 description={descriptionDialog}
                 okButton={okButtonDialog}
-                cancelButton="Ir para o Painel"
+                cancelButton="Sim"
                 showDialog={isDialogOpen}
                 source={sourceDialog}
                 onClose={handleCloseDialog}
-                actionButton={handleCloseDialog}
+                actionButton={handleGoPainel}
             />
             <form onSubmit={handleSubmit(handleRegisterCar)} className="grid grid-cols-2 gap-6 my-10 bg-gray-50 py-10 md:px-32 rounded-lg">
+                <label htmlFor="inputFile" className="block">
+                    <span className="text-red-950 font-bold">Imagem para vitrine*</span>
+                    {imagePreview ? (
+                        <div className="relative flex items-center justify-center w-32 h-32 rounded-full group cursor-pointer">
+                            <img
+                                className="object-cover w-32 h-32 group-hover:shadow-2xl group-hover:opacity-50 transition-all duration-200 rounded-full"
+                                src={imagePreview}
+                                alt="Preview"
+                            />
+                            <Edit className='absolute opacity-0 w-8 h-8 text-red-850 group-hover:opacity-100 transition-all duration-200' />
+                        </div>
+                    ) : (
+                        <div className="relative flex items-center justify-center w-32 h-32 rounded-full group cursor-pointer">
+                            <img className="object-contain opacity-70 group-hover:shadow-2xl group-hover:opacity-50 transition-all duration-200" src='/images/gallery.png' alt={`item.source`} />
+                            <Edit className='absolute opacity-0 w-8 h-8 text-red-850 group-hover:opacity-100 transition-all duration-200' />
+                        </div>
+                    )}
+                </label>
+                <input id="inputFile" className="w-full h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 hidden"
+                    type="file"
+                    placeholder="Selecione a imagem principal"
+                    accept="image/*"
+                    {...register('file', {
+                        onChange: (e) => {
+                            handleImageChange(e)
+                        }
+                    })}
+                />
                 <div className="w-full gap-1 col-span-2">
                     <span className="text-red-950 font-bold">Descrição*</span>
                     <input className={`w-full h-12 p-2 bg-white border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`}
@@ -194,7 +236,7 @@ export default function NewCarForm({ token }: Props) {
                     <input
                         className={`w-full md:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`}
                         type="text"
-                        placeholder="Valor"
+                        placeholder="R$ 0,00"
                         {...register('price', {
                             onChange: (e) => {
                                 const formattedValue = handleSetPrice(e.target.value);
@@ -262,35 +304,11 @@ export default function NewCarForm({ token }: Props) {
                         placeholder="Portas"
                         {...register('doors', {
                             onChange: (e) => {
+                                handleSetDoors(e.target.value)
                                 setValue('doors', e.target.value)
                             }
                         })}
                     />
-                </div>
-                <div className="flex flex-col w-full gap-1 col-span-2">
-                    <span className="text-red-950 font-bold">Selecione uma Imagem para vitrine*</span>
-                    <input className="w-full h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2"
-                        type="file"
-                        placeholder="Selecione a imagem principal"
-                        accept="image/*"
-                        {...register('file', {
-                            onChange: (e) => {
-                                handleImageChange(e)
-                            }
-                        })}
-                    />
-                    {
-                        imagePreview && (
-                            <div className="flex flex-col items-center justify-center  mt-4 bg-gray-100 rounded-lg p-4">
-                                <span className='text-sm text-blue-700 '>Imagem selecionada para Vitrine!</span>
-                                <img
-                                    src={imagePreview}
-                                    alt="Preview"
-                                    className="mt-2 w-36 h-36 object-cover rounded-lg"
-                                />
-                            </div>
-                        )
-                    }
                 </div>
                 <div className="w-full overflow-y-auto max-h-96 col-span-2 flex items-center justify-center">
                     <FileInput

@@ -1,7 +1,7 @@
 'use client'
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { ReactNode, SyntheticEvent, useState } from "react";
+import { ReactNode, useState } from "react";
 import { useForm } from 'react-hook-form';
 
 import { UserCircle2, EyeIcon, EyeOffIcon } from 'lucide-react';
@@ -22,6 +22,7 @@ export default function SignIn() {
 
     const [visible, setVisible] = useState(false);
     const [dialogIsOpen, setDialogIsOpen] = useState(false);
+    const [descriptionError, setDescriptionError] = useState('');
     const [loading, setLoading] = useState(false);
 
     const router = useRouter();
@@ -41,11 +42,14 @@ export default function SignIn() {
 
             if (result.error) {
                 setLoading(false);
+                setDescriptionError('Usuário ou senha incorretas!');
                 return setDialogIsOpen(true);
             }
+
             setLoading(false);
-            router.replace('/painel')
+            router.replace('/painel');
         } catch (error) {
+            setDescriptionError('Ocorreu um erro inesperado! Tente mais tarde')
             setLoading(false);
         }
     }
@@ -56,7 +60,7 @@ export default function SignIn() {
             className="h-screen flex flex-col items-center justify-center px-10 gap-6" >
             <DialogConfirm
                 title="Ocorreu um erro"
-                description="Usuário ou senha incorretas!"
+                description={descriptionError}
                 okButton="Fechar"
                 onClose={handleCloseModal}
                 actionButton={handleCloseModal}

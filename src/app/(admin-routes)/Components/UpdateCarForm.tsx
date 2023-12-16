@@ -1,9 +1,9 @@
 'use client'
 
 import { DialogConfirm } from '@/app/Components/DialogConfirm';
-import { ChangeEvent, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import Loading from 'react-loading';
-import { Trash2 } from 'lucide-react';
+import { Trash2, Edit } from 'lucide-react';
 import { FileInput } from './FileInput';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -256,8 +256,8 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
         return formattedValue
     }
 
-    function handleCloseDialog() {
-        setIsDialogOpen(false);
+    function handleSetDoors(value: string) {
+        value = value.replace(/\D/g, '');
     }
 
     return (
@@ -271,9 +271,34 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
                 actionButton={handlePushPainel}
             />
             <form onSubmit={handleSubmit(handleUpdateCar)} className="grid grid-cols-2 gap-6 my-10 bg-gradient-to-b from-gray-100 to-gray-50 py-10 md:px-32 rounded-lg">
-                <div className="w-full max-h-28">
-                    <img className="object-cover w-32 h-32 rounded-full" src={`${process.env.NEXT_PUBLIC_S3_URL}/${source}`} alt="Imagem Principal" />
-                </div>
+                <label htmlFor="inputFile" className="block">
+                    {imagePreview ? (
+                        <div className="relative flex items-center justify-center w-32 h-32 rounded-full group cursor-pointer">
+                            <img
+                                className="object-cover w-32 h-32 group-hover:shadow-2xl group-hover:opacity-50 transition-all duration-200 rounded-full"
+                                src={imagePreview}
+                                alt="Preview"
+                            />
+                            <Edit className='absolute opacity-0 w-8 h-8 text-red-850 group-hover:opacity-100 transition-all duration-200' />
+                        </div>
+                    ) : (
+                        <div className="relative flex items-center justify-center w-32 h-32 rounded-full group cursor-pointer">
+                            <img className="object-cover w-32 h-32 group-hover:shadow-2xl group-hover:opacity-50 transition-all duration-200 rounded-full" src={`${process.env.NEXT_PUBLIC_S3_URL}/${source}`} alt={`item.source`} />
+                            <Edit className='absolute opacity-0 w-8 h-8 text-red-850 group-hover:opacity-100 transition-all duration-200' />
+                        </div>
+                    )}
+
+                </label>
+                <input id="inputFile" className="w-full h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 hidden"
+                    type="file"
+                    placeholder="Selecione a imagem principal"
+                    accept="image/*"
+                    {...register('file', {
+                        onChange: (e) => {
+                            handleImageChange(e)
+                        }
+                    })}
+                />
                 <div className="w-full gap-1 col-span-2">
                     <span className="text-red-950 font-bold">Descrição*</span>
                     <input className={`w-full h-12 bg-transparent p-2 border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`}
@@ -358,13 +383,13 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
                         placeholder="Portas"
                         {...register('doors', {
                             onChange: (e) => {
+                                handleSetDoors(e.target.value)
                                 setValue('doors', e.target.value)
                             }
                         })}
                     />
                 </div>
-
-                <div className="flex flex-row w-full h-32 gap-2">
+                <div className="flex flex-row w-full h-28 gap-2">
                     {
                         imageCars && imageCars.map((item, index) => (
                             <button key={index} onClick={() => handheDeleteImageCar(item.id)} type="button" className="relative flex items-center justify-center w-20 h-20 group">
@@ -374,32 +399,7 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
                         ))
                     }
                 </div>
-                <div className="flex flex-col w-full gap-1 col-span-2">
-                    <span className="text-red-950 font-bold">Selecione uma Imagem para vitrine*</span>
-                    <input className="w-full h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2"
-                        type="file"
-                        placeholder="Selecione a imagem principal"
-                        accept="image/*"
-                        {...register('file', {
-                            onChange: (e) => {
-                                handleImageChange(e)
-                            }
-                        })}
-                    />
-                    {
-                        imagePreview && (
-                            <div className="flex flex-col items-center justify-center  mt-4 bg-gray-100 rounded-lg p-4">
-                                <span className='text-sm text-blue-700 '>Imagem selecionada para Vitrine!</span>
-                                <img
-                                    src={imagePreview}
-                                    alt="Preview"
-                                    className="mt-2 w-36 h-36 object-cover rounded-lg"
-                                />
-                            </div>
-                        )
-                    }
-                </div>
-                <div className="w-full h-80 col-span-2 flex items-center justify-center">
+                <div className="w-full h-40 mb-4 col-span-2 flex items-center justify-center">
                     <FileInput
                         files={files}
                         onDrop={onDrop}
@@ -407,20 +407,23 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
                     />
                 </div>
 
-                <div className="flex flex-col items-center justify-center w-full gap-2 col-span-2">
+                <div className="flex flex-row items-center justify-center w-full gap-2 col-span-2">
                     <button
-                        className="flex w-full items-center justify-center text-gray-50 bg-red-800 hover:brightness-90 transition-all duration-100 rounded-lg p-6"
+                        className={`flex gap-4 w-full items-center justify-center text-gray-50 bg-red-700 hover:brightness-90 transition-all duration-100 rounded-lg p-6 ${loading && 'pointer-events-none'}`}
                         type='submit'>
                         {
                             loading ? (
                                 <Loading type='spin' width={32} height={32} />
                             ) : (
-                                <span>Atualizar</span>
+                                <div className="flex gap-2">
+                                    <Edit />
+                                    <span>Atualizar</span>
+                                </div>
                             )
                         }
                     </button>
                     <button
-                        className="flex w-full items-center justify-center text-gray-50 bg-red-700 hover:brightness-90 transition-all duration-100 rounded-lg p-6"
+                        className={`flex gap-4 w-full items-center justify-center text-gray-50 bg-red-950 hover:brightness-90 transition-all duration-100 rounded-lg p-6 ${loading && 'pointer-events-none'}`}
                         type='button'
                         onClick={handleDeleteCar}
                     >
@@ -428,12 +431,15 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
                             loading ? (
                                 <Loading type='spin' width={32} height={32} />
                             ) : (
-                                <span>Excluir</span>
+                                <div className="flex gap-2">
+                                    <Trash2 />
+                                    <span>Excluir</span>
+                                </div>
                             )
                         }
                     </button>
                 </div>
             </form>
-        </main>
+        </main >
     )
 } 
