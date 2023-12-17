@@ -270,6 +270,7 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
                 okButton={okButtonDialog}
                 showDialog={isDialogOpen}
                 source={sourceDialog}
+                onClose={() => setIsDialogOpen(false)}
                 actionButton={handlePushPainel}
             />
             <form onSubmit={handleSubmit(handleUpdateCar)} className="grid grid-cols-2 gap-6 my-10 bg-gradient-to-b from-gray-100 to-gray-50 py-10 md:px-32 rounded-lg">

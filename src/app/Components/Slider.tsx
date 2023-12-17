@@ -11,7 +11,7 @@ interface SliderProps {
 export function Slider({ children }: SliderProps
 ) {
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-    const [selectedImageZoom, setSelectedImageZoom] = useState(0);
+    const [selectedImageZoom, setSelectedImageZoom] = useState(null);
 
     const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
         initial: 0,
