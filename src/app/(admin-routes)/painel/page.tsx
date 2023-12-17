@@ -17,7 +17,7 @@ export default async function Painel() {
     const cars = await getCars();
 
     return (
-        <main className="flex flex-col items-center justify-center w-full h-full px-3">
+        <main className="flex flex-col items-center justify-center w-full h-full px-4">
             <section className="flex flex-col gap-2 py-2 h-10">
                 <h2 className="text-2xl font-bold">Painel</h2>
             </section>
@@ -29,8 +29,8 @@ export default async function Painel() {
                             .slice(0, 5)
                             .map(car => (
                                 <div key={car.id} className="flex flex-row w-full gap-6 bg-gray-50 rounded-lg px-6 py-1 border-b-8 border-red-800">
-                                    <div className="flex items-center justify-center w-28 h-full">
-                                        <img className="object-cover rounded-lg" src={`${process.env.NEXT_S3_URL}/${car.source}`} alt="Logo" />
+                                    <div className="flex items-center justify-center w-28 h-28">
+                                        <img className="w-full h-full object-cover rounded-lg" src={`${process.env.NEXT_S3_URL}/${car.source}`} alt="Logo" />
                                     </div>
                                     <ul className="flex flex-col gap-2 items-start w-full">
                                         <li className="text-red-800 text-md uppercase">{car.description}</li>

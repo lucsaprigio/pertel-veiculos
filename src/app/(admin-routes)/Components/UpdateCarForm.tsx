@@ -87,6 +87,7 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
             setLoading(true);
             const formData = new FormData();
             const formDataFiles = new FormData();
+            const dateUpdated = new Date().toISOString();
 
             formData.append('description', data.description.toLocaleUpperCase());
             formData.append('price', data.price);
@@ -96,8 +97,9 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
             formData.append('exchange', data.exchange.toUpperCase());
             formData.append('doors', data.doors);
             formData.append('file', data.file);
+            formData.append('updated_at', dateUpdated);
 
-            console.log(data)
+            console.log(dateUpdated)
 
             const response = await api.put(`${process.env.NEXT_PUBLIC_API_NODE}/update-car/${id}`, formData, {
                 headers: {

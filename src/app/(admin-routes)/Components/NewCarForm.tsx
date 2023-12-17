@@ -70,6 +70,8 @@ export default function NewCarForm({ token }: Props) {
             setLoading(true);
             const formData = new FormData();
             const formDataFiles = new FormData();
+            const dateCreated = new Date().toISOString();
+            const dateUpdated = new Date().toISOString();
 
             formData.append('description', data.description.toLocaleUpperCase());
             formData.append('price', data.price);
@@ -79,6 +81,8 @@ export default function NewCarForm({ token }: Props) {
             formData.append('exchange', data.exchange.toUpperCase());
             formData.append('doors', data.doors);
             formData.append('file', data.file);
+            formData.append('created_at', dateCreated);
+            formData.append('updated_at', dateUpdated);
 
             const response = await api.post(`/new-car`, formData, {
                 headers: {

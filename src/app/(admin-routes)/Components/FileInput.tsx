@@ -69,7 +69,7 @@ function Input({ dropzone }: InputProps) {
 
 function HasFile({ files, removeFile }: HasFileProps) {
     return (
-        <div className="flex flex-col items-center w-full gap-1">
+        <div className="flex flex-col items-center w-full gap-1 mt-32">
             {files && files.length > 0 && (
                 <div>
                     {files.map((file, index) => (

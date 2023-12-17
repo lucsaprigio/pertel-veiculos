@@ -66,8 +66,8 @@ export default function CarsPainel() {
                     search !== '' &&
                     searchedCars && searchedCars.map((car) => (
                         <div key={car.id} className="flex flex-row items-center justify-center w-full h-32 bg-red-200 rounded-lg p-2 overflow-hidden gap-6 group">
-                            <div className="w-48 py-10 rounded-lg">
-                                <img className="flex items-center h-full rounded-lg object-contain" src={`${process.env.NEXT_PUBLIC_S3_URL}/${car.source}`} alt="Photo" />
+                            <div className="w-48 h-48 py-10 rounded-lg">
+                                <img className="flex items-center h-full rounded-lg object-cover" src={`${process.env.NEXT_PUBLIC_S3_URL}/${car.source}`} alt="Photo" />
                             </div>
                             <ul className="grid grid-cols-6 md:flex-row gap-20 items-center justify-center">
                                 <li className="items-center justify-center uppercase w-full md:w-96 text-red-950 md:text-1xl font-semibold">{car.description}</li>
@@ -88,8 +88,8 @@ export default function CarsPainel() {
                     search === '' &&
                         cars.length > 0 ? (cars.sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()).map(car => (
                             <div key={car.id} className="flex flex-row items-center justify-center w-full h-32 bg-red-200 rounded-lg p-2 overflow-hidden gap-6 group">
-                                <div className="w-48 py-10 rounded-lg">
-                                    <img className="flex items-center h-full rounded-lg object-contain" src={`${process.env.NEXT_PUBLIC_S3_URL}/${car.source}`} alt="Photo" />
+                                <div className="w-48 h-48 py-10 rounded-lg">
+                                    <img className="flex items-center w-full h-full rounded-lg object-cover" src={`${process.env.NEXT_PUBLIC_S3_URL}/${car.source}`} alt="Photo" />
                                 </div>
                                 <ul className="grid grid-cols-6 md:flex-row gap-20 items-center justify-center">
                                     <li className="items-center justify-center uppercase w-full md:w-96 text-red-950 md:text-1xl font-semibold">{car.description}</li>
