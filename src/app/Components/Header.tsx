@@ -58,7 +58,7 @@ export function Header() {
                 <div className="flex flex-row items-center gap-2 justify-center">
                     <FaWhatsapp size={32} className="md:opacity-100 opacity-0 text-gray-50" />
                     <div>
-                        <span className="md:opacity-100 opacity-0 flex gap-3 text-gray-50 text-sm text-left">Felipe - (27) 99754-6411</span>
+                        <span className="md:opacity-100 opacity-0 flex gap-3 text-gray-50 text-sm text-left">Fellipe - (27) 99754-6411</span>
                         <span className="md:opacity-100 opacity-0 flex gap-3 text-gray-50 text-sm text-left">Michel - (27) 99836-6919</span>
                     </div>
                 </div>

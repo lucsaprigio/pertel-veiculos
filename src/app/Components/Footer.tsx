@@ -21,7 +21,7 @@ export function Footer() {
                 <div className="flex flex-col items-center justify-center">
                     <div className="flex flex-row gap-2 items-center justify-center text-center">
                         <PhoneIcon color="#FFFFFF" size={20} />
-                        <span className="text-gray-150">Felipe - (27) 99754-6411 </span>
+                        <span className="text-gray-150">Fellipe - (27) 99754-6411 </span>
                     </div>
                     <div className="flex flex-row gap-2 items-center justify-center text-center">
                         <PhoneIcon color="#FFFFFF" size={20} />
