@@ -11,6 +11,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { api } from '@/app/axios/api';
+import { createClient } from '@supabase/supabase-js';
+import { hash } from 'bcryptjs';
 
 interface Props {
     id: string;
@@ -27,6 +29,12 @@ interface Props {
 }
 
 type UpdateCarFormData = z.infer<typeof createCarFormSchema>;
+
+const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+
+)
 
 const createCarFormSchema = z.object({
     description: z.string().min(5, 'Preencha a descrição').transform(description => {
@@ -85,41 +93,59 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
     async function handleUpdateCar(data: UpdateCarFormData) {
         try {
             setLoading(true);
-            const formData = new FormData();
-            const formDataFiles = new FormData();
             const dateUpdated = new Date().toISOString();
 
-            formData.append('description', data.description.toLocaleUpperCase());
-            formData.append('price', data.price);
-            formData.append('km', data.km.replaceAll('.', ''));
-            formData.append('year', data.year);
-            formData.append('fuelType', data.fuelType.toUpperCase());
-            formData.append('exchange', data.exchange.toUpperCase());
-            formData.append('doors', data.doors);
-            formData.append('file', data.file);
-            formData.append('updated_at', dateUpdated);
+            let dataForm = {
+                description: data.description.toLocaleUpperCase(),
+                price: data.price,
+                km: data.km.replaceAll('.', ''),
+                year: data.year,
+                fuelType: data.fuelType.toUpperCase(),
+                exchange: data.exchange.toUpperCase(),
+                doors: data.doors,
+                updated_at: dateUpdated
+            }
 
-            console.log(dateUpdated)
+            if (data.file) {
+                const { error } = await supabase.storage
+                    .from('images')
+                    .update(source, data.file, {
+                        upsert: true
+                    })
+                if (error) {
+                    console.log(error);
+                }
+            }
 
-            const response = await api.put(`${process.env.NEXT_PUBLIC_API_NODE}/update-car/${id}`, formData, {
+            const response = await api.put(`${process.env.NEXT_PUBLIC_API_NODE}/update-car/${id}`, dataForm, {
                 headers: {
-                    'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}`,
                 }
             });
 
-            if (files && files.length > 0) {
-                files.forEach((file) => {
-                    formDataFiles.append('file', file);
-                });
+            const fileNamesArray = [];
 
-                await api.post(`${process.env.NEXT_PUBLIC_API_NODE}/add-image-car/${response.data.id}`, formDataFiles, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        'Authorization': `Bearer ${token}`,
-                    }
-                });
+            if (files && files.length > 0) {
+                for (let i = 0; i < files.length; i++) {
+                    const hashedFileName = await hash(files[i].name, 8);
+
+                    const sanitizedHash = `${hashedFileName.replace(/[\/-\s]/g, '')}_${files[i].name.replace(/[\/-\s]/g, '')}`;
+                    console.log(sanitizedHash);
+
+                    fileNamesArray.push(sanitizedHash);
+
+                    await supabase.storage.from('images').upload(sanitizedHash, files[i]);
+                }
             }
+
+            await api.post(`/add-image-car/${id}`, {
+                source: fileNamesArray
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
 
             setIsDialogOpen(true);
 
@@ -147,7 +173,7 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
         route.push('/painel');
     }
 
-    async function handheDeleteImageCar(carId: string) {
+    async function handheDeleteImageCar(carId: string, source: string) {
         try {
             api.delete(`/del-image-car/${carId}`, {
                 headers: {
@@ -169,7 +195,11 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
                         setLoading(false);
                     }
                 });
+
+            await supabase.storage.from('images').remove([`${source}`]);
+
         } catch (err) {
+            console.log(err);
             return null
         }
     };
@@ -177,6 +207,9 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
     async function handleDeleteCar() {
         try {
             setLoading(true);
+            const imageCarsMap = imageCars.map(item => item.source)
+
+            await supabase.storage.from('images').remove(imageCarsMap);
 
             await axios.delete(`${process.env.NEXT_PUBLIC_API_NODE}/delete-car/${id}`, {
                 headers: {
@@ -286,7 +319,7 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
                         </div>
                     ) : (
                         <div className="relative flex items-center justify-center w-32 h-32 rounded-full group cursor-pointer">
-                            <img className="object-cover w-32 h-32 group-hover:shadow-2xl group-hover:opacity-50 transition-all duration-200 rounded-full" src={`${process.env.NEXT_PUBLIC_S3_URL}/${source}`} alt={`item.source`} />
+                            <img className="object-cover w-32 h-32 group-hover:shadow-2xl group-hover:opacity-50 transition-all duration-200 rounded-full" src={`${process.env.NEXT_PUBLIC_SUPABASE_IMAGE_URL}/${source}`} alt={`item.source`} />
                             <Edit className='absolute opacity-0 w-8 h-8 text-red-850 group-hover:opacity-100 transition-all duration-200' />
                         </div>
                     )}
@@ -395,8 +428,8 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
                 <div className="flex flex-row w-full h-28 gap-2">
                     {
                         imageCars && imageCars.map((item, index) => (
-                            <button key={index} onClick={() => handheDeleteImageCar(item.id)} type="button" className="relative flex items-center justify-center w-20 h-20 group">
-                                <img className="w-full h-full object-cover group-hover:shadow-2xl group-hover:opacity-50 transition-all duration-200 rounded-lg" src={`${process.env.NEXT_PUBLIC_S3_URL}/${item.source}`} alt={`item.source`} />
+                            <button key={index} onClick={() => handheDeleteImageCar(item.id, item.source)} type="button" className="relative flex items-center justify-center w-20 h-20 group">
+                                <img className="w-full h-full object-cover group-hover:shadow-2xl group-hover:opacity-50 transition-all duration-200 rounded-lg" src={`${process.env.NEXT_PUBLIC_SUPABASE_IMAGE_URL}/${item.source}`} alt={`item.source`} />
                                 <Trash2 className='absolute opacity-0 w-10 h-10 text-red-600 group-hover:opacity-100 transition-all duration-200' />
                             </button>
                         ))

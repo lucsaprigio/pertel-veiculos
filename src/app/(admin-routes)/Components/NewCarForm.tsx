@@ -11,6 +11,7 @@ import { api } from '@/app/axios/api';
 import { useRouter } from 'next/navigation';
 import { Edit } from 'lucide-react';
 import { createClient } from '@supabase/supabase-js';
+import { hash } from 'bcryptjs';
 
 interface Props {
     token: string;
@@ -75,52 +76,59 @@ export default function NewCarForm({ token }: Props) {
     async function handleRegisterCar(data: CreateCarFormData) {
         try {
             setLoading(true);
-            const formData = new FormData();
-            const formDataFiles = new FormData();
             const dateCreated = new Date().toISOString();
             const dateUpdated = new Date().toISOString();
 
-            formData.append('description', data.description.toLocaleUpperCase());
-            formData.append('price', data.price);
-            formData.append('km', data.km.replaceAll('.', ''));
-            formData.append('year', data.year);
-            formData.append('fuelType', data.fuelType.toUpperCase());
-            formData.append('exchange', data.exchange.toUpperCase());
-            formData.append('doors', data.doors);
-            formData.append('file', data.file);
-            formData.append('created_at', dateCreated);
-            formData.append('updated_at', dateUpdated);
+            const hashFile = await hash(data.file.name, 8);
 
-            const response = await api.post(`/new-car`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'Authorization': `Bearer ${token}`,
-                }
-            });
-
-            if (files && files.length > 0) {
-                files.forEach((file) => {
-                    formDataFiles.append('file', file.name);
-                });
-
-                for(let i = 0; i < files.length; i++) {
-                    await supabase.storage.from('images').upload(files[i].name, files[i]);
-                }
+            const dataForm = {
+                description: data.description.toLocaleUpperCase(),
+                price: data.price,
+                km: data.km.replaceAll('.', ''),
+                year: data.year,
+                fuelType: data.fuelType.toUpperCase(),
+                exchange: data.exchange.toUpperCase(),
+                doors: data.doors,
+                source: `${hashFile}_${data.file.name}`.replace(/[\/-\s]/g, ''),
+                created_at: dateCreated,
+                updated_at: dateUpdated
             }
 
             // Envia a imagem para o supabase
             const { error } = await supabase.storage
                 .from('images')
-                .upload(data.file.name, data.file)
+                .upload(dataForm.source, data.file)
 
             if (error) {
                 console.log(error);
             }
 
-
-            await api.post(`/add-image-car/${response.data.newCar.id}`, formDataFiles, {
+            const response = await api.post(`/new-car`, dataForm, {
                 headers: {
-                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+
+            const fileNamesArray = [];
+
+            if (files && files.length > 0) {
+                for (let i = 0; i < files.length; i++) {
+                    const hashedFileName = await hash(files[i].name, 8);
+
+                    const sanitizedHash = `${hashedFileName.replace(/[\/-\s]/g, '')}_${files[i].name.replace(/[\/-\s]/g, '')}`;
+                    console.log(sanitizedHash);
+
+                    fileNamesArray.push(sanitizedHash);
+
+                    await supabase.storage.from('images').upload(sanitizedHash, files[i]);
+                }
+            }
+
+            await api.post(`/add-image-car/${response.data.newCar.id}`, {
+                source: fileNamesArray
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
                 }
             });
@@ -143,7 +151,6 @@ export default function NewCarForm({ token }: Props) {
             setDescriptionDialog('Parece que houve um erro com o servidor, tente novamente.');
             setSourceDialog('/images/cancel.png');
             setOkButtonDialog('Ok');
-
         }
     }
 
