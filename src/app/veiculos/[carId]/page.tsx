@@ -35,7 +35,7 @@ export default async function CarDetailsPage({ params }: { params: { carId: stri
                         <Slider>
                             {
                                 car.ImageCars.map((image) => (
-                                    <img key={car.id} className="lg:object-cover h-auto w-full" src={`${process.env.NEXT_S3_URL}/${image.source}`} alt="Imagem do carro" />
+                                    <img key={car.id} className="lg:object-cover h-auto w-full" src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/${image.source}`} alt="Imagem do carro" />
                                 ))
                             }
                         </Slider>

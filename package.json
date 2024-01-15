@@ -12,6 +12,7 @@
     "@headlessui/react": "^1.7.17",
     "@hookform/resolvers": "^3.3.2",
     "@phosphor-icons/react": "^2.0.14",
+    "@supabase/supabase-js": "^2.39.3",
     "axios": "^1.6.2",
     "date-fns": "^2.30.0",
     "feather-icons": "^4.29.1",

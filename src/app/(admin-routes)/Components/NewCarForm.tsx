@@ -10,12 +10,19 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { api } from '@/app/axios/api';
 import { useRouter } from 'next/navigation';
 import { Edit } from 'lucide-react';
+import { createClient } from '@supabase/supabase-js';
 
 interface Props {
     token: string;
 }
 
 type CreateCarFormData = z.infer<typeof createCarFormSchema>;
+
+const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+
+)
 
 const createCarFormSchema = z.object({
     description: z.string().min(5, 'Preencha a descrição').transform(description => {
@@ -93,9 +100,23 @@ export default function NewCarForm({ token }: Props) {
 
             if (files && files.length > 0) {
                 files.forEach((file) => {
-                    formDataFiles.append('file', file);
+                    formDataFiles.append('file', file.name);
                 });
+
+                for(let i = 0; i < files.length; i++) {
+                    await supabase.storage.from('images').upload(files[i].name, files[i]);
+                }
             }
+
+            // Envia a imagem para o supabase
+            const { error } = await supabase.storage
+                .from('images')
+                .upload(data.file.name, data.file)
+
+            if (error) {
+                console.log(error);
+            }
+
 
             await api.post(`/add-image-car/${response.data.newCar.id}`, formDataFiles, {
                 headers: {

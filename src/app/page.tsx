@@ -51,7 +51,7 @@ export default async function Home() {
                   <Card
                     id={car.id}
                     key={car.id}
-                    source={`${process.env.NEXT_S3_URL}/${car.source}`}
+                    source={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/${car.source}`}
                     description={car.description}
                     price={car.price}
                     year={car.year}
