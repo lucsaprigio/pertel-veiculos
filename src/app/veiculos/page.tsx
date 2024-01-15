@@ -34,7 +34,7 @@ export default async function Vehicles({ searchParams }: { searchParams?: { page
                             <Link href={`/veiculos/${car.id}`} key={car.id}>
                                 <Card
                                     id={car.id}
-                                    source={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/${car.source}`}
+                                    source={`${process.env.NEXT_PUBLIC_SUPABASE_IMAGE_URL}/${car.source}`}
                                     description={car.description}
                                     price={car.price}
                                     year={car.year}
