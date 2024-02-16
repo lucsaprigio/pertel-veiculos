@@ -349,7 +349,7 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
                 <div className="flex flex-col w-full gap-1">
                     <span className="text-red-950 font-bold">Valor*</span>
                     <input
-                        className={`w-full md:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`}
+                        className={`w-full xl:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`}
                         type="text"
                         placeholder="Valor"
                         {...register('price', {
@@ -363,7 +363,7 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
                 </div>
                 <div className="flex flex-col w-full gap-1">
                     <span className="text-red-950 font-bold">Quilometragem*</span>
-                    <input className={`w-full md:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`}
+                    <input className={`w-full xl:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`}
                         type="text"
                         placeholder="Quilometragem"
                         maxLength={7}
@@ -378,7 +378,7 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
                 </div>
                 <div className="flex flex-col w-full gap-1">
                     <span className="text-red-950 font-bold">Ano/Modelo*</span>
-                    <input className={`w-full md:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`}
+                    <input className={`w-full xl:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`}
                         type="text"
                         placeholder="Ano/Modelo"
                         {...register('year', {
@@ -392,7 +392,7 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
                 </div>
                 <div className="flex flex-col w-full gap-1">
                     <span className="text-red-950 font-bold">Combustível*</span>
-                    <input className={`w-full md:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`}
+                    <input className={`w-full xl:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`}
                         type="text"
                         placeholder="Tipo de Combustível"
                         {...register('fuelType', {
@@ -403,7 +403,7 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
                 </div>
                 <div className="flex flex-col w-full gap-1">
                     <span className="text-red-950 font-bold">Câmbio*</span>
-                    <select className={`w-full md:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`} placeholder="Tipo de Combustível"
+                    <select className={`w-full xl:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`} placeholder="Tipo de Combustível"
                         {...register('exchange')}
                     >
                         <option value="" disabled hidden>Câmbio</option>
@@ -413,7 +413,7 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
                 </div>
                 <div className="flex flex-col w-full gap-1">
                     <span className="text-red-950 font-bold">Portas*</span>
-                    <input className={`w-full md:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`}
+                    <input className={`w-full xl:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`}
                         type="text"
                         maxLength={1}
                         placeholder="Portas"
@@ -425,7 +425,7 @@ export default function UpdateCarForm({ description, doors, exchange, fuelType, 
                         })}
                     />
                 </div>
-                <div className="flex flex-row w-full h-28 gap-2">
+                <div className="flex flex-row flex-wrap w-full gap-2">
                     {
                         imageCars && imageCars.map((item, index) => (
                             <button key={index} onClick={() => handheDeleteImageCar(item.id, item.source)} type="button" className="relative flex items-center justify-center w-20 h-20 group">

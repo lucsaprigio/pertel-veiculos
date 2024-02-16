@@ -223,7 +223,7 @@ export default function NewCarForm({ token }: Props) {
                 onClose={handleCloseDialog}
                 actionButton={handleGoPainel}
             />
-            <form onSubmit={handleSubmit(handleRegisterCar)} className="grid grid-cols-2 gap-6 my-10 bg-gray-50 py-10 md:px-32 rounded-lg">
+            <form onSubmit={handleSubmit(handleRegisterCar)} className="grid grid-cols-2 gap-6 my-10 bg-gray-50 py-10 md:px-28 rounded-lg">
                 <label htmlFor="inputFile" className="block">
                     <span className="text-red-950 font-bold">Imagem para vitrine*</span>
                     {imagePreview ? (
@@ -266,7 +266,7 @@ export default function NewCarForm({ token }: Props) {
                 <div className="flex flex-col w-full gap-1">
                     <span className="text-red-950 font-bold">Valor*</span>
                     <input
-                        className={`w-full md:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`}
+                        className={`w-full xl:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`}
                         type="text"
                         placeholder="R$ 0,00"
                         {...register('price', {
@@ -280,7 +280,7 @@ export default function NewCarForm({ token }: Props) {
                 </div>
                 <div className="flex flex-col w-full gap-1">
                     <span className="text-red-950 font-bold">Quilometragem*</span>
-                    <input className={`w-full md:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`}
+                    <input className={`w-full xl:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`}
                         type="text"
                         placeholder="Quilometragem"
                         maxLength={7}
@@ -295,7 +295,7 @@ export default function NewCarForm({ token }: Props) {
                 </div>
                 <div className="flex flex-col w-full gap-1">
                     <span className="text-red-950 font-bold">Ano/Modelo*</span>
-                    <input className={`w-full md:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`}
+                    <input className={`w-full xl:w-96  h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`}
                         type="text"
                         placeholder="Ano/Modelo"
                         {...register('year', {
@@ -309,7 +309,7 @@ export default function NewCarForm({ token }: Props) {
                 </div>
                 <div className="flex flex-col w-full gap-1">
                     <span className="text-red-950 font-bold">Combustível*</span>
-                    <input className={`w-full md:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`}
+                    <input className={`w-full h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`}
                         type="text"
                         placeholder="Tipo de Combustível"
                         {...register('fuelType', {
@@ -320,7 +320,7 @@ export default function NewCarForm({ token }: Props) {
                 </div>
                 <div className="flex flex-col w-full gap-1">
                     <span className="text-red-950 font-bold">Câmbio*</span>
-                    <select className={`w-full md:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`} placeholder="Tipo de Combustível"
+                    <select className={`w-full xl:w-96  h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`} placeholder="Tipo de Combustível"
                         {...register('exchange')}
                     >
                         <option value="" disabled hidden>Câmbio</option>
@@ -330,7 +330,7 @@ export default function NewCarForm({ token }: Props) {
                 </div>
                 <div className="flex flex-col w-full gap-1">
                     <span className="text-red-950 font-bold">Portas*</span>
-                    <input className={`w-full md:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`}
+                    <input className={`w-full xl:w-96 h-12 p-2 bg-transparent border rounded-lg border-red-800 focus:outline-none focus:border-2 placeholder:opacity-50`}
                         type="text"
                         maxLength={1}
                         placeholder="Portas"
