@@ -29,8 +29,8 @@ export default async function CarDetailsPage({ params }: { params: { carId: stri
                     <Link href="/veiculos" className="flex items-center text-gray-300 opacity-90 font-inter">Veículos <ChevronRight size={18} /> </Link>
                     <span className="text-red-700">{car.description}</span>
                 </div>
-                <div className="lg:grid lg:grid-cols-3 lg:justify-around flex flex-col overflow-hidden w-full h-1/2 gap-3 my-4 rounded-lg bg-gray-100 md:p-10">
-                    <div className="h-h-120 col-span-2 w-full flex flex-col justify-between">
+                <div className="lg:grid lg:grid-cols-3 lg:justify-around flex flex-col overflow-hidden w-full gap-3 my-4 rounded-lg bg-gray-100 md:p-10">
+                    <div className="h-2/3 col-span-2 w-full flex flex-col justify-between">
                         <strong className="uppercase text-4xl mb-3">{car.description}</strong>
                         <Slider>
                             {
@@ -41,7 +41,7 @@ export default async function CarDetailsPage({ params }: { params: { carId: stri
                         </Slider>
                     </div>
 
-                    <div className="flex flex-col items-start justify-start gap-4 bg-gray-50 rounded-lg my-10 p-7 md:p-10">
+                    <div className="flex flex-col h-2/3 items-start justify-start gap-4 bg-gray-50 rounded-lg my-10 p-7 md:p-10">
                         <div className="w-full border-b-bottom border-red-700 mb-1">
                             <strong className="w-full uppercase text-2xl text-red-700 mb-3">{car.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</strong>
                         </div>
