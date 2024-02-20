@@ -91,9 +91,9 @@ export default function CarsPainel() {
                                 <div className="w-48 h-48 py-10 rounded-lg">
                                     <img className="flex items-center w-full h-full rounded-lg object-cover" src={`${process.env.NEXT_PUBLIC_SUPABASE_IMAGE_URL}/${car.source}`} alt="Photo" />
                                 </div>
-                                <ul className="grid grid-cols-6 md:flex-row gap-20 items-center justify-center">
-                                    <li className="items-center justify-center uppercase w-full md:w-96 text-red-950 md:text-1xl font-semibold">{car.description}</li>
-                                    <li className="items-center justify-center text-red-950 md:text-1xl font-semibold"> {car.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
+                                <ul className="grid grid-cols-6 md:flex-row gap-10 items-center justify-center">
+                                    <li className="items-center justify-center uppercase w-full md:w-32 text-red-950 md:text-md font-semibold">{car.description}</li>
+                                    <li className="items-center justify-center w-32 text-red-950 md:text-1xl font-semibold"> {car.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
                                     <li className="items-center justify-center text-red-950 md:text-1xl font-semibold">{car.year}</li>
                                     <li className="items-center justify-center text-red-950 md:text-1xl font-semibold">{format(new Date(car.created_at), 'dd/MM/yyyy HH:mm')}</li>
                                     <li className="items-center justify-center text-red-950 md:text-1xl font-semibold">{format(new Date(car.updated_at), 'dd/MM/yyyy HH:mm')}</li>

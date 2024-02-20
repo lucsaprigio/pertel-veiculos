@@ -58,6 +58,7 @@ export default function NewCarForm({ token }: Props) {
     const [descriptionDialog, setDescriptionDialog] = useState('');
     const [sourceDialog, setSourceDialog] = useState('');
     const [okButtonDialog, setOkButtonDialog] = useState('');
+    const [cancelButtonDialog, setCancelButtonDialog] = useState('');
 
     const [files, setFiles] = useState<File[] | null>(null);
 
@@ -93,6 +94,18 @@ export default function NewCarForm({ token }: Props) {
                 created_at: dateCreated,
                 updated_at: dateUpdated
             }
+
+            if (!data.file.name) {
+                setLoading(false);
+                setIsDialogOpen(true);
+
+                setTitleDialog('Ocorreu um erro!');
+                setDescriptionDialog('Sem imagem para vitrine!');
+                setSourceDialog('/images/cancel.png');
+                setOkButtonDialog('');
+                setCancelButtonDialog('Fechar');
+            }
+
 
             // Envia a imagem para o supabase
             const { error } = await supabase.storage
@@ -139,6 +152,7 @@ export default function NewCarForm({ token }: Props) {
             setDescriptionDialog('Deseja continuar cadastrando?');
             setSourceDialog('/images/checked.png');
             setOkButtonDialog('Ir para o painel');
+            setCancelButtonDialog('Sim');
             setLoading(false);
 
             reset();
@@ -150,7 +164,8 @@ export default function NewCarForm({ token }: Props) {
             setTitleDialog('Ocorreu um erro!');
             setDescriptionDialog('Parece que houve um erro com o servidor, tente novamente.');
             setSourceDialog('/images/cancel.png');
-            setOkButtonDialog('Ok');
+            setOkButtonDialog('Ir para o painel');
+            setCancelButtonDialog('Fechar');
         }
     }
 
@@ -217,7 +232,7 @@ export default function NewCarForm({ token }: Props) {
                 title={titleDialog}
                 description={descriptionDialog}
                 okButton={okButtonDialog}
-                cancelButton="Sim"
+                cancelButton={cancelButtonDialog}
                 showDialog={isDialogOpen}
                 source={sourceDialog}
                 onClose={handleCloseDialog}
